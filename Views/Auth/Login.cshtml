@@ -5,22 +5,24 @@
 }
 
 <div class="position-absolute top-50 start-50 translate-middle" style="width:320px;">
-@{
-    if (TempData["LoginError"] != null)
-    {
-        <div class="alert bg-red-300 alert-dismissible fade show" role="alert" id="@TempData["LoginError"]">
-            <strong>Hey!</strong> Somethig went wrong.
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
+    @{
+        if (TempData["LoginError"] != null)
+        {
+            <div class="alert bg-red-300 alert-dismissible fade show" role="alert" id="@TempData["LoginError"]">
+                <strong>Hey!</strong> Somethig went wrong.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
     }
-}
 
 
-<div class="card p-3 m-auto border-light border-3 rounded-4 bg-primary shadow-lg" >
-<partial name="LoginPartial" />
-</div>
+    <div class="card p-3 m-auto border-light border-3 rounded-4 bg-primary shadow-lg">
+        <partial name="LoginPartial"/>
+    </div>
 
-<p class=" my-2 w-100 text-center m-auto"><a asp-action="Register" asp-controller="Auth" class="text-decoration-none">Not an user? <b>Register</b> instead</a></p>
+    <p class=" my-2 w-100 text-center m-auto">
+        <a asp-action="Register" asp-controller="Auth" class="text-decoration-none">Not an user? <b>Register</b> instead</a>
+    </p>
 </div>
 
 <script>

@@ -1,29 +1,29 @@
 @using Microsoft.AspNetCore.Http
-  
-  <nav class="navbar shadow-sm navbar-expand-md navbar-light border border-top-0 border-end-0 border-start-0 border-2 border-color-yellow-300 bg-white" aria-label="Fourth navbar example">
+
+<nav class="navbar shadow-sm navbar-expand-md navbar-light border border-top-0 border-end-0 border-start-0 border-2 border-color-yellow-300 bg-white" aria-label="Fourth navbar example">
     <div class="container-md">
         <a class="navbar-brand" asp-action="Index" asp-controller="Home">VirtualClinic</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      
-      <div class="collapse navbar-collapse" id="navbarsExample04">
-        <ul class="navbar-nav me-auto mb-2 mb-md-0">
-          <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="/">Home</a>
-          </li>
-          @{
-            if (@ViewBag.UserLoggedIn != null)
-            {
-              <li class="nav-item">
-                <a class="nav-link" asp-action="Welcome" asp-controller="Home">Welcome</a>
-              </li>
-            }
-          }
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-          @* <li class="nav-item dropdown">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExample04">
+            <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="/">Home</a>
+                </li>
+                @{
+                    if (@ViewBag.UserLoggedIn != null)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-action="Welcome" asp-controller="Home">Welcome</a>
+                        </li>
+                    }
+                }
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                @* <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</a>
             <ul class="dropdown-menu" aria-labelledby="dropdown04">
               <li><a class="dropdown-item" href="#">Action</a></li>
@@ -31,21 +31,20 @@
               <li><a class="dropdown-item" href="#">Something else here</a></li>
             </ul>
           </li> *@
-        </ul>
-        @{
-          if (@ViewBag.UserLoggedIn != null)
-          {
-            <a asp-action="logout" asp-controller="Auth" class='btn btn-sm btn-outline-info' type="button">Logout</a>
-          }
-          else
-          {
-
-        <button class="btn btn-outline-primary btn-sm" onclick="loginModal('registermodal')">Sign-in | Login</button>
-          }
-        }
-      </div>
+            </ul>
+            @{
+                if (@ViewBag.UserLoggedIn != null)
+                {
+                    <a asp-action="logout" asp-controller="Auth" class='btn btn-sm btn-outline-info' type="button">Logout</a>
+                }
+                else
+                {
+                    <button class="btn btn-outline-primary btn-sm" onclick="loginModal('registermodal')">Sign-in | Login</button>
+                }
+            }
+        </div>
     </div>
-  </nav>
+</nav>
 <div id="registermodal"></div>
 <script src="~/js/site.js" asp-append-version="true"></script>
 <script>

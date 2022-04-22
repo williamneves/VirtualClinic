@@ -3,7 +3,9 @@
 <main class="form-signin">
     <form asp-action="LoginUser" asp-controller="Auth" method="post">
         <h1 class="h3 mb-3 fw-normal text-center" id="logintext-login-page">Login</h1>
-        <small class="d-block text-white fw-bold text-center" style="height: 21px"><span asp-validation-for="Email" ></span></small>
+        <small class="d-block text-white fw-bold text-center" style="height: 21px">
+            <span asp-validation-for="Email"></span>
+        </small>
         <div class="form-floating">
             <input asp-for="Email"class="form-control" id="floatingInput">
             <label asp-for="Email">Email address</label>
@@ -11,7 +13,9 @@
         <div class="form-floating">
             <input asp-for="Password" class="form-control mb-0" id="floatingPassword">
             <label asp-for="Password">Password</label>
-            <small class="d-block text-white fw-bold text-center" style="height: 21px"><span asp-validation-for="Password"></span></small>
+            <small class="d-block text-white fw-bold text-center" style="height: 21px">
+                <span asp-validation-for="Password"></span>
+            </small>
         </div>
 
         <div class="checkbox mb-3">
