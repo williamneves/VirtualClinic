@@ -11,6 +11,10 @@ namespace VirtualClinic.Models
     {
         [Key] public int UserId { get; set; }
 
+        // Hidden field for all users
+        [Required]
+        public string userType { get; set; } = "patient"; 
+
         [Required(ErrorMessage = "*Required")]
         [MinLength(2, ErrorMessage = "*Needs to be at least 2 characters")]
         [Display(Name = "First Name", Prompt = "First Name")]
