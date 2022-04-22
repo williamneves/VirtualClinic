@@ -25,7 +25,7 @@ namespace VirtualClinic.Models
         public Provider Provider { get; set; }
 
         // Relationship with Patient
-        public int PatientId { get; set; } = 0;
+        public int PatientId { get; set; }
         public Patient Patient { get; set; }
     }
 }
