@@ -1,0 +1,245 @@
+
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/utilities";
+/*! `Custom` Bootstrap 5 theme */
+@import url(https://use.fontawesome.com/releases/v5.0.10/css/all.css);
+@import url(https://fonts.googleapis.com/css?family=Nunito:200,300,400,700);
+$font-family-base: Nunito;
+@import url(https://fonts.googleapis.com/css?family=Poppins:200,300,400,700);
+$headings-font-family: Poppins;
+$primary: #015668;
+$secondary: #bed6d5;
+$success: #3e4d59;
+$danger: #f2460d;
+$info: #7ebcfa;
+$warning: #ff9933;
+$light: #eef0f2;
+$dark: #000633;
+$navbar-dark-color: #f3f3f3;
+
+// Add SASS theme customizations here..
+
+//Generating All Shades of Gray
+@each $key, $value in $grays {
+  .bg-gray-#{$key} {
+    background-color: $value !important;
+  }
+
+  .text-gray-#{$key} {
+    color: $value !important;
+  }
+}
+
+$blues: (
+  "100": $blue-100,
+  "200": $blue-200,
+  "300": $blue-300,
+  "400": $blue-400,
+  "500": $blue-500,
+  "600": $blue-600,
+  "700": $blue-700,
+  "800": $blue-800,
+  "900": $blue-900,
+) !default;
+$indigos: (
+  "100": $indigo-100,
+  "200": $indigo-200,
+  "300": $indigo-300,
+  "400": $indigo-400,
+  "500": $indigo-500,
+  "600": $indigo-600,
+  "700": $indigo-700,
+  "800": $indigo-800,
+  "900": $indigo-900,
+) !default;
+$purples: (
+  "100": $purple-100,
+  "200": $purple-200,
+  "300": $purple-300,
+  "400": $purple-400,
+  "500": $purple-500,
+  "600": $purple-600,
+  "700": $purple-700,
+  "800": $purple-800,
+  "900": $purple-900,
+) !default;
+$pinks: (
+  "100": $pink-100,
+  "200": $pink-200,
+  "300": $pink-300,
+  "400": $pink-400,
+  "500": $pink-500,
+  "600": $pink-600,
+  "700": $pink-700,
+  "800": $pink-800,
+  "900": $pink-900,
+) !default;
+$reds: (
+  "100": $red-100,
+  "200": $red-200,
+  "300": $red-300,
+  "400": $red-400,
+  "500": $red-500,
+  "600": $red-600,
+  "700": $red-700,
+  "800": $red-800,
+  "900": $red-900,
+) !default;
+$oranges: (
+  "100": $orange-100,
+  "200": $orange-200,
+  "300": $orange-300,
+  "400": $orange-400,
+  "500": $orange-500,
+  "600": $orange-600,
+  "700": $orange-700,
+  "800": $orange-800,
+  "900": $orange-900,
+) !default;
+$yellows: (
+  "100": $yellow-100,
+  "200": $yellow-200,
+  "300": $yellow-300,
+  "400": $yellow-400,
+  "500": $yellow-500,
+  "600": $yellow-600,
+  "700": $yellow-700,
+  "800": $yellow-800,
+  "900": $yellow-900,
+) !default;
+$greens: (
+  "100": $green-100,
+  "200": $green-200,
+  "300": $green-300,
+  "400": $green-400,
+  "500": $green-500,
+  "600": $green-600,
+  "700": $green-700,
+  "800": $green-800,
+  "900": $green-900,
+) !default;
+$teals: (
+  "100": $teal-100,
+  "200": $teal-200,
+  "300": $teal-300,
+  "400": $teal-400,
+  "500": $teal-500,
+  "600": $teal-600,
+  "700": $teal-700,
+  "800": $teal-800,
+  "900": $teal-900,
+) !default;
+$cyans: (
+  "100": $cyan-100,
+  "200": $cyan-200,
+  "300": $cyan-300,
+  "400": $cyan-400,
+  "500": $cyan-500,
+  "600": $cyan-600,
+  "700": $cyan-700,
+  "800": $cyan-800,
+  "900": $cyan-900,
+) !default;
+
+@each $key, $value in $blues {
+  .bg-#{$key} {
+    background-color: $value !important;
+  }
+
+  .text-#{$key} {
+    color: $value !important;
+  }
+}
+
+@each $key, $value in $purples {
+  .bg-#{$key} {
+    background-color: $value !important;
+  }
+
+  .text-#{$key} {
+    color: $value !important;
+  }
+}
+
+@each $key, $value in $indigos {
+  .bg-#{$key} {
+    background-color: $value !important;
+  }
+
+  .text-#{$key} {
+    color: $value !important;
+  }
+}
+
+@each $key, $value in $pinks {
+  .bg-#{$key} {
+    background-color: $value !important;
+  }
+
+  .text-#{$key} {
+    color: $value !important;
+  }
+}
+
+@each $key, $value in $reds {
+  .bg-#{$key} {
+    background-color: $value !important;
+  }
+
+  .text-#{$key} {
+    color: $value !important;
+  }
+}
+
+@each $key, $value in $oranges {
+  .bg-#{$key} {
+    background-color: $value !important;
+  }
+
+  .text-#{$key} {
+    color: $value !important;
+  }
+}
+
+@each $key, $value in $yellows {
+  .bg-#{$key} {
+    background-color: $value !important;
+  }
+
+  .text-#{$key} {
+    color: $value !important;
+  }
+}
+
+@each $key, $value in $greens {
+  .bg-#{$key} {
+    background-color: $value !important;
+  }
+
+  .text-#{$key} {
+    color: $value !important;
+  }
+}
+
+@each $key, $value in $teals {
+  .bg-#{$key} {
+    background-color: $value !important;
+  }
+
+  .text-#{$key} {
+    color: $value !important;
+  }
+}
+
+@each $key, $value in $cyans {
+  .bg-#{$key} {
+    background-color: $value !important;
+  }
+
+  .text-#{$key} {
+    color: $value !important;
+  }
+}
+
+@import "bootstrap/scss/bootstrap";

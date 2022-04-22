@@ -1,0 +1,36 @@
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class='p-0 m-auto w-100'>
+
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <!-- Login Tab Selector -->
+                        <button class="nav-link active bg-blue-500 text-light col-6 border-0 py-3 fs-3"
+                            id="nav-login-tab" data-bs-toggle="tab" data-bs-target="#nav-login" type="button" role="tab"
+                            aria-controls="nav-login" aria-selected="true" style="border-radius: 0;">Login</button>
+                            <!-- Register Tab Selector -->
+                        <button class="nav-link col-6 border-0 bg-blue-700 text-light py-3 fs-3" id="nav-register-tab"
+                            data-bs-toggle="tab" data-bs-target="#nav-register" type="button" role="tab"
+                            aria-controls="nav-register" aria-selected="false"
+                            style="border-radius: 0;">Register</button>
+
+                    </div>
+                </nav>
+                <!-- Content -->
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active p-5" id="nav-login" role="tabpanel"
+                        aria-labelledby="nav-login-tab">
+                        <!-- Login Partial -->
+                        <partial name="loginPartial" />
+                    </div>
+                    <div class="tab-pane fade p-5" id="nav-register" role="tabpanel" aria-labelledby="nav-register-tab">
+                        <!-- Register Partial -->
+                        <partial name="registerPartial" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
