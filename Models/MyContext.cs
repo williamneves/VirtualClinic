@@ -8,6 +8,16 @@ namespace VirtualClinic.Models
         {
         }
 
+        // User Table
         public DbSet<User> Users { get; set; }
+
+        // Provider Table
+        public DbSet<Provider> Providers { get; set; }
+
+        // Patient Table
+        public DbSet<Patient> Patients { get; set; }
+
+        // Appointment Table
+        public DbSet<Appointment> Appointments { get; set; }
     }
 }
