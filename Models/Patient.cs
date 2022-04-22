@@ -27,10 +27,10 @@ namespace VirtualClinic.Models
 
         // Relationship tables
         // Allergies
-        public List<Allergies> Allergies { get; set; }
+        public List<Allergy> Allergies { get; set; }
 
         // Medications
-        public List<Medications> Medications { get; set; }
+        public List<Medication> Medications { get; set; }
 
         // Appointments
         public List<Appointment> Appointments { get; set; }
