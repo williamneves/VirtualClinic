@@ -2,6 +2,7 @@
 
 <nav class="navbar shadow-sm navbar-expand-md navbar-light border border-top-0 border-end-0 border-start-0 border-2 border-color-yellow-300 bg-white" aria-label="Fourth navbar example">
     <div class="container-md">
+        <i class='bx bx-menu' ></i>
         <a class="navbar-brand" asp-action="Index" asp-controller="Home">VirtualClinic</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -17,6 +18,15 @@
                     {
                         <li class="nav-item">
                             <a class="nav-link" asp-action="Welcome" asp-controller="Home">Welcome</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-action="Login" asp-controller="Auth">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-action="Register" asp-controller="Auth">Register</a>
                         </li>
                     }
                 }
@@ -54,4 +64,18 @@
             link.classList.add("fw-bold");
         }
     });
+    
+      let arrow = document.querySelectorAll(".arrow");
+      for (var i = 0; i < arrow.length; i++) {
+        arrow[i].addEventListener("click", (e)=>{
+       let arrowParent = e.target.parentElement.parentElement;//selecting main parent of arrow
+       arrowParent.classList.toggle("showMenu");
+        });
+      }
+      let sidebar = document.querySelector(".sidebar");
+      let sidebarBtn = document.querySelector(".bx-menu");
+      console.log(sidebarBtn);
+      sidebarBtn.addEventListener("click", ()=>{
+        sidebar.classList.toggle("close");
+      });
 </script>

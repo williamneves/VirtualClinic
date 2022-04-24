@@ -1,6 +1,6 @@
 William's Tasks 
 By Monday Morning:
-- Login and Register Page
+- Login and Register Page - Done
 - NavBar
 
 
