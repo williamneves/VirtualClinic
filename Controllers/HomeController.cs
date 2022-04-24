@@ -47,6 +47,17 @@ namespace VirtualClinic.Controllers
 
             return View();
         }
+        
+        [HttpGet("test")]
+        public IActionResult Test()
+        {
+            return View();
+        }
+        [HttpGet("test2")]
+        public IActionResult Test2()
+        {
+            return View();
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

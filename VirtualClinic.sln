@@ -13,4 +13,7 @@ Global
 		{F80633B3-5F37-4AB1-B4FA-4C6E1CC8EAC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F80633B3-5F37-4AB1-B4FA-4C6E1CC8EAC3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(RiderSharedRunConfigurations) = postSolution
+		File = .watchrun\Watch Run.run.xml
+	EndGlobalSection
 EndGlobal
