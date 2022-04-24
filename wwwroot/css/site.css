@@ -48,3 +48,19 @@ a.navbar-brand {
 .rounded-5 {
   border-radius: 0.7rem !important;
 }
+
+#page-container {
+  position: relative;
+  min-height: 100vh;
+}
+
+#content-wrap {
+  padding-bottom: 2.5rem;    /* Footer height */
+}
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+              /* Footer height */
+}

@@ -42,10 +42,15 @@ namespace VirtualClinic.Models
 
         // User Sex type
         [Required(ErrorMessage = "*Required")]
+        [Display(Name = "Sex", Prompt = "Select your Sex")]
         public string Sex { get; set;}
         
         // How the user like to be called
+        [Display(Name = "Pronouns", Prompt = "If you want, select above")]
         public string Pronouns { get; set;}
+        
+        [Display(Name = "Preferred Name", Prompt = "Preferred Name")]
+        public string PreferredName { get; set; }
 
         // Image profile
         public string ImageProfile { get; set; }
@@ -58,6 +63,8 @@ namespace VirtualClinic.Models
         public string Zipcode { get; set; }
 
         // User Phone Number
+        [Phone]
+        [Display(Name = "Phone Number (xxx-xxx-xxxx)", Prompt = "Phone Number (xxx-xxx-xxxx)")]
         public string PhoneNumber { get; set; }
 
 

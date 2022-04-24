@@ -116,6 +116,12 @@ namespace VirtualClinic.Controllers
                 // Save new user to database
                 dbContext.Add(newUser);
                 dbContext.SaveChanges();
+                
+                // Attach new patient to the user
+                Patient newPatient = new Patient();
+                newPatient.UserId = newUser.UserId;
+                dbContext.Add(newPatient);
+                dbContext.SaveChanges();
 
                 // Save new user to session
                 HttpContext.Session.SetInt32("UserId", newUser.UserId);

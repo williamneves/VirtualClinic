@@ -1,0 +1,13 @@
+﻿<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Watch Run" type="RunNativeExe" factoryName="Native Executable" activateToolWindowBeforeRun="false">
+    <option name="EXE_PATH" value="C:/Program Files/dotnet/dotnet.exe" />
+    <option name="PROGRAM_PARAMETERS" value="watch run" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+    <option name="PASS_PARENT_ENVS" value="1" />
+    <option name="USE_EXTERNAL_CONSOLE" value="0" />
+    <method v="2">
+      <option name="Build Solution" enabled="true" />
+      <option name="LaunchBrowser.Before.Run" />
+    </method>
+  </configuration>
+</component>

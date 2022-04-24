@@ -4,7 +4,7 @@
     ViewData["Title"] = "Register";
 }
 
-<div class="position-absolute top-50 start-50 translate-middle" style="width:320px;">
+<div class="col-sm-9 m-auto my-5">
     @{
         if (TempData["LoginError"] != null)
         {
@@ -16,8 +16,8 @@
     }
 
 
-    <div class="card p-3 m-auto border-light border-3 rounded-4 bg-primary shadow-lg">
-        <partial name="registerPartial"/>
+    <div class="card p-3 m-auto border-light border-3 rounded-4 bg-white shadow-lg">
+        <partial name="_registerPartial"/>
     </div>
 
     <p class=" my-2 w-100 text-center m-auto">
@@ -27,14 +27,20 @@
 
 <script>
 let body = document.querySelector('body');
-body.classList.add('bg-gray-200');
+body.classList.add('bg-light');
 
 let btnsubmit = document.querySelector('#btnsubmit-register-page');
 btnsubmit.classList.remove('btn-primary');
-btnsubmit.classList.add('btn-outline-light');
+btnsubmit.classList.remove('col-sm-12');
+btnsubmit.classList.add('btn-primary');
+btnsubmit.classList.add('col-sm-3');
+
+let btnsubmitblock = document.querySelector('#btnsubmit-register-page-block');
+btnsubmitblock.classList.add('d-flex');
+btnsubmitblock.classList.add('justify-content-end');
 
 let logintext = document.querySelector('#registertext-reg-page');
-logintext.classList.add('text-light');
+logintext.classList.add('text-primary');
 
 if(document.querySelector('#emailnotfound')){
     document.querySelector('#floatingInput').classList.add('is-invalid');
@@ -42,5 +48,6 @@ if(document.querySelector('#emailnotfound')){
 if(document.querySelector('#passwordincorrect')){
     document.querySelector('#floatingPassword').classList.add('is-invalid');
 }
+
 
 </script>
