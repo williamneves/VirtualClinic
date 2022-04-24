@@ -9,3 +9,5 @@ Theresa's Tasks
 By Monday Morning:
 - Dashboard
 - 
+Notes: 
+- HomeController- is session statement (line 27)
