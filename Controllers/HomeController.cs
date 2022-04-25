@@ -44,6 +44,10 @@ namespace VirtualClinic.Controllers
             Console.WriteLine("User Logged In: ", HttpContext.Session.GetInt32("UserId"));
 
             ViewBag.UserLoggedIn = userInDb;
+            ViewBag.PatientInfo = dbContext.Patients
+            .Include(p => p.Medications)
+            .FirstOrDefault(p => p.UserId == userInDb.UserId);
+        
 
             return View();
         }
