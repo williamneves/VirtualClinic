@@ -40,9 +40,9 @@ namespace VirtualClinic.Controllers
             }
 
             var userInDb = dbContext.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"));
-
+            
             Console.WriteLine("User Logged In: ", HttpContext.Session.GetInt32("UserId"));
-
+            
             ViewBag.UserLoggedIn = userInDb;
 
             // Patient Medications
@@ -101,7 +101,7 @@ namespace VirtualClinic.Controllers
             // int ProviderId = (int) HttpContext.Session.GetInt32("ProviderId");
 
             // ViewBag.ProviderInfo = dbContext.Providers.FirstOrDefault(p => p.ProviderId == ProviderId);
-            return View();
+            return View();                      
         }
 
 
