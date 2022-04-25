@@ -2,102 +2,126 @@
     ViewData["Title"] = "Welcome";
     Layout = "_LayoutBS";
 }
-@model User
 
-<div class="text-center card p-3 my-5 shadow col-6 m-auto">
-    <h3>Welcome @ViewBag.UserLoggedIn.FirstName @ViewBag.UserLoggedIn.LastName !</h3>
-    <p>You email is @ViewBag.UserLoggedIn.Email</p>
-
-    <a asp-action="logout" asp-controller="Auth" class="w-50 m-auto btn btn-warning my-2">Logout</a>
-</div>
+@* <div class="text-center card p-3 my-5 shadow col-6 m-auto"> *@
+@*     <h3>Welcome @ViewBag.UserLoggedIn.FirstName @ViewBag.UserLoggedIn.LastName !</h3> *@
+@*     <p>You email is @ViewBag.UserLoggedIn.Email</p> *@
+@* *@
+@*     <a asp-action="logout" asp-controller="Auth" class="w-50 m-auto btn btn-warning my-2">Logout</a> *@
+@* </div> *@
 
 <div class="mainbody">
 
 </div>
-<div class="headerdropdown">
-    <div class="btn-group">
-        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static"
-            aria-expanded="false">
-            Extra
-        </button>
-        <ul class="dropdown-menu dropdown-menu-lg-end">
-            <li><a class="dropdown-item" href="#">Settings</a></li>
-            <li><a class="dropdown-item" href="#">Edit Account Info</a></li>
-            <li><a class="dropdown-item" href="#">Log Out</a></li>
-        </ul>
-    </div>
-</div>
-
-<div class="welcometag">
-    <h3>Welcome @ViewBag.UserLoggedIn.FirstName!</h3>
-</div>
+<div class="row">
+    <div class="col-12 col-sm-4">
 
 
-<div class="dashboard row">
-    <div class="col-4">
+        <div class="card col-sm-10 col-10 mx-auto mb-4 bg-gray-500 rounded-3">
 
-        <div class="dashleft bg text-align">
-
-            <img src="https://www.newsshare.in/wp-content/uploads/2/Cartoon-WhatsApp-DP-44.jpg" class="img-thumbnail"
-                width="200" height="200" alt="Profile Picture">
-            <h4> @ViewBag.UserLoggedIn.FirstName @ViewBag.UserLoggedIn.LastName</h4>
-            <a href="#" class="btn btn-primary">Edit Profile</a>
+            <img src="https://www.newsshare.in/wp-content/uploads/2/Cartoon-WhatsApp-DP-44.jpg" class="rounded-circle mx-auto border border-5 shadow border-white w-50 my-2"
+                 alt="Profile Picture">
+            <h4 class="my-2 text-center"> Hello User</h4>
+            @* <h4> @ViewBag.UserLoggedIn.FirstName @ViewBag.UserLoggedIn.LastName</h4> *@
+            <a href="#" class="btn btn-sm btn-outline-light col-8 mx-auto my-3"><i class="bi bi-gear"></i> Edit Profile</a>
         </div>
 
-        <div class="dashleft bg">
-            <p>Information:</p>
-            <p>Patient Id:</p>
-            <p>Sex:</p>
-            <p>Allergies:</p>
-            <p>Height:</p>
-            <p>Medical History:</p>
+        <div class="card col-sm-10 col-10 mx-auto mb-4 bg-gray-100 rounded-3">
+            <div class="card-header border-bottom bg-gray-500">
+                <span class="card-title fw-bold">Patient informations:</span>
+            </div>
+            <div class="card-body p-0">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item bg-gray-100">Sex:</li>
+                    <li class="list-group-item bg-gray-200">Allergies:</li>
+                    <li class="list-group-item bg-gray-100">Height:</li>
+                    <li class="list-group-item bg-gray-200">Medical History:</li>
+                </ul>
+            </div>
         </div>
 
     </div>
-
-
-
-    <div class="dashright col-8">
-
-        <div class="rowone flex">
-
-            <div class="dashboardactions bg text-align">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiHczCceUTYLTahtnMjozm7uUoSBMWP5BhwQ&usqp=CAU"
-                    width="100" height="100" alt="Blood Pressure">
-                <p>Most Recent Blood Pressure: </p>
+    <div class="col-12 col-sm-8">
+        <div class="col-sm-12">
+            <div class="btn-group w-100">
+                <button type="button" class="btn btn-outline-primary col-sm-9" disabled>
+                    <small>“Books are a uniquely portable magic.”</small>
+                </button>
+                <button type="button" class="btn btn-primary col-sm-3 dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static"
+                        aria-expanded="false">
+                    Extra
+                </button>
+                <ul class="dropdown-menu dropdown-menu-lg-end">
+                    <li>
+                        <a class="dropdown-item" href="#">Settings</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="#">Edit Account Info</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="#">Log Out</a>
+                    </li>
+                </ul>
             </div>
-
-            <div class="dashboardactions bg text-align">
-                <img src=" https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgZcSNvCEC5SIXJsjMV--AS__6qLXsqmWwRg&usqp=CAU"
-                    width="100" height="100" alt="Weight">
-                <p>Weight: </p>
-            </div>
-
-            <div class="dashboardactions bg text-align">
-                <img src=" https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDThmi9nYSNqXB9ecnDES1P8wwZlVwbeRr8CG8rMiLS2okPmIHX60aOdZcomxqTheiaAY&usqp=CAU"
-                    width="100" height="100" alt="Weight">
-                <p>Next Appointment is with : ##Doctor##</p>
-                <p>Appointment Date and Time: ##Date## ##Time##</p>
-            </div>
-
         </div>
+        <div class="col-sm-12 row me-0 mt-3 justify-content-between">
+            <div class="col-sm-4 col-md-12 col-lg-4">
+                <div class="card">
 
-        <div class="rowtwo">
+                    <div class="card-body bg-gray-400 p-2 text-center">
+                        <h6 class="card-title">Recent Blood Pressure:</h6>
+                        <hr class="my-2 mx-auto">
+                        <p class="display-6">120/80</p>
+                        <hr class="my-2 mx-auto">
+                        <small class="text-muted">On Jun 12, 2022 - 08:10am</small>
+                    </div>
 
-            <div>
+                </div>
+            </div>
+            <div class="col-sm-4 col-md-12 col-lg-4">
+                <div class="card">
+
+                    <div class="card-body bg-gray-400 p-2 text-center">
+                        <h6 class="card-title">Weigth:</h6>
+                        <hr class="my-2 mx-auto">
+                        <p class="display-6">220lb</p>
+                        <hr class="my-2 mx-auto">
+                        <small class="text-muted">Above Average</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 col-md-12 col-lg-4">
+                <div class="card">
+
+                    <div class="card-body bg-gray-400 p-2 text-center">
+                        <h6 class="card-title">Next Appoitment:</h6>
+                        <hr class="my-2 mx-auto">
+                        <p class="fs-3">12/05/22 - 10am</p>
+                        <hr class="my-2 mx-auto">
+                        <small class="text-muted">Above Average</small>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        
+
+            <div class="rowtwo">
 
                 <div>
-                    <h4>Medications</h4>
-                </div>
-                <div>
-                    <partial name="_PatientMeds" />
-                </div>
 
+                    <div>
+                        <h4>Medications</h4>
+                    </div>
+                    <div>
+                        @* <partial name="_PatientMeds" /> *@
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="bg">
+                <p>Visit History:</p>
             </div>
         </div>
-
-        <div class="bg">
-            <p>Visit History:</p>
-        </div>
     </div>
-</div>

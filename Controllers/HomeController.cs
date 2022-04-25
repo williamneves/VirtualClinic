@@ -33,20 +33,20 @@ namespace VirtualClinic.Controllers
         [HttpGet("welcome")]
         public IActionResult Welcome()
         {
-            if (HttpContext.Session.GetInt32("UserId") == null)
-            {
-                TempData["AuthError"] = "You must be logged in to view this page";
-                return RedirectToAction("Index");
-            }
+            // if (HttpContext.Session.GetInt32("UserId") == null)
+            // {
+            //     TempData["AuthError"] = "You must be logged in to view this page";
+            //     return RedirectToAction("Index");
+            // }
 
-            var userInDb = dbContext.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"));
-
-            Console.WriteLine("User Logged In: ", HttpContext.Session.GetInt32("UserId"));
-
-            ViewBag.UserLoggedIn = userInDb;
-            ViewBag.PatientInfo = dbContext.Patients
-            .Include(p => p.Medications)
-            .FirstOrDefault(p => p.UserId == userInDb.UserId);
+            // var userInDb = dbContext.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"));
+            //
+            // Console.WriteLine("User Logged In: ", HttpContext.Session.GetInt32("UserId"));
+            //
+            // ViewBag.UserLoggedIn = userInDb;
+            // ViewBag.PatientInfo = dbContext.Patients
+            // .Include(p => p.Medications)
+            // .FirstOrDefault(p => p.UserId == userInDb.UserId);
         
 
             return View();
@@ -77,7 +77,7 @@ namespace VirtualClinic.Controllers
             // int ProviderId = (int) HttpContext.Session.GetInt32("ProviderId");
 
             // ViewBag.ProviderInfo = dbContext.Providers.FirstOrDefault(p => p.ProviderId == ProviderId);
-            return View();
+            return View();                      
         }
 
 
