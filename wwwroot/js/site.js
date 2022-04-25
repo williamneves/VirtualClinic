@@ -35,3 +35,44 @@ function createHtml(data) {
   htmlElement.innerHTML = data;
   return htmlElement;
 }
+
+// Call Medical Notes
+
+function getMedicalNotes(id){
+    return new Promise((resolve, reject) => {
+        $("#accordionMedicalNotes").fadeIn('slow');        
+        document.getElementById("medical-notes-card").style.opacity="1";
+
+        $.when($.ajax(
+            {
+                url: `json/medicalnotes/${id}`,
+                method: 'GET'
+            })).done(function(data){
+
+            $('#First-Accordion-aHPI-ajax').html(data.hpi);
+            $('#First-Accordion-aPE-ajax').html(data.pe);
+            $('#First-Accordion-aSMRY-ajax').html(data.summary);
+            $('#First-Accordion-aAP-ajax').html(data.ap);
+            
+            let apptid = data.appointmentId
+            // Get appointment info
+            $.when($.ajax(
+                {
+                    url: `json/appointments/${apptid}`,
+                    method: 'GET'
+                })).done(function(apptData){
+                $('#apptId-card-mn-ajax').html(apptData.appointmentId);
+                let date = new Date(apptData.dateTime);
+                $('#apptDate-card-mn-ajax').html(date.toDateString() +" at "+ date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })); 
+            });
+            
+            
+            
+            resolve();
+
+        }).fail(function(error){
+            reject(error);
+        });
+
+    });
+}

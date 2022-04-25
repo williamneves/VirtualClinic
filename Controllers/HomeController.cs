@@ -95,11 +95,22 @@ namespace VirtualClinic.Controllers
         {
             return View();
         }
-        // [HttpGet("medicalnotes/{id}")]
-        // public IActionResult MedicalNotes(int id)
-        // {
-        //     return JsonResult();
-        // }
+        
+        // Json veiw for Medical Notes
+        [HttpGet("json/medicalnotes/{id}")]
+        public IActionResult MedicalNotes(int id)
+        {
+            MedicalNote note = dbContext.MedicalNotes.FirstOrDefault(n => n.MedicalNoteId == id);
+            return Json(note);
+        }
+        
+        // Jsaon view for Appointments
+        [HttpGet("json/appointments/{id}")]
+        public IActionResult Appointments(int id)
+        {
+            Appointment appointment = dbContext.Appointments.FirstOrDefault(a => a.AppointmentId == id);
+            return Json(appointment);
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

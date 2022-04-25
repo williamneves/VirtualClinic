@@ -10,7 +10,8 @@
             <th scope="col">#ID</th>
             <th scope="col">Date of Visit</th>
             <th scope="col">Summary</th>
-            <th scope="col"> with</th>
+            <th scope="col">With:</th>
+            <th scope="col">Actions:</th>
         </tr>
         </thead>
         <tbody> 
@@ -21,6 +22,9 @@
                     <td>@i.DateTime.ToString("MM/dd/yyyy hh:mm tt")</td>
                     <td>@i.MedicalNotes[0].Summary</td>
                     <td>Dr. @i.Provider.User.PreferredName</td>
+                    <td>
+                        <button type="submit" class="btn btn-outline-primary btn-sm" onclick="getMedicalNotes(@i.MedicalNotes[0].MedicalNoteId)"><i class="bi bi-eye"></i> View</button>
+                    </td>
                 </tr>
             }    
         </tbody>

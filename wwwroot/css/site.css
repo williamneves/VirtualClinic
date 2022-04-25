@@ -63,3 +63,11 @@ a.navbar-brand {
   width: 100%;
               /* Footer height */
 }
+
+#medical-notes-card {
+  min-height: 264px;
+  opacity: 0;
+  -moz-animation: ease-in-out 1s;
+  -webkit-animation: ease-in-out 1s;
+  animation: ease-in-out 1s;
+}
