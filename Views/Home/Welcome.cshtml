@@ -38,66 +38,65 @@
 
         <div class="dashleft bg text-align">
 
-            <img src="https://www.newsshare.in/wp-content/uploads/2/Cartoon-WhatsApp-DP-44.jpg" class="img-thumbnail"
-                width="200" height="200" alt="Profile Picture">
+            <img src="https://www.newsshare.in/wp-content/uploads/2/Cartoon-WhatsApp-DP-44.jpg" class="img-thumbnail" alt="Profile Picture">
             <h4> @ViewBag.UserLoggedIn.FirstName @ViewBag.UserLoggedIn.LastName</h4>
             <a href="#" class="btn btn-primary">Edit Profile</a>
         </div>
 
-        <div class="dashleft bg">
-            <p>Information:</p>
-            <p>Patient Id:</p>
-            <p>Sex:</p>
-            <p>Allergies:</p>
-            <p>Height:</p>
-            <p>Medical History:</p>
+        <div class="card" style="width: 18rem;">
+            <div class="card-body bg">
+                <h5 class="card-title">Information</h5>
+                <partial name="_Allergies.MedHx" />
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="dashright col-8">
+
+    <div class="rowone flex">
+
+        <div class="dashboardactions bg text-align">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiHczCceUTYLTahtnMjozm7uUoSBMWP5BhwQ&usqp=CAU"
+                width="100" height="100" alt="Blood Pressure">
+            <p>Most Recent Blood Pressure: </p>
+        </div>
+
+        <div class="dashboardactions bg text-align">
+            <img src=" https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgZcSNvCEC5SIXJsjMV--AS__6qLXsqmWwRg&usqp=CAU"
+                width="100" height="100" alt="Weight">
+            <p>Weight: @ViewBag.PatientInfo.Weight</p>
+        </div>
+
+        <div class="dashboardactions bg text-align">
+            <img src=" https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDThmi9nYSNqXB9ecnDES1P8wwZlVwbeRr8CG8rMiLS2okPmIHX60aOdZcomxqTheiaAY&usqp=CAU"
+                width="100" height="100" alt="Weight">
+            <p>Next Appointment is with : ##Doctor##</p>
+            <p>Appointment Date and Time: ##Date## ##Time##</p>
         </div>
 
     </div>
 
+    <div class="rowtwo">
 
-
-    <div class="dashright col-8">
-
-        <div class="rowone flex">
-
-            <div class="dashboardactions bg text-align">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiHczCceUTYLTahtnMjozm7uUoSBMWP5BhwQ&usqp=CAU"
-                    width="100" height="100" alt="Blood Pressure">
-                <p>Most Recent Blood Pressure: </p>
-            </div>
-
-            <div class="dashboardactions bg text-align">
-                <img src=" https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgZcSNvCEC5SIXJsjMV--AS__6qLXsqmWwRg&usqp=CAU"
-                    width="100" height="100" alt="Weight">
-                <p>Weight: </p>
-            </div>
-
-            <div class="dashboardactions bg text-align">
-                <img src=" https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDThmi9nYSNqXB9ecnDES1P8wwZlVwbeRr8CG8rMiLS2okPmIHX60aOdZcomxqTheiaAY&usqp=CAU"
-                    width="100" height="100" alt="Weight">
-                <p>Next Appointment is with : ##Doctor##</p>
-                <p>Appointment Date and Time: ##Date## ##Time##</p>
-            </div>
-
-        </div>
-
-        <div class="rowtwo">
+        <div>
 
             <div>
-
-                <div>
-                    <h4>Medications</h4>
-                </div>
-                <div>
-                    <partial name="_PatientMeds" />
-                </div>
-
+                <h4>Medications</h4>
             </div>
-        </div>
+            <div>
+                <partial name="_PatientMeds" />
+            </div>
 
-        <div class="bg">
-            <p>Visit History:</p>
         </div>
     </div>
+
+    <div class="bg">
+        <h4>Visit History:</h4>
+        <partial name="_PatientAppt" />
+
+    </div>
+</div>
 </div>
