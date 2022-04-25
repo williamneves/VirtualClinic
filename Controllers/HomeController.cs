@@ -70,7 +70,12 @@ namespace VirtualClinic.Controllers
         [HttpGet("dashboardtest")]
         public IActionResult ProviderDashboard()
         {
+            // int ProviderId = (int) HttpContext.Session.GetInt32("ProviderId");
+
+            // ViewBag.ProviderInfo = dbContext.Providers.FirstOrDefault(p => p.ProviderId == ProviderId);
             return View();
         }
+
+
     }
 }
