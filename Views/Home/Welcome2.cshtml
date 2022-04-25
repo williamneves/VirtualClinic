@@ -1,0 +1,101 @@
+@{
+    ViewData["Title"] = "Welcome";
+}
+@model User
+
+<div class="text-center card p-3 my-5 shadow col-6 m-auto">
+    <h3>Welcome @ViewBag.UserLoggedIn.FirstName @ViewBag.UserLoggedIn.LastName !</h3>
+    <p>You email is @ViewBag.UserLoggedIn.Email</p>
+
+    <a asp-action="logout" asp-controller="Auth" class="w-50 m-auto btn btn-warning my-2">Logout</a>
+</div>
+
+<div class="mainbody">
+
+</div>
+<div class="headerdropdown">
+    <div class="btn-group">
+        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static"
+            aria-expanded="false">
+            Extra
+        </button>
+        <ul class="dropdown-menu dropdown-menu-lg-end">
+            <li><a class="dropdown-item" href="#">Settings</a></li>
+            <li><a class="dropdown-item" href="#">Edit Account Info</a></li>
+            <li><a class="dropdown-item" href="#">Log Out</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="welcometag">
+    <h3>Welcome @ViewBag.UserLoggedIn.FirstName!</h3>
+</div>
+
+
+<div class="dashboard row">
+    <div class="col-4">
+
+        <div class="dashleft bg text-align">
+
+            <img src="https://www.newsshare.in/wp-content/uploads/2/Cartoon-WhatsApp-DP-44.jpg" class="img-thumbnail" alt="Profile Picture">
+            <h4> @ViewBag.UserLoggedIn.FirstName @ViewBag.UserLoggedIn.LastName</h4>
+            <a href="#" class="btn btn-primary">Edit Profile</a>
+        </div>
+
+        <div class="card" style="width: 18rem;">
+            <div class="card-body bg">
+                <h5 class="card-title">Information</h5>
+                <partial name="_Allergies.MedHx" />
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="dashright col-8">
+
+    <div class="rowone flex">
+
+        <div class="dashboardactions bg text-align">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiHczCceUTYLTahtnMjozm7uUoSBMWP5BhwQ&usqp=CAU"
+                width="100" height="100" alt="Blood Pressure">
+            <p>Most Recent Blood Pressure: </p>
+        </div>
+
+        <div class="dashboardactions bg text-align">
+            <img src=" https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgZcSNvCEC5SIXJsjMV--AS__6qLXsqmWwRg&usqp=CAU"
+                width="100" height="100" alt="Weight">
+            <p>Weight: @ViewBag.PatientInfo.Weight</p>
+        </div>
+
+        <div class="dashboardactions bg text-align">
+            <img src=" https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDThmi9nYSNqXB9ecnDES1P8wwZlVwbeRr8CG8rMiLS2okPmIHX60aOdZcomxqTheiaAY&usqp=CAU"
+                width="100" height="100" alt="Weight">
+            <p>Next Appointment is with : ##Doctor##</p>
+            <p>Appointment Date and Time: ##Date## ##Time##</p>
+        </div>
+
+    </div>
+
+    <div class="rowtwo">
+
+        <div>
+
+            <div>
+                <h4>Medications</h4>
+            </div>
+            <div>
+                <partial name="_PatientMeds" />
+            </div>
+
+        </div>
+    </div>
+
+    <div class="bg">
+        <h4>Visit History:</h4>
+        <partial name="_PatientAppt" />
+
+    </div>
+</div>
+</div>

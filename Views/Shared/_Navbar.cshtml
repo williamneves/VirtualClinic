@@ -1,10 +1,12 @@
 @using Microsoft.AspNetCore.Http
 
-<nav class="navbar shadow-sm navbar-expand-md navbar-light border border-top-0 border-end-0 border-start-0 border-2 border-color-yellow-300 bg-white" aria-label="Fourth navbar example">
+<nav class="navbar shadow-sm navbar-expand-md navbar-light border border-top-0 border-end-0 border-start-0 border-2 border-color-yellow-300 bg-white"
+    aria-label="Fourth navbar example">
     <div class="container-md">
-        <i class='bx bx-menu' ></i>
+        <i class='bx bx-menu'></i>
         <a class="navbar-brand" asp-action="Index" asp-controller="Home">VirtualClinic</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample04"
+            aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -34,13 +36,14 @@
                     <a class="nav-link" href="#">Link</a>
                 </li>
                 @* <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</a>
-            <ul class="dropdown-menu" aria-labelledby="dropdown04">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-          </li> *@
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown"
+                    aria-expanded="false">Dropdown</a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdown04">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                    </li> *@
             </ul>
             @{
                 if (@ViewBag.UserLoggedIn != null)
@@ -49,7 +52,8 @@
                 }
                 else
                 {
-                    <button class="btn btn-outline-primary btn-sm" onclick="loginModal('registermodal')">Sign-in | Login</button>
+                    <button class="btn btn-outline-primary btn-sm" onclick="loginModal('registermodal')">Sign-in |
+                        Login</button>
                 }
             }
         </div>
@@ -59,23 +63,23 @@
 <script src="~/js/site.js" asp-append-version="true"></script>
 <script>
     document.querySelectorAll(".nav-link").forEach(link => {
-        if(link.getAttribute("href") === window.location.pathname) {
+        if (link.getAttribute("href") === window.location.pathname) {
             link.classList.add("active");
             link.classList.add("fw-bold");
         }
     });
-    
-      let arrow = document.querySelectorAll(".arrow");
-      for (var i = 0; i < arrow.length; i++) {
-        arrow[i].addEventListener("click", (e)=>{
-       let arrowParent = e.target.parentElement.parentElement;//selecting main parent of arrow
-       arrowParent.classList.toggle("showMenu");
+
+    let arrow = document.querySelectorAll(".arrow");
+    for (var i = 0; i < arrow.length; i++) {
+        arrow[i].addEventListener("click", (e) => {
+            let arrowParent = e.target.parentElement.parentElement;//selecting main parent of arrow
+            arrowParent.classList.toggle("showMenu");
         });
-      }
-      let sidebar = document.querySelector(".sidebar");
-      let sidebarBtn = document.querySelector(".bx-menu");
-      console.log(sidebarBtn);
-      sidebarBtn.addEventListener("click", ()=>{
+    }
+    let sidebar = document.querySelector(".sidebar");
+    let sidebarBtn = document.querySelector(".bx-menu");
+    console.log(sidebarBtn);
+    sidebarBtn.addEventListener("click", () => {
         sidebar.classList.toggle("close");
-      });
+    });
 </script>

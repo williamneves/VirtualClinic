@@ -44,10 +44,34 @@ namespace VirtualClinic.Controllers
             Console.WriteLine("User Logged In: ", HttpContext.Session.GetInt32("UserId"));
             
             ViewBag.UserLoggedIn = userInDb;
+
+            // Patient Medications
             ViewBag.PatientInfo = dbContext.Patients
             .Include(p => p.Medications)
             .FirstOrDefault(p => p.UserId == userInDb.UserId);
-        
+
+            // Patient Allergies
+            ViewBag.PatientAllergies = dbContext.Patients
+            .Include(p => p.Allergies)
+            .FirstOrDefault(p => p.UserId == userInDb.UserId);
+    
+            // Patient MedHx
+            ViewBag.PatientMedHx = dbContext.Patients
+            .Include(p => p.MedicalHistory)
+            .FirstOrDefault(p => p.UserId == userInDb.UserId);
+
+            // Patient Appointment
+            ViewBag.PatientAppt = dbContext.Patients
+            .Include(p => p.Appointments)
+            .ThenInclude(l => l.Provider)
+            .FirstOrDefault(p => p.UserId == userInDb.UserId);
+
+            // List of Appointments Ordered by Date
+            // List<Appointment> Appt = dbContext.Appointments
+            // .Where(p => p.PatientId == userInDb)
+            // .OrderBy()
+            // .ToList();
+            
 
             return View();
         }

@@ -1,26 +1,25 @@
 @model Patient
 
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Description</th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (ViewBag.PatientInfo.Medications.Count != 0)
-        {
-            foreach (var i in ViewBag.PatientInfo.Medications)
+@if (ViewBag.PatientInfo.Medications.Count != 0)
+{    
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var i in ViewBag.PatientInfo.Medications)
             {
                 <tr>
                     <td>@i.Name</td>
                     <td>@i.Description</td>
                 </tr>
             }
-        }
-        else
-        {
+        </tbody>
+        </table>
+        } else {
             <p>You currently do not have any medications listed. </p>
         }
-    </tbody>
-</table>
+
