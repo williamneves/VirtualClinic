@@ -24,9 +24,9 @@ namespace VirtualClinic.Controllers
 
         public IActionResult Index()
         {
-            var userInDb = dbContext.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"));
+            // var userInDb = dbContext.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"));
 
-            ViewBag.UserLoggedIn = userInDb;
+            // ViewBag.UserLoggedIn = userInDb;
             return View();
         }
 
@@ -64,5 +64,18 @@ namespace VirtualClinic.Controllers
         {
             return View(new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
         }
+
+
+        // TEST PROVIDER DASHBOARD
+        [HttpGet("dashboardtest")]
+        public IActionResult ProviderDashboard()
+        {
+            // int ProviderId = (int) HttpContext.Session.GetInt32("ProviderId");
+
+            // ViewBag.ProviderInfo = dbContext.Providers.FirstOrDefault(p => p.ProviderId == ProviderId);
+            return View();
+        }
+
+
     }
 }
