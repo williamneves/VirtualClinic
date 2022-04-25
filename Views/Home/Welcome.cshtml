@@ -3,12 +3,12 @@
     Layout = "_LayoutBS";
 }
 
-@* <div class="text-center card p-3 my-5 shadow col-6 m-auto"> *@
-@*     <h3>Welcome @ViewBag.UserLoggedIn.FirstName @ViewBag.UserLoggedIn.LastName !</h3> *@
-@*     <p>You email is @ViewBag.UserLoggedIn.Email</p> *@
-@* *@
-@*     <a asp-action="logout" asp-controller="Auth" class="w-50 m-auto btn btn-warning my-2">Logout</a> *@
-@* </div> *@
+<div class="text-center card p-3 my-5 shadow col-6 m-auto">
+    <h3>Welcome @ViewBag.UserLoggedIn.FirstName @ViewBag.UserLoggedIn.LastName !</h3>
+    <p>You email is @ViewBag.UserLoggedIn.Email</p>
+
+    <a asp-action="logout" asp-controller="Auth" class="w-50 m-auto btn btn-warning my-2">Logout</a>
+</div>
 
 <div class="mainbody">
 
