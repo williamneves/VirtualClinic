@@ -27,5 +27,8 @@ namespace VirtualClinic.Models
         // Relationship with Patient
         public int PatientId { get; set; }
         public Patient Patient { get; set; }
+        
+        // Relationship with Medical Notes
+        public List<MedicalNote> MedicalNotes { get; set; }
     }
 }

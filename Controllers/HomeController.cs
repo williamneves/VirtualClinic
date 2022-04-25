@@ -47,30 +47,44 @@ namespace VirtualClinic.Controllers
 
             // Patient Medications
             ViewBag.PatientInfo = dbContext.Patients
-            .Include(p => p.Medications)
-            .FirstOrDefault(p => p.UserId == userInDb.UserId);
+                                    .Include(p => p.Medications)
+                                    .FirstOrDefault(p => p.UserId == userInDb.UserId);
 
             // Patient Allergies
             ViewBag.PatientAllergies = dbContext.Patients
-            .Include(p => p.Allergies)
-            .FirstOrDefault(p => p.UserId == userInDb.UserId);
+                                        .Include(p => p.Allergies)
+                                        .FirstOrDefault(p => p.UserId == userInDb.UserId);
     
             // Patient MedHx
             ViewBag.PatientMedHx = dbContext.Patients
-            .Include(p => p.MedicalHistory)
-            .FirstOrDefault(p => p.UserId == userInDb.UserId);
+                                    .Include(p => p.MedicalHistory)
+                                    .FirstOrDefault(p => p.UserId == userInDb.UserId);
 
             // Patient Appointment
             ViewBag.PatientAppt = dbContext.Patients
-            .Include(p => p.Appointments)
-            .ThenInclude(l => l.Provider)
-            .FirstOrDefault(p => p.UserId == userInDb.UserId);
+                                    .Include(p => p.Appointments)
+                                    .ThenInclude(l => l.Provider)
+                                    .ThenInclude(u => u.User)
+                                    .Include(p => p.Appointments)
+                                    .ThenInclude(m => m.MedicalNotes)
+                                    .FirstOrDefault(p => p.UserId == userInDb.UserId);
 
-            // List of Appointments Ordered by Date
-            // List<Appointment> Appt = dbContext.Appointments
-            // .Where(p => p.PatientId == userInDb)
-            // .OrderBy()
-            // .ToList();
+            // // List of Appointments Ordered by Date
+            // ViewBag.AllAppointments = dbContext.Appointments
+            //     .Include(p => p.Patient)
+            //     .Include(p => p.Provider)
+            //     .Where(p => p.PatientId == userInDb.UserId)
+            //     .OrderBy(p => p.DateTime)
+            //     .ToList();
+            
+            // Next appointment (not in the past)
+            ViewBag.NextAppointment = dbContext.Appointments
+                .Include(p => p.Patient)
+                .Include(p => p.Provider)
+                .ThenInclude(u => u.User)
+                .Where(p => p.PatientId == userInDb.UserId && p.DateTime >= DateTime.Now.AddHours(-1))
+                .OrderBy(p => p.DateTime)
+                .FirstOrDefault();
             
 
             return View();
@@ -81,11 +95,11 @@ namespace VirtualClinic.Controllers
         {
             return View();
         }
-        [HttpGet("test2")]
-        public IActionResult Test2()
-        {
-            return View();
-        }
+        // [HttpGet("medicalnotes/{id}")]
+        // public IActionResult MedicalNotes(int id)
+        // {
+        //     return JsonResult();
+        // }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
@@ -102,6 +116,62 @@ namespace VirtualClinic.Controllers
 
             // ViewBag.ProviderInfo = dbContext.Providers.FirstOrDefault(p => p.ProviderId == ProviderId);
             return View();                      
+        }
+
+        // TEST PROVIDERDOCUMENATION
+
+        [HttpGet("providerdocumentation")]
+        public IActionResult ProviderDocumentation()
+        {
+            
+            var userInDb = dbContext.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"));
+            
+            Console.WriteLine("User Logged In: ", HttpContext.Session.GetInt32("UserId"));
+            
+            ViewBag.UserLoggedIn = userInDb;
+
+            // Patient Medications
+            ViewBag.PatientInfo = dbContext.Patients
+                                    .Include(p => p.Medications)
+                                    .FirstOrDefault(p => p.UserId == userInDb.UserId);
+
+            // Patient Allergies
+            ViewBag.PatientAllergies = dbContext.Patients
+                                        .Include(p => p.Allergies)
+                                        .FirstOrDefault(p => p.UserId == userInDb.UserId);
+    
+            // Patient MedHx
+            ViewBag.PatientMedHx = dbContext.Patients
+                                    .Include(p => p.MedicalHistory)
+                                    .FirstOrDefault(p => p.UserId == userInDb.UserId);
+
+            // Patient Appointment
+            ViewBag.PatientAppt = dbContext.Patients
+                                    .Include(p => p.Appointments)
+                                    .ThenInclude(l => l.Provider)
+                                    .ThenInclude(u => u.User)
+                                    .Include(p => p.Appointments)
+                                    .ThenInclude(m => m.MedicalNotes)
+                                    .FirstOrDefault(p => p.UserId == userInDb.UserId);
+
+            // // List of Appointments Ordered by Date
+            // ViewBag.AllAppointments = dbContext.Appointments
+            //     .Include(p => p.Patient)
+            //     .Include(p => p.Provider)
+            //     .Where(p => p.PatientId == userInDb.UserId)
+            //     .OrderBy(p => p.DateTime)
+            //     .ToList();
+            
+            // Next appointment (not in the past)
+            ViewBag.NextAppointment = dbContext.Appointments
+                .Include(p => p.Patient)
+                .Include(p => p.Provider)
+                .ThenInclude(u => u.User)
+                .Where(p => p.PatientId == userInDb.UserId && p.DateTime >= DateTime.Now.AddHours(-1))
+                .OrderBy(p => p.DateTime)
+                .FirstOrDefault();
+            
+            return View();
         }
 
 

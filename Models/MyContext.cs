@@ -19,5 +19,18 @@ namespace VirtualClinic.Models
 
         // Appointment Table
         public DbSet<Appointment> Appointments { get; set; }
+        
+        // Medical Notes
+        public DbSet<MedicalNote> MedicalNotes { get; set; }
+        
+        // Medications
+        public DbSet<Medication> Medications { get; set; }
+        
+        // Allergies
+        public DbSet<Allergy> Allergies { get; set; }
+        
+        // Medical History
+        public DbSet<MedicalHistory> MedicalHistories { get; set; }
+        
     }
 }

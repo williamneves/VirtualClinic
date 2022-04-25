@@ -15,7 +15,7 @@ namespace VirtualClinic.Models
         public string Diagnosis { get; set; }
 
         // Year of Diagnosis
-        public DateTime DateofDx { get; set; }
+        public string DateofDx { get; set; }
 
         
         // Patient Foreign Key and Navigation Property

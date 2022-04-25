@@ -6,22 +6,28 @@
     {
         <table class="table">
         <thead>
-            <tr>
-                <th scope="col">Date of Visit</th>
-                <th scope="col"> with</th>
-            </tr>
+        <tr>
+            <th scope="col">#ID</th>
+            <th scope="col">Date of Visit</th>
+            <th scope="col">Summary</th>
+            <th scope="col"> with</th>
+        </tr>
         </thead>
         <tbody> 
             @foreach (var i in ViewBag.PatientAppt.Appointments)
             {
                 <tr>
-                    <td>@i.DateTime.Date</td>
-                    <td>Dr. @i.Provider.FirstName @i.Provider.LastName</td>
+                    <td>@i.AppointmentId</td>
+                    <td>@i.DateTime.ToString("MM/dd/yyyy hh:mm tt")</td>
+                    <td>@i.MedicalNotes[0].Summary</td>
+                    <td>Dr. @i.Provider.User.PreferredName</td>
                 </tr>
             }    
         </tbody>
         </table>
-    } else{
+    } 
+    else
+    {
         <p>You do not have any previous visits. </p>
     }
 
