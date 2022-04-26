@@ -244,7 +244,6 @@ namespace VirtualClinic.Controllers
             
             return View();
         }
-
-
+        
     }
 }
