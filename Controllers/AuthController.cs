@@ -66,7 +66,7 @@ namespace VirtualClinic.Controllers
 
                 if (userInDb.userType == "provider")
                 {
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("ProviderDashboard", "Home");
                 }
 
                 return RedirectToAction("Welcome", "Home");
@@ -185,7 +185,7 @@ namespace VirtualClinic.Controllers
 
                 ViewBag.UserLoggedIn = newUser;
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("ProviderDashboard", "Home");
             }
 
             // Not Valid ModelState
