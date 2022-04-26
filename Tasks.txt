@@ -1,14 +1,42 @@
 William's Tasks 
-By Monday Morning:
-- Login and Register Page - Done
-- NavBar
+-Login and Register: 
+    - Need Provider
+        -- need a pin code to register as a doctor
+
+- create an appt page. 
 
 
 
 Theresa's Tasks
-By Monday Morning:
-- Dashboard
-- 
-Notes: 
-- HomeController- is session statement (line 27)
--CANNOT ADD MED DUE TO ForeignKEY
+    - Create Provider Dashboard
+    
+    -view a patient page. 
+
+    -view provider dash
+
+    -edit profile for patient
+
+
+
+What needs to be done: 
+
+Login and Register: 
+    - Need Provider
+        -- need a pin code to register as a doctor
+    * Admin Login
+
+Provider Dashboard: 
+    - Create Provider Dashboard
+
+    - Create an appt page
+
+    - Page view patient --- link -- read only patient Dashboard
+
+    - Attend an appt page --- with the link to the provider documentation
+
+    -Edit profile
+
+Patient Dashboard: 
+    - edit profile- add button
+
+    - schedule an appt. 
