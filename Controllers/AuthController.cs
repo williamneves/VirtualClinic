@@ -64,6 +64,11 @@ namespace VirtualClinic.Controllers
 
                 ViewBag.UserLoggedIn = userInDb;
 
+                if (userInDb.userType == "provider")
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+
                 return RedirectToAction("Welcome", "Home");
             }
 
@@ -82,6 +87,11 @@ namespace VirtualClinic.Controllers
 
         [HttpGet("register")]
         public IActionResult Register()
+        {
+            return View();
+        }
+        [HttpGet("registerprovider")]
+        public IActionResult RegisterProvider()
         {
             return View();
         }
@@ -134,6 +144,53 @@ namespace VirtualClinic.Controllers
             // Not Valid ModelState
             TempData["LoginError"] = "modelstateinvalid";
             return View("Register");
+        }
+        
+        [HttpPost("RegisterUserProvider")]
+        public IActionResult RegisterUserProvider(User newUser)
+        {
+            // Set userType to Provider
+            newUser.userType = "provider";
+            
+            // Check initial ModelState
+            if (ModelState.IsValid)
+            {
+                // If inital ModelState is valid, query for a user with provided email
+                if (dbContext.Users.Any(u => u.Email == newUser.Email))
+                {
+                    // Email already exists
+                    TempData["LoginError"] = "emailinuse";
+                    ModelState.AddModelError("Email", "Email already in use!");
+                    return View("RegisterProvider");
+                }
+
+                // Initialize hasher object
+                PasswordHasher<User> Hasher = new PasswordHasher<User>();
+
+                // Hash password
+                newUser.Password = Hasher.HashPassword(newUser, newUser.Password);
+
+                // Save new user to database
+                dbContext.Add(newUser);
+                dbContext.SaveChanges();
+                
+                // Attach new patient to the user
+                Provider newProvider = new Provider();
+                newProvider.UserId = newUser.UserId;
+                dbContext.Add(newProvider);
+                dbContext.SaveChanges();
+
+                // Save new user to session
+                HttpContext.Session.SetInt32("UserId", newUser.UserId);
+
+                ViewBag.UserLoggedIn = newUser;
+
+                return RedirectToAction("Index", "Home");
+            }
+
+            // Not Valid ModelState
+            TempData["LoginError"] = "modelstateinvalid";
+            return View("RegisterProvider");
         }
 
 
