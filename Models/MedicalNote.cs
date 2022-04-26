@@ -14,7 +14,7 @@ namespace VirtualClinic.Models
 
         // History of Present Illness
         public int MedicalNoteId { get; set; }
-        [Required(ErrorMessage = "*Required")]
+        // [Required(ErrorMessage = "*Required")]
         public string HPI { get; set; }
 
         // Physical Exam
@@ -22,11 +22,11 @@ namespace VirtualClinic.Models
         public string PE { get; set; }
         
         // Summary of Present Illness
-        [Required(ErrorMessage = "*Required")]
+        // [Required(ErrorMessage = "*Required")]
         public string Summary { get; set; }
         
         // Assessment and Plan
-        [Required(ErrorMessage = "*Required")]
+        // [Required(ErrorMessage = "*Required")]
         public string AP { get; set; }
         
         // Patient Foreign Key and Navigation Property
