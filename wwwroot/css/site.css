@@ -71,3 +71,8 @@ a.navbar-brand {
   -webkit-animation: ease-in-out 1s;
   animation: ease-in-out 1s;
 }
+textarea:focus-visible.form-control-plaintext {
+  outline:0px !important;
+  -webkit-appearance:none;
+  box-shadow: none !important;
+}

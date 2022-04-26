@@ -95,6 +95,49 @@ namespace VirtualClinic.Controllers
         {
             return View();
         }
+        // Post Medical Notes Model
+        [HttpPost("add-medical-notes-autosave")]
+        public IActionResult AddMedicalNotesAutoSave(MedicalNote newNote)
+        {
+            Console.WriteLine("\n###############\n");
+            Console.WriteLine("New Medical Note: ");
+            Console.WriteLine(newNote.PatientId);
+            Console.WriteLine(newNote.AP);
+            // Console.WriteLine(;
+            // Console.WriteLine(HPI);
+            Console.WriteLine("\n###############\n");
+                // dbContext.MedicalNotes.Add(newMedicalNote);
+                // dbContext.SaveChanges();
+                
+            var newNoteInDb = dbContext.MedicalNotes
+                .FirstOrDefault(m => m.PatientId == newNote.PatientId 
+                                     && m.ProviderId == newNote.ProviderId
+                                     && m.AppointmentId == newNote.AppointmentId);
+            if (newNoteInDb != null)
+            {
+                newNoteInDb.HPI = newNote.HPI;
+                newNoteInDb.PE = newNote.PE;
+                newNoteInDb.Summary = newNote.Summary;
+                newNoteInDb.AP = newNote.AP;
+                
+                // save changes
+                dbContext.SaveChanges();
+                
+                var response = "Auto-updated Medical Notes";
+            
+                return Json(response);
+            }
+            else
+            {
+                dbContext.MedicalNotes.Add(newNote);
+                dbContext.SaveChanges();
+                
+                var response = "Added new Medical Notes";
+            
+                return Json(response);
+            }
+
+        }
         
         // Json veiw for Medical Notes
         [HttpGet("json/medicalnotes/{id}")]
@@ -181,6 +224,23 @@ namespace VirtualClinic.Controllers
                 .Where(p => p.PatientId == userInDb.UserId && p.DateTime >= DateTime.Now.AddHours(-1))
                 .OrderBy(p => p.DateTime)
                 .FirstOrDefault();
+            
+            // Appointment with Id 1 and all includes
+            ViewBag.Appointment1 = dbContext.Appointments
+                .Include(p => p.Patient)
+                .Include(p => p.Provider)
+                .ThenInclude(u => u.User)
+                .Include(p => p.MedicalNotes)
+                .FirstOrDefault(p => p.AppointmentId == 1);
+            
+            ViewBag.MedicalNote1 = dbContext.MedicalNotes
+                .FirstOrDefault(m => m.PatientId == 1 
+                                     && m.ProviderId == 1
+                                     && m.AppointmentId == 1);
+            Console.WriteLine(ViewBag.MedicalNote1.HPI);
+            Console.WriteLine(ViewBag.MedicalNote1.PE);
+            Console.WriteLine(ViewBag.MedicalNote1.Summary);
+            Console.WriteLine(ViewBag.MedicalNote1.AP);
             
             return View();
         }
