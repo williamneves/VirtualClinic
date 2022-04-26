@@ -170,13 +170,13 @@ namespace VirtualClinic.Controllers
         }
 
 
-        // TEST PROVIDER DASHBOARD
-        [HttpGet("dashboardtest")]
+        // PROVIDER DASHBOARD
+        [HttpGet("providerdashboard")]
         public IActionResult ProviderDashboard()
         {
-            // int ProviderId = (int) HttpContext.Session.GetInt32("ProviderId");
+            int UserId = (int) HttpContext.Session.GetInt32("UserId");
 
-            // ViewBag.ProviderInfo = dbContext.Providers.FirstOrDefault(p => p.ProviderId == ProviderId);
+            ViewBag.userInDb = dbContext.Users.FirstOrDefault(p => p.UserId == UserId);
             return View();                      
         }
 
