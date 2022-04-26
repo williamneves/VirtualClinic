@@ -171,13 +171,13 @@ namespace VirtualClinic.Controllers
         }
 
 
-        // TEST PROVIDER DASHBOARD
-        [HttpGet("dashboardtest")]
+        // PROVIDER DASHBOARD
+        [HttpGet("providerdashboard")]
         public IActionResult ProviderDashboard()
         {
-            // int ProviderId = (int) HttpContext.Session.GetInt32("ProviderId");
+            int UserId = (int) HttpContext.Session.GetInt32("UserId");
 
-            // ViewBag.ProviderInfo = dbContext.Providers.FirstOrDefault(p => p.ProviderId == ProviderId);
+            ViewBag.userInDb = dbContext.Users.FirstOrDefault(p => p.UserId == UserId);
             return View();                      
         }
 
@@ -244,23 +244,17 @@ namespace VirtualClinic.Controllers
             
             
             
+
             ViewBag.MedicalNote1Exists = dbContext.MedicalNotes
                 .Any(m => m.PatientId == 1 
                                      && m.ProviderId == 1
                                      && m.AppointmentId == 1);
-            ViewBag.MedicalNote2Exists = dbContext.MedicalNotes
-                .Any(m => m.PatientId == 4 
-                          && m.ProviderId == 1
-                          && m.AppointmentId == 1);
+
             ViewBag.MedicalNote1 = dbContext.MedicalNotes
                 .FirstOrDefault(m => m.PatientId == 1 
                           && m.ProviderId == 1
                           && m.AppointmentId == 1);
-            ViewBag.MedicalNote3 = dbContext.MedicalNotes
-                .FirstOrDefault(m => m.PatientId == 4 
-                                     && m.ProviderId == 1
-                                     && m.AppointmentId == 1);
-            
+
             
             return View();
         }

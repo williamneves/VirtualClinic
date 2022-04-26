@@ -58,8 +58,8 @@
                 <button type="button" class="btn btn-outline-primary col-sm-9" disabled>
                     <small>“Books are a uniquely portable magic.”</small>
                 </button>
-                <button type="button" class="btn btn-primary col-sm-3 dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static"
-                        aria-expanded="false">
+                <button type="button" class="btn btn-primary col-sm-3 dropdown-toggle" data-bs-toggle="dropdown"
+                    data-bs-display="static" aria-expanded="false">
                     Extra
                 </button>
                 <ul class="dropdown-menu dropdown-menu-lg-end">
@@ -107,15 +107,25 @@
                     <div class="card-body bg-gray-400 p-2 text-center">
                         <h6 class="card-title">Next Appointment:</h6>
                         <hr class="my-2 mx-auto">
-                        <p class="fs-3">@ViewBag.NextAppointment.DateTime.ToString("MMMM dd") at @ViewBag.NextAppointment.DateTime.ToString("h:mm tt")</p>
-                        <hr class="my-2 mx-auto">
-                        <small class="text-muted fst-italic">Dr. @ViewBag.NextAppointment.Provider.User.PreferredName</small>
+
+                        @if(ViewBag.NextAppointment != null)
+                        {
+                            <p class="fs-3"> @ViewBag.NextAppointment.DateTime.ToString("MMMM dd") at
+                                @ViewBag.NextAppointment.DateTime.ToString("h:mm tt")</p>
+                            <hr class="my-2 mx-auto">
+                            <small class="text-muted fst-italic">Dr.
+                                @ViewBag.NextAppointment.Provider.User.PreferredName</small>
+                        }
+                        else
+                        {
+                            <p class="fs-3"> You have No Upcoming Appointments Scheduled</p>
+                        }
                     </div>
 
                 </div>
             </div>
         </div>
-        
+
 
         <div class="rowtwo">
 
@@ -140,9 +150,9 @@
             </div>
             
         </div>
-        
-        
-        <partial name="_MedicalNotesAcc"/>
-        
+
+
+        <partial name="_MedicalNotesAcc" />
+
     </div>
 </div>

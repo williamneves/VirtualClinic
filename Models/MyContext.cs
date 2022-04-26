@@ -25,6 +25,7 @@ namespace VirtualClinic.Models
         
         // Medications
         public DbSet<Medication> Medications { get; set; }
+        public DbSet<ReportedMedication> ReportedMedications { get; set; }
         
         // Allergies
         public DbSet<Allergy> Allergies { get; set; }

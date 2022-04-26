@@ -1,151 +1,412 @@
+@{
+    ViewData["Title"] = "Welcome";
+    Layout = "_LayoutBS";
+}
+
 <div class="mainbody">
 
 </div>
-<div class="headerdropdown">
-    <div class="btn-group">
-        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static"
-            aria-expanded="false">
-            Extra
-        </button>
-        <ul class="dropdown-menu dropdown-menu-lg-end">
-            <li><a class="dropdown-item" href="#">Settings</a></li>
-            <li><a class="dropdown-item" href="#">Edit Account Info</a></li>
-            <li><a class="dropdown-item" href="#">Log Out</a></li>
-        </ul>
-    </div>
-</div>
+<div class="row">
+    <div class="col-12 col-sm-4">
 
-<div class="welcometag">
-    <h3>Welcome </h3>
-</div>
+        <div class="sticky-top" style="top: 4rem; z-index: 1">
 
+            <div class="card col-sm-10 col-10 mx-auto mb-4 bg-gray-500 rounded-3">
 
-<div class="dashboard row">
-    <div class="col-4">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRptIbvFgU67rEonXt8DIq-1UB6FSQcemQtdA&usqp=CAU"
+                    alt="Profile Picture" class="rounded-circle mx-auto border border-5 shadow border-white w-50 my-2"
+                    alt="Profile Picture">
+                @* <h4 class="my-2 text-center"> @ViewBag.UserLoggedIn.FirstName @ViewBag.UserLoggedIn.LastName</h4> *@
+                <h4 class="my-2 text-center"> ## PROVDER NAME ##</h4>
+                <a href="/edit/patientprofile" class="btn btn-sm btn-outline-light col-8 mx-auto my-3"><i
+                        class="bi bi-gear"></i> Edit Profile</a>
+            </div>
 
-        <div class="dashleft bg text-align">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRptIbvFgU67rEonXt8DIq-1UB6FSQcemQtdA&usqp=CAU" alt="Profile Picture">
-            <p>##FirstName LastName##</p>
-            <a href="#" class="btn btn-primary">Edit Profile</a>
+            <div class="card col-sm-10 col-10 mx-auto mb-4 bg-gray-100 rounded-3">
+                <div class="card-header border-bottom bg-gray-500">
+                    <span class="card-title fw-bold"></span>
+                </div>
+                <div class="card-body p-0">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item bg-gray-100">Number of Appointments Today: 35</li>
+                        <li class="list-group-item bg-gray-100">Links to References</li>
+                        <li class="list-group-item bg-gray-100 p-0 m-0">
+                            @* <partial name="_Allergies-MedHx" /> *@
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
 
-        <div class="dashleft bg">
-            <p>Number of Appointments Today: ##num##</p>
-            <p>Forms Available to Send:</p>
-            <div class="line"></div>
-            <p>Other Links:</p>
-            <div class="line"></div>
-        </div>
 
     </div>
 
-
-    <div class="dashright col-8">
-
-        <div class="rowone flex">
-
-            <div class="dashboardactions bg text-align">
-                <img src="#" alt="Labs">
-                <p>Labs To Review</p>
+    <div class="col-12 col-sm-8">
+        <div class="col-sm-12">
+            <div class="btn-group w-100">
+                <button type="button" class="btn btn-outline-primary col-sm-9" disabled>
+                    <small>“Books are a uniquely portable magic.”</small>
+                </button>
+                <button type="button" class="btn btn-primary col-sm-3 dropdown-toggle" data-bs-toggle="dropdown"
+                    data-bs-display="static" aria-expanded="false">
+                    Extra
+                </button>
+                <ul class="dropdown-menu dropdown-menu-lg-end">
+                    <li>
+                        <a class="dropdown-item" href="#">Settings</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="#">Edit Account Info</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="#">Log Out</a>
+                    </li>
+                </ul>
             </div>
-
-            <div class="dashboardactions bg text-align">
-                <img src="#" alt="Messages">
-                <p>Messages</p>
-            </div>
-
-            <div class="dashboardactions bg text-align">
-                <img src="#" alt="Next Appt">
-                <p>Next Appointment is with : ##Patient##</p>
-                <p>Appointment Date and Time: ##Date## ##Time##</p>
-            </div>
-
         </div>
+        <div class="col-sm-12 row me-0 mt-3 justify-content-between">
+            <div class="col-sm-4 col-md-12 col-lg-4">
+                <div class="card">
+
+                    <div class="card-body bg-gray-400 p-2 text-center">
+                        <h6 class="card-title"> Labs to Review:</h6>
+                        <hr class="my-2 mx-auto">
+                        <p class="display-6">3</p>
+                        <hr class="my-2 mx-auto">
+                        <small class="text-muted"></small>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-sm-4 col-md-12 col-lg-4">
+                <div class="card">
+
+                    <div class="card-body bg-gray-400 p-2 text-center">
+                        <h6 class="card-title">Messages:</h6>
+                        <hr class="my-2 mx-auto">
+                        <p class="display-6">5</p>
+                        <hr class="my-2 mx-auto">
+                        <small class="text-muted"></small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 col-md-12 col-lg-4">
+                <div class="card">
+
+                    <div class="card-body bg-gray-400 p-2 text-center">
+                        <h6 class="card-title">Next Appointment:</h6>
+                        <hr class="my-2 mx-auto">
+
+                        @if (ViewBag.NextAppointment != null)
+                        {
+                            <p class="fs-3"> @ViewBag.NextAppointment.DateTime.ToString("MMMM dd") at
+                                @ViewBag.NextAppointment.DateTime.ToString("h:mm tt")</p>
+                            <hr class="my-2 mx-auto">
+                            <small class="text-muted fst-italic">Dr.
+                                @ViewBag.NextAppointment.Provider.User.PreferredName</small>
+                        }
+                        else
+                        {
+                            <p class="fs-3"> You have No Upcoming Appointments Scheduled</p>
+                        }
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
 
         <div class="rowtwo">
 
             <div>
+                <h4>Appointment Calendar</h4>
+            </div>
+            @* CALENDAR TABS *@
+            <div>
+                <ul class="nav nav-tabs" id="myTab">
+                    <li class="active"><a href="#nav-today" data-toggle="tab"
+                            class="nav-link maintext">@DateTime.Today.ToString("dddd, MMMM dd yyyy")</a></li>
+                    <li><a href="#nav-tomorrow" data-toggle="tab" class="nav-link maintext">
+                            @DateTime.Today.AddDays(1).ToString("dddd, MMMM dd yyyy")</a></li>
+                    <li><a href="#nav-t2" data-toggle="tab"
+                            class="nav-link maintext">@DateTime.Today.AddDays(2).ToString("dddd, MMMM dd yyyy")</a></li>
+                    <li><a href="#nav-t3" data-toggle="tab"
+                            class="nav-link maintext">@DateTime.Today.AddDays(3).ToString("dddd, MMMM dd yyyy")</a></li>
+                    <li><a href="#nav-t4" data-toggle="tab"
+                            class="nav-link maintext">@DateTime.Today.AddDays(4).ToString("dddd, MMMM dd yyyy")</a></li>
+                    <li><a href="#nav-t5" data-toggle="tab"
+                            class="nav-link maintext">@DateTime.Today.AddDays(5).ToString("dddd, MMMM dd yyyy")</a></li>
+                    <li><a href="#nav-t6" data-toggle="tab"
+                            class="nav-link maintext">@DateTime.Today.AddDays(6).ToString("dddd, MMMM dd yyyy")</a></li>
+                </ul>
 
-                <div>
-                    <h4>Appointment Calendar</h4>
+                @* dbContext ==> where (DateTime.Today.AddDays(2 + (7 * Count))) *@
 
-                    <div class="dropdown-menu">
-                        <partial name="_AddAppt" />
-                    </div>
-                </div>
 
-                <div class="flex">
+            </div>
+            @* CALENDAR TABS *@
 
-                    <div class="card" style="width: 10rem;">
-                        <div class="card-body">
-                            <h5 class="card-title">Monday</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
-                                of the card's content.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
-
-                    <div class="card" style="width: 10rem;">
-                        <div class="card-body">
-                            <h5 class="card-title">Tuesday</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
-                                of the card's content.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
-
-                    <div class="card" style="width: 10rem;">
-                        <div class="card-body">
-                            <h5 class="card-title">Wednesday</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
-                                of the card's content.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
-
-                    <div class="card" style="width: 10rem;">
-                        <div class="card-body">
-                            <h5 class="card-title">Thursday</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
-                                of the card's content.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
-
-                    <div class="card" style="width: 10rem;">
-                        <div class="card-body">
-                            <h5 class="card-title">Friday</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
-                                of the card's content.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
-
-                    @* <div class="card" style="width: 10rem;">
-                        <div class="card-body">
-                            <h5 class="card-title">Satuday</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
-                                of the card's content.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
-
-                    <div class="card" style="width: 10rem;">
-                        <div class="card-body">
-                            <h5 class="card-title">Sunday</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
-                                of the card's content.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div> *@
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade" id="nav-today" role="tabpanel" aria-labelledby="nav-today-tab">
+                    <table class="maintext table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Patient Name</th>
+                                <th scope="col">Duration of Appointment</th>
+                                <th scope="col">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (ViewBag.AppointmentToday != null)
+                            {
+                                @foreach (var i in ViewBag.AppointmentToday)
+                                {
+                                    <tr>
+                                        <td scope="col">i </td>
+                                        <td>i.User.FirstName i.User.LastName</td>
+                                        <td>i.Duration minutes</td>
+                                        <td>i.Status </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
 
                 </div>
+
+                <div class="tab-pane fade" id="nav-tomorrow" role="tabpanel" aria-labelledby="nav-tomorrow-tab">
+                    <table class="maintext table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Patient Name</th>
+                                <th scope="col">Duration of Appointment</th>
+                                <th scope="col">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @* @if(ViewBag.AppointmentToday){
+                                @foreach (var i in ViewBag.AppointmentToday)
+                                { *@
+                            <tr>
+                                <td scope="col">i </td>
+                                <td>i.User.FirstName i.User.LastName</td>
+                                <td>i.Duration minutes</td>
+                                <td>i.Status </td>
+                            </tr>
+                            @* }
+                                } *@
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="tab-pane fade" id="nav-t2" role="tabpanel" aria-labelledby="nav-t2-tab">
+                    <table class="maintext table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">t2</th>
+                                <th scope="col">Patient Name</th>
+                                <th scope="col">Duration of Appointment</th>
+                                <th scope="col">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @* @if(ViewBag.AppointmentToday){
+                                @foreach (var i in ViewBag.AppointmentToday)
+                                { *@
+                            <tr>
+                                <td scope="col">i </td>
+                                <td>i.User.FirstName i.User.LastName</td>
+                                <td>i.Duration minutes</td>
+                                <td>i.Status </td>
+                            </tr>
+                            @* }
+                                } *@
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="tab-pane fade" id="nav-t3" role="tabpanel" aria-labelledby="nav-t3-tab">
+                    <table class="maintext table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">#t3</th>
+                                <th scope="col">Patient Name</th>
+                                <th scope="col">Duration of Appointment</th>
+                                <th scope="col">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @* @if(ViewBag.AppointmentToday){
+                                @foreach (var i in ViewBag.AppointmentToday)
+                                { *@
+                            <tr>
+                                <td scope="col">i </td>
+                                <td>i.User.FirstName i.User.LastName</td>
+                                <td>i.Duration minutes</td>
+                                <td>i.Status </td>
+                            </tr>
+                            @* }
+                                } *@
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="tab-pane fade" id="nav-t4" role="tabpanel" aria-labelledby="nav-t4-tab">
+                    <table class="maintext table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Patient Name</th>
+                                <th scope="col">Duration of Appointment</th>
+                                <th scope="col">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @* @if(ViewBag.AppointmentToday){
+                                @foreach (var i in ViewBag.AppointmentToday)
+                                { *@
+                            <tr>
+                                <td scope="col">i </td>
+                                <td>i.User.FirstName i.User.LastName</td>
+                                <td>i.Duration minutes</td>
+                                <td>i.Status </td>
+                            </tr>
+                            @* }
+                                } *@
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="tab-pane fade" id="nav-t5" role="tabpanel" aria-labelledby="nav-t5-tab">
+                    <table class="maintext table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Patient Name</th>
+                                <th scope="col">Duration of Appointment</th>
+                                <th scope="col">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @* @if(ViewBag.AppointmentToday){
+                                @foreach (var i in ViewBag.AppointmentToday)
+                                { *@
+                            <tr>
+                                <td scope="col">i </td>
+                                <td>i.User.FirstName i.User.LastName</td>
+                                <td>i.Duration minutes</td>
+                                <td>i.Status </td>
+                            </tr>
+                            @* }
+                                } *@
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="tab-pane fade" id="nav-t6" role="tabpanel" aria-labelledby="nav-t6-tab">test6
+                    <table class="maintext table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Patient Name</th>
+                                <th scope="col">Duration of Appointment</th>
+                                <th scope="col">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @* @if(ViewBag.AppointmentToday){
+                                @foreach (var i in ViewBag.AppointmentToday)
+                                { *@
+                            <tr>
+                                <td scope="col">i </td>
+                                <td>i.User.FirstName i.User.LastName</td>
+                                <td>i.Duration minutes</td>
+                                <td>i.Status </td>
+                            </tr>
+                            @* }
+                                } *@
+                        </tbody>
+                    </table>
+                </div>
+
             </div>
 
-            <div class="bg">
-                <p>Unsigned Notes:</p>
+
+            @*
+                <div class="card">
+                <div class="card-header bg-gray-500">
+                <h5 class="mb-0">Patient Information:</h5>
+                </div>
+                </div> *@
+        </div>
+    </div>
+
+    @* Canvas *@
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <p>Patient Info</p>
+        </div>
+
+        <div class="offcanvas-body">
+            <div class="card col-sm-10 col-10 mx-auto mb-4 bg-gray-500 rounded-3">
+
+                <img src="https://www.newsshare.in/wp-content/uploads/2/Cartoon-WhatsApp-DP-44.jpg"
+                    class="rounded-circle mx-auto border border-5 shadow border-white w-50 my-2" alt="Profile Picture">
+                <h4 class="my-2 text-center"> ViewBag.UserLoggedIn.FirstName ViewBag.UserLoggedIn.LastName</h4>
+                <p class="my-2 text-center">Preferred Pronouns: ViewBag.UserLoggedIn.Pronouns</p>
+            </div>
+
+            <div class="card col-sm-10 col-10 mx-auto mb-4 bg-gray-100 rounded-3">
+                <div class="card-header border-bottom bg-gray-500">
+                    <span class="card-title fw-bold">Medical Information:</span>
+                </div>
+                <div class="card-body p-0">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item bg-gray-100">Sex:</li>
+                        <li class="list-group-item bg-gray-100">Height:</li>
+                        <li class="list-group-item bg-gray-100">Weight:</li>
+                        <li class="list-group-item bg-gray-100 p-0 m-0">
+                            @* <partial name="_Allergies-MedHx" /> *@
+                        </li>
+                        <li class="list-group-item bg-gray-100 p-0 m-0">
+                            <div class="accordion accordion-flush" id="accordionPanelsStayOpenExample">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                                        <button class="accordion-button py-2 bg-gray-100 collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne"
+                                            aria-expanded="false" aria-controls="panelsStayOpen-collapseOne">
+                                            Allergies:
+                                        </button>
+                                    </h2>
+                                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse"
+                                        aria-labelledby="panelsStayOpen-headingOne">
+                                        <div class="accordion-body p-0">
+                                            <ul class="list-group list-group-flush">
+                                                @if (@ViewBag.PatientAllergies.Allergies.Count != 0)
+                                                {
+                                                    foreach (var i in ViewBag.PatientAllergies.Allergies)
+                                                    {
+                                                        <li class="list-group-item"><b>@i.Name</b> | Type of Reaction:
+                                                            <em>@i.Reaction</em></li>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <li class="list-group-item">No Known Allergies</li>
+                                                }
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                        </li>
+
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
+</div>
+</div>
