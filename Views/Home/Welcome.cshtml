@@ -41,12 +41,10 @@
                 <div class="card-body p-0">
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item bg-gray-100">Sex:</li>
-                        <li class="list-group-item bg-gray-200">Allergies:
-
+                        <li class="list-group-item bg-gray-100">Height:</li>
+                        <li class="list-group-item bg-gray-100 p-0 m-0">
                             <partial name="_Allergies-MedHx" />
                         </li>
-                        <li class="list-group-item bg-gray-100">Height:</li>
-                        <li class="list-group-item bg-gray-200">Medical History:</li>
                     </ul>
                 </div>
             </div>
@@ -143,9 +141,14 @@
             </div>
         </div>
 
-        <div class="bg">
-            <p>Visit History:</p>
-            <partial name="_PatientAppt" />
+        <div class="card">
+            <div class="card-header bg-gray-500">
+                <h5 class="mb-0">Visit History:</h5>
+            </div>
+            <div class="card-body p-0">
+                <partial name="_PatientAppt"/>
+            </div>
+            
         </div>
 
 

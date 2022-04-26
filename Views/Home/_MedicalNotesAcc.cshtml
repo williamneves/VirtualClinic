@@ -1,68 +1,75 @@
 ﻿@model MedicalNote
 
 <div class="card rounded-3 my-5" id="medical-notes-card">
-    <div class="card-header">
-        <span class="card-title">#<span id="apptId-card-mn-ajax" class="fw-bold"></span> - <span id="apptDate-card-mn-ajax"></span></span>
+    <div class="card-header bg-gray-500">
+        <h5 class="mb-0">Medical Notes:</h5>
+        <hr class="dropdown-divider"/>
+        <small>Visit #<span id="apptId-card-mn-ajax" class="fw-bold"></span> | <span id="apptDate-card-mn-ajax"></span></small>
     </div>
+    
+    @* <div class="card-title py-3"> *@
+    @*     $1$ #<span id="apptId-card-mn-ajax" class="fw-bold"></span> - <span id="apptDate-card-mn-ajax"></span> #1# *@
+    @* </div> *@
     <div class="accordion accordion-flush" id="accordionMedicalNotes" style="display: none;">
         <div class="accordion-item">
             <h2 class="accordion-header" id="First-Accordion-aHPI">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#First-Accordion-bHPI" aria-expanded="true" aria-controls="First-Accordion-bHPI">
+                <button class="accordion-button py-3" type="button" data-bs-toggle="collapse" data-bs-target="#First-Accordion-bHPI" aria-expanded="true" aria-controls="First-Accordion-bHPI">
                     History of Present Illness
                 </button>
             </h2>
             <div id="First-Accordion-bHPI" class="accordion-collapse collapse show" aria-labelledby="First-Accordion-aHPI">
                 <div class="accordion-body">
-                    <textarea class="form-control-plaintext" rows="8" readonly  id="First-Accordion-aHPI-ajax"></textarea>
+                    @* <textarea class="form-control-plaintext" rows="10" readonly  id="First-Accordion-aHPI-ajax"></textarea> *@
+                    <div style="white-space: pre;"  id="First-Accordion-aHPI-ajax" class="border-start ps-3 border-secondary border-4"></div>
                 </div>
             </div>
         </div>
         <div class="accordion-item">
             <h2 class="accordion-header" id="Second-Accordion-aPE">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#Second-Accordion-bPE" aria-expanded="false" aria-controls="Second-Accordion-bPE">
+                <button class="accordion-button py-3" type="button" data-bs-toggle="collapse" data-bs-target="#Second-Accordion-bPE" aria-expanded="true" aria-controls="Second-Accordion-bPE">
                     Physical Exam
                 </button>
             </h2>
-            <div id="Second-Accordion-bPE" class="accordion-collapse collapse" aria-labelledby="Second-Accordion-aPE">
+            <div id="Second-Accordion-bPE" class="accordion-collapse collapse show" aria-labelledby="Second-Accordion-aPE">
                 <div class="accordion-body">
-                    <textarea class="form-control-plaintext" rows="8" readonly  id="First-Accordion-aPE-ajax"></textarea>
+                    <div style="white-space: pre;"  id="First-Accordion-aPE-ajax" class="border-start ps-3 border-secondary border-4"></div>
                 </div>
             </div>
         </div>
         <div class="accordion-item">
             <h2 class="accordion-header" id="First-Accordion-aSMRY">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#First-Accordion-bSMRY" aria-expanded="false" aria-controls="First-Accordion-bSMRY">
+                <button class="accordion-button py-3" type="button" data-bs-toggle="collapse" data-bs-target="#First-Accordion-bSMRY" aria-expanded="true" aria-controls="First-Accordion-bSMRY">
                     Summary
                 </button>
             </h2>
-            <div id="First-Accordion-bSMRY" class="accordion-collapse collapse" aria-labelledby="First-Accordion-aSMRY">
-                <div class="accordion-body collapsed">
-                    <textarea class="form-control-plaintext" rows="8" readonly  id="First-Accordion-aSMRY-ajax"></textarea>
+            <div id="First-Accordion-bSMRY" class="accordion-collapse collapse show" aria-labelledby="First-Accordion-aSMRY">
+                <div class="accordion-body">
+                    <div style="white-space: pre;" id="First-Accordion-aSMRY-ajax" class="border-start ps-3 border-secondary border-4"></div>
                 </div>
             </div>
         </div>
     
         <div class="accordion-item">
             <h2 class="accordion-header" id="First-Accordion-aAP">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#First-Accordion-bAP" aria-expanded="false" aria-controls="First-Accordion-bAP">
+                <button class="accordion-button py-3" type="button" data-bs-toggle="collapse" data-bs-target="#First-Accordion-bAP" aria-expanded="true" aria-controls="First-Accordion-bAP">
                     Assessment / Plan of Care
                 </button>
             </h2>
-            <div id="First-Accordion-bAP" class="accordion-collapse collapse" aria-labelledby="First-Accordion-aAP">
-                <div class="accordion-body collapsed">
-                    <textarea class="form-control-plaintext" rows="8" readonly id="First-Accordion-aAP-ajax"></textarea>
+            <div id="First-Accordion-bAP" class="accordion-collapse collapse show" aria-labelledby="First-Accordion-aAP">
+                <div class="accordion-body">
+                    <div style="white-space: pre;" id="First-Accordion-aAP-ajax" class="border-start ps-3 border-secondary border-4"></div>
                 </div>
             </div>
         </div>
     
         <div class="accordion-item">
             <h2 class="accordion-header" id="First-Accordion-aPM">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#First-Accordion-bPM" aria-expanded="false" aria-controls="First-Accordion-bPM">
+                <button class="accordion-button py-3" type="button" data-bs-toggle="collapse" data-bs-target="#First-Accordion-bPM" aria-expanded="true" aria-controls="First-Accordion-bPM">
                     Prescription Medications
                 </button>
             </h2>
-            <div id="First-Accordion-bPM" class="accordion-collapse collapse" aria-labelledby="First-Accordion-aPM">
-                <div class="accordion-body collapsed">
+            <div id="First-Accordion-bPM" class="accordion-collapse collapse show" aria-labelledby="First-Accordion-aPM">
+                <div class="accordion-body">
                     Tylenol for now :-)
                 </div>
             </div>
