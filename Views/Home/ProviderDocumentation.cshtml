@@ -18,17 +18,19 @@
 <div class="row">
     <div class="col-12 col-sm-4">
 
-        <div class="sticky-top" style="top: 4rem; z-index: -9999">
+        <div class="sticky-top" style="top: 4rem; z-index: 1">
 
 
             <div class="card col-sm-10 col-10 mx-auto mb-4 bg-gray-500 rounded-3">
 
                 <img src="https://www.newsshare.in/wp-content/uploads/2/Cartoon-WhatsApp-DP-44.jpg"
-                    class="rounded-circle mx-auto border border-5 shadow border-white w-50 my-2" alt="Profile Picture">
+                     class="rounded-circle mx-auto border border-5 shadow border-white w-50 my-2" alt="Profile Picture">
                 <h4 class="my-2 text-center"> Hello User</h4>
                 @* <h4> @ViewBag.UserLoggedIn.FirstName @ViewBag.UserLoggedIn.LastName</h4> *@
-                <a href="#" class="btn btn-sm btn-outline-light col-8 mx-auto my-3"><i class="bi bi-gear"></i> Edit
-                    Profile</a>
+                <a href="#" class="btn btn-sm btn-outline-light col-8 mx-auto my-3">
+                    <i class="bi bi-gear"></i> Edit
+                    Profile
+                </a>
             </div>
 
             <div class="card col-sm-10 col-10 mx-auto mb-4 bg-gray-100 rounded-3">
@@ -40,7 +42,7 @@
                         <li class="list-group-item bg-gray-100">Sex:</li>
                         <li class="list-group-item bg-gray-100">Height:</li>
                         <li class="list-group-item bg-gray-200">
-                            <partial name="_Allergies-MedHx" />
+                            <partial name="_Allergies-MedHx"/>
                         </li>
                     </ul>
                 </div>
@@ -56,7 +58,7 @@
                     <small>“Books are a uniquely portable magic.”</small>
                 </button>
                 <button type="button" class="btn btn-primary col-sm-3 dropdown-toggle" data-bs-toggle="dropdown"
-                    data-bs-display="static" aria-expanded="false">
+                        data-bs-display="static" aria-expanded="false">
                     Extra
                 </button>
                 <ul class="dropdown-menu dropdown-menu-lg-end">
@@ -94,7 +96,7 @@
                         <hr class="my-2 mx-auto">
                         <p class="display-6">@ViewBag.PatientInfo.Weight kg</p>
                         <hr class="my-2 mx-auto">
-                        <small class="text-muted">@((int)(Convert.ToDouble(ViewBag.PatientInfo.Weight)*2.2)) lbs</small>
+                        <small class="text-muted">@((int) (Convert.ToDouble(ViewBag.PatientInfo.Weight) * 2.2)) lbs</small>
                     </div>
                 </div>
             </div>
@@ -116,51 +118,10 @@
 
         <div class="rowtwo">
 
-            <div>
-
-                <form action="/visitnotes" method="post">
-                    <div>
-
-                        <div>
-                            <div class="mb-3" >
-                                <label for="exampleFormControlTextarea1" class="form-label">History of Present
-                                    Illness</label>
-                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="10"
-                                    asp-for="HPI"></textarea>
-                            </div>
-                        </div>
-
-                        <div>
-                            <div class="mb-3">
-                                <label for="exampleFormControlTextarea1" class="form-label">Physical Exam</label>
-                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="10"
-                                    asp-for="PE"></textarea>
-                            </div>
-                        </div>
-
-                        <div>
-                            <div class="mb-3">
-                                <label for="exampleFormControlTextarea1" class="form-label">Summary</label>
-                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
-                                    asp-for="Summary"></textarea>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="mb-3">
-                                <label for="exampleFormControlTextarea1" class="form-label">Assessment and Plan</label>
-                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="10"
-                                    asp-for="AP"></textarea>
-                            </div>
-                        </div>
-
-                    </div>
-                <button type="submit" class="btn btn-primary col-sm-3 offset-md-9" data-bs-display="static"> Finish Visit
-                </button>
-
-                </form>
-            </div>
+            <partial name="Partials/_FormVisitNotes"/>
 
             <partial name="_AddMedication"/>
 
         </div>
     </div>
+</div>

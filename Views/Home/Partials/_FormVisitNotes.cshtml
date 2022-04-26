@@ -1,0 +1,64 @@
+﻿@model MedicalNote
+
+@* // Medical Note *@
+<div class="card rounded-3 my-5">
+    @* // Card header *@
+    <div class="card-header px-4">
+        <h5>Visit Notes:</h5>
+    </div>
+
+    @* // Card body *@
+    <form id="form-medical-note-pd" asp-action="AddMedicalNotesAutoSave" asp-controller="Home" method="post">
+        <input type="hidden" asp-for="PatientId" value="@ViewBag.Appointment1.Patient.PatientId"/>
+        <input type="hidden" asp-for="ProviderId" value="@ViewBag.Appointment1.Provider.ProviderId"/>
+        <input type="hidden" asp-for="AppointmentId" value="@ViewBag.Appointment1.AppointmentId"/>
+        <div class="card-body bg-light">
+            @{
+                <div class="mb-3">
+                    <label asp-for="HPI" class="form-label">History of Present Illness</label>
+                    <textarea class="form-control text-area-notes" rows="8" name="HPI">@ViewBag.MedicalNote1.HPI</textarea>
+            
+                </div>
+
+                <hr class="my-3"/>
+                <div class="mb-3">
+                    <label asp-for="PE" class="form-label">Physical Exam</label>
+                    <textarea class="form-control text-area-notes" rows="8" name="PE">@ViewBag.MedicalNote1.PE</textarea>
+                </div>
+                <hr class="my-3"/>
+                <div class="mb-3">
+                    <label asp-for="Summary" class="form-label">Summary</label>
+                    <textarea class="form-control text-area-notes" rows="3" name="Summary">@ViewBag.MedicalNote1.Summary</textarea>
+                </div>
+                <hr class="my-3"/>
+                <div class="mb-3">
+                    <label asp-for="AP" class="form-label">Assessment and Plan</label>
+                    <textarea class="form-control text-area-notes" rows="8" name="AP">@ViewBag.MedicalNote1.AP</textarea>
+                </div>
+            }
+        </div>
+        <div class="card-footer py-3">
+            <button class="btn btn-primary col-sm-3 offset-md-9" disabled>
+                Finish Visit
+            </button>
+        </div>
+    </form>
+
+</div>
+
+@* <script> *@
+@*     tinymce.init({ *@
+@*       selector: 'textarea', *@
+@*       height: 300, *@
+@*       init_instance_callback: function(editor) { *@
+@*           editor.on('Focus', function(e) { *@
+@*             console.log('The ' + e.command + ' command was fired.'); *@
+@*             autosaveForm(true); *@
+@*           }); *@
+@*           editor.on('Blur', function(e) { *@
+@*             console.log('The ' + e.command + ' command was fired.'); *@
+@*             autosaveForm(false); *@
+@*           }); *@
+@*         } *@
+@*     }); *@
+@*   </script> *@
