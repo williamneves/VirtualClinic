@@ -4,7 +4,7 @@
 <tbody>
     @if (ViewBag.PatientAppt.Appointments.Count != 0)
     {
-        <table class="table">
+        <table class="table table-striped table-light table-hover mb-0">
         <thead>
         <tr>
             <th scope="col">#ID</th>
@@ -17,15 +17,20 @@
         <tbody> 
             @foreach (var i in ViewBag.PatientAppt.Appointments)
             {
-                <tr>
-                    <td>@i.AppointmentId</td>
-                    <td>@i.DateTime.ToString("MM/dd/yyyy hh:mm tt")</td>
-                    <td>@i.MedicalNotes[0].Summary</td>
-                    <td>Dr. @i.Provider.User.PreferredName</td>
-                    <td>
-                        <button type="submit" class="btn btn-outline-primary btn-sm" onclick="getMedicalNotes(@i.MedicalNotes[0].MedicalNoteId)"><i class="bi bi-eye"></i> View</button>
-                    </td>
-                </tr>
+                if (i.Status == "done")
+                {
+                    <tr>
+                        <th scope="row">#@i.AppointmentId</th>
+                        <td>@i.DateTime.ToString("MM/dd/yyyy hh:mm tt")</td>
+                        <td>@i.MedicalNotes[0].Summary</td>
+                        <td>Dr. @i.Provider.User.PreferredName</td>
+                        <td>
+                            <button type="submit" class="btn btn-outline-primary btn-sm" onclick="getMedicalNotes(@i.MedicalNotes[0].MedicalNoteId)"><i class="bi bi-eye"></i> View</button>
+                        </td>
+                    </tr>
+                }
+                
+                
             }    
         </tbody>
         </table>

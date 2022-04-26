@@ -17,7 +17,6 @@
                 <div class="mb-3">
                     <label asp-for="HPI" class="form-label">History of Present Illness</label>
                     <textarea class="form-control text-area-notes" rows="8" name="HPI">@ViewBag.MedicalNote1.HPI</textarea>
-            
                 </div>
 
                 <hr class="my-3"/>
@@ -45,20 +44,3 @@
     </form>
 
 </div>
-
-@* <script> *@
-@*     tinymce.init({ *@
-@*       selector: 'textarea', *@
-@*       height: 300, *@
-@*       init_instance_callback: function(editor) { *@
-@*           editor.on('Focus', function(e) { *@
-@*             console.log('The ' + e.command + ' command was fired.'); *@
-@*             autosaveForm(true); *@
-@*           }); *@
-@*           editor.on('Blur', function(e) { *@
-@*             console.log('The ' + e.command + ' command was fired.'); *@
-@*             autosaveForm(false); *@
-@*           }); *@
-@*         } *@
-@*     }); *@
-@*   </script> *@
