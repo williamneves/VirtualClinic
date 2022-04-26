@@ -6,6 +6,11 @@
 <div class="text-center card p-3 my-5 shadow col-6 m-auto">
     <h3>Welcome @ViewBag.UserLoggedIn.FirstName @ViewBag.UserLoggedIn.LastName !</h3>
     <p>You email is @ViewBag.UserLoggedIn.Email</p>
+    <a href="/edit/patientprofile" class="btn btn-sm btn-outline-light col-8 mx-auto my-3"><i class="bi bi-gear"></i>
+        Edit Profile</a>
+    <a href="/edit/medicalinfo" class="btn btn-sm btn-outline-light col-8 mx-auto my-3"><i class="bi bi-gear"></i>
+        Edit Medical Information</a>
+
 
     <a asp-action="logout" asp-controller="Auth" class="w-50 m-auto btn btn-warning my-2">Logout</a>
 </div>
@@ -17,27 +22,29 @@
     <div class="col-12 col-sm-4">
 
         <div class="sticky-top" style="top: 4rem; z-index: -9999">
-            
-        
+
+
             <div class="card col-sm-10 col-10 mx-auto mb-4 bg-gray-500 rounded-3">
 
-                <img src="https://www.newsshare.in/wp-content/uploads/2/Cartoon-WhatsApp-DP-44.jpg" class="rounded-circle mx-auto border border-5 shadow border-white w-50 my-2"
-                     alt="Profile Picture">
-                <h4 class="my-2 text-center"> Hello User</h4>
-                @* <h4> @ViewBag.UserLoggedIn.FirstName @ViewBag.UserLoggedIn.LastName</h4> *@
-                <a href="#" class="btn btn-sm btn-outline-light col-8 mx-auto my-3"><i class="bi bi-gear"></i> Edit Profile</a>
+                <img src="https://www.newsshare.in/wp-content/uploads/2/Cartoon-WhatsApp-DP-44.jpg"
+                    class="rounded-circle mx-auto border border-5 shadow border-white w-50 my-2" alt="Profile Picture">
+                <h4 class="my-2 text-center"> @ViewBag.UserLoggedIn.FirstName @ViewBag.UserLoggedIn.LastName</h4>
+                <p class="my-2 text-center">Preferred Pronouns: @ViewBag.UserLoggedIn.Pronouns</p>
+
+                <a href="/edit/patientprofile" class="btn btn-sm btn-outline-light col-8 mx-auto my-3"><i
+                        class="bi bi-gear"></i> Edit Profile</a>
             </div>
 
             <div class="card col-sm-10 col-10 mx-auto mb-4 bg-gray-100 rounded-3">
                 <div class="card-header border-bottom bg-gray-500">
-                    <span class="card-title fw-bold">Patient informations:</span>
+                    <span class="card-title fw-bold">Patient Information:</span>
                 </div>
                 <div class="card-body p-0">
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item bg-gray-100">Sex:</li>
                         <li class="list-group-item bg-gray-200">Allergies:
-                    
-                            <partial name="_Allergies-MedHx"/>
+
+                            <partial name="_Allergies-MedHx" />
                         </li>
                         <li class="list-group-item bg-gray-100">Height:</li>
                         <li class="list-group-item bg-gray-200">Medical History:</li>
@@ -45,7 +52,7 @@
                 </div>
             </div>
         </div>
-        
+
 
     </div>
     <div class="col-12 col-sm-8">

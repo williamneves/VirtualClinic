@@ -1,0 +1,25 @@
+@model Allergy
+
+<form class="row row-cols-lg-auto g-3 align-items-center" action="/addallergy" method="post">
+    <div class="col-12">
+        <label class="visually-hidden" for="inlineFormInputGroupUsername">Allergy</label>
+        <div class="input-group">
+            <div class="input-group-text"></div>
+            <input type="text" class="form-control" id="inlineFormInputGroupUsername" placeholder="Allergy Name"
+                asp-for="Name">
+        </div>
+    </div>
+
+    <div class="col-12">
+        <label class="visually-hidden" for="inlineFormSelectPref">Reaction</label>
+        <div class="input-group">
+            <div class="input-group-text"></div>
+            <input type="text" class="form-control" id="inlineFormInputGroupUsername" placeholder="Reaction"
+                asp-for="Reaction">
+        </div>
+    </div>
+
+    <div class="col-12">
+        <button type="submit" class="btn btn-primary" data-bs-display="static">Add Allergy</button>
+    </div>
+</form>
