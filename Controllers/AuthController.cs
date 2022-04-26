@@ -150,7 +150,7 @@ namespace VirtualClinic.Controllers
             if (HttpContext.Session.GetInt32("UserId") == null)
             {
                 TempData["AuthError"] = "You must be logged in to view this page";
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
 
             var userInDb = dbContext.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"));

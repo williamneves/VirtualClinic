@@ -128,7 +128,7 @@ function autosaveForm(run = false,FormID = "form-medical-note-pd", interval = 50
             dataType: 'json',
         })
             .then((res) => {
-                // console.log(res);
+                console.log(res);
             })
             .catch((err) => {
                 console.log(err);
@@ -136,6 +136,25 @@ function autosaveForm(run = false,FormID = "form-medical-note-pd", interval = 50
     }
     
 }
+// const tx = document.querySelectorAll('.text-area-notes');
+// // const tx = document.getElementsByTagName("textarea");
+// for (let i = 0; i < tx.length; i++) {
+//     tx[i].setAttribute("style", "height:" + (tx[i].scrollHeight) + "px;overflow-y:hidden;");
+//     tx[i].addEventListener("input", OnInput, false);
+//     tx[i].addEventListener("change", OnInput, false);
+// }
+//
+// function OnInput() {
+//     this.style.height = "auto";
+//     this.style.height = (this.scrollHeight) + "px";
+// }
+// autosize(document.querySelectorAll('textarea'));
+
+$('.text-area-notes').each(function(){
+    autosize(this);
+}).on('autosize:resized', function(){
+    console.log('textarea height updated');
+});
 
 // Auto Save Medical Notes - End
 

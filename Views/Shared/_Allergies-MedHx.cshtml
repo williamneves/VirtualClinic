@@ -1,51 +1,55 @@
 @model Patient
 
-<div class="accordion" id="accordionPanelsStayOpenExample">
+<div class="accordion accordion-flush" id="accordionPanelsStayOpenExample">
   <div class="accordion-item">
     <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-      <button class="accordion-button" type="button" data-bs-toggle="collapse"
-        data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+      <button class="accordion-button py-2 bg-gray-100 collapsed" type="button" data-bs-toggle="collapse"
+        data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="false" aria-controls="panelsStayOpen-collapseOne">
         Allergies:
       </button>
     </h2>
-    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
+    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse"
       aria-labelledby="panelsStayOpen-headingOne">
-      <div class="accordion-body">
+      <div class="accordion-body p-0">
+        <ul class="list-group list-group-flush">
         @if (@ViewBag.PatientAllergies.Allergies.Count != 0)
         {
           foreach (var i in ViewBag.PatientAllergies.Allergies)
           {
-            <p>@i.Name | Type of Reaction: @i.Reaction</p>
+            <li class="list-group-item"><b>@i.Name</b> | Type of Reaction: <em>@i.Reaction</em></li>
           }
         }
         else
         {
-          <p>No Known Allergies </p>
+          <li class="list-group-item">No Known Allergies</li>
         }
+        </ul>
       </div>
     </div>
   </div>
 <div class="accordion-item">
   <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
-    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+    <button class="accordion-button py-2 bg-gray-100 collapsed" type="button" data-bs-toggle="collapse"
             data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
       Medical History:
     </button>
   </h2>
   <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse"
        aria-labelledby="panelsStayOpen-headingTwo">
-    <div class="accordion-body">
+    <div class="accordion-body p-0">
+      <ul class="list-group list-group-flush">
       @if (@ViewBag.PatientMedHx.MedicalHistory.Count != 0)
       {
         foreach (var i in ViewBag.PatientMedHx.MedicalHistory)
         {
-          <p>@i.Diagnosis, Diagnosed in @i.DateofDx</p>
+          <li class="list-group-item">@i.Diagnosis, Diagnosed in @i.DateofDx</li>
         }
       }
       else
       {
-        <p>No Known Medical History</p>
+        <li class="list-group-item">No Known Medical History</li>
       }
+      </ul>
     </div>
   </div>
 </div>

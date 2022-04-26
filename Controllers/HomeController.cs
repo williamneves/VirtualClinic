@@ -69,6 +69,14 @@ namespace VirtualClinic.Controllers
                                     .ThenInclude(m => m.MedicalNotes)
                                     .FirstOrDefault(p => p.UserId == userInDb.UserId);
 
+            foreach (var i in ViewBag.PatientAppt.Appointments)
+            {
+                Console.WriteLine("Appointment: ", i.MedicalNotes.Count);
+            }
+            
+            // Console.WriteLine(ViewBag.PatientAppt.Appointments.MedicalNotes.Count);
+            // Console.WriteLine(ViewBag.PatientAppt.MedicalNotes);
+            
             // // List of Appointments Ordered by Date
             // ViewBag.AllAppointments = dbContext.Appointments
             //     .Include(p => p.Patient)
@@ -99,15 +107,15 @@ namespace VirtualClinic.Controllers
         [HttpPost("add-medical-notes-autosave")]
         public IActionResult AddMedicalNotesAutoSave(MedicalNote newNote)
         {
-            Console.WriteLine("\n###############\n");
-            Console.WriteLine("New Medical Note: ");
-            Console.WriteLine(newNote.PatientId);
-            Console.WriteLine(newNote.AP);
-            // Console.WriteLine(;
-            // Console.WriteLine(HPI);
-            Console.WriteLine("\n###############\n");
-                // dbContext.MedicalNotes.Add(newMedicalNote);
-                // dbContext.SaveChanges();
+            // Console.WriteLine("\n###############\n");
+            // Console.WriteLine("New Medical Note: ");
+            // Console.WriteLine(newNote.PatientId);
+            // Console.WriteLine(newNote.AP);
+            // // Console.WriteLine(;
+            // // Console.WriteLine(HPI);
+            // Console.WriteLine("\n###############\n");
+            //     // dbContext.MedicalNotes.Add(newMedicalNote);
+            //     // dbContext.SaveChanges();
                 
             var newNoteInDb = dbContext.MedicalNotes
                 .FirstOrDefault(m => m.PatientId == newNote.PatientId 
@@ -233,14 +241,16 @@ namespace VirtualClinic.Controllers
                 .Include(p => p.MedicalNotes)
                 .FirstOrDefault(p => p.AppointmentId == 1);
             
+            
+            
             ViewBag.MedicalNote1 = dbContext.MedicalNotes
                 .FirstOrDefault(m => m.PatientId == 1 
                                      && m.ProviderId == 1
                                      && m.AppointmentId == 1);
-            Console.WriteLine(ViewBag.MedicalNote1.HPI);
-            Console.WriteLine(ViewBag.MedicalNote1.PE);
-            Console.WriteLine(ViewBag.MedicalNote1.Summary);
-            Console.WriteLine(ViewBag.MedicalNote1.AP);
+            // Console.WriteLine(ViewBag.MedicalNote1.HPI);
+            // Console.WriteLine(ViewBag.MedicalNote1.PE);
+            // Console.WriteLine(ViewBag.MedicalNote1.Summary);
+            // Console.WriteLine(ViewBag.MedicalNote1.AP);
             
             return View();
         }
