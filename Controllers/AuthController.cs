@@ -212,6 +212,7 @@ namespace VirtualClinic.Controllers
             // Patient Medications
             ViewBag.PatientInfo = dbContext.Patients
                                     .Include(p => p.Medications)
+                                    .Include(l => l.ReportedMedications)
                                     .FirstOrDefault(p => p.UserId == userInDb.UserId);
 
             // Patient Allergies
@@ -227,10 +228,22 @@ namespace VirtualClinic.Controllers
             return View();
         }
 
-        // Add medications
+        // Add medications (provider in appt)
         [HttpPost("addmed")]
 
         public IActionResult AddMed(Medication NewMed)
+        {
+            NewMed.PatientId = (int) HttpContext.Session.GetInt32("UserId");
+
+            dbContext.Add(NewMed);
+            dbContext.SaveChanges();
+            return RedirectToAction("UpdateMedicalInfo");
+
+        }
+        // Add medications (pt reported)
+        [HttpPost("addptmed")]
+
+        public IActionResult AddPtMed(ReportedMedication NewMed)
         {
             NewMed.PatientId = (int) HttpContext.Session.GetInt32("UserId");
 
@@ -266,12 +279,22 @@ namespace VirtualClinic.Controllers
 
         }
 
-        // Remove Medication
+        // Remove Medication (prescribed)
         [HttpGet("remove/medication/{id}")]
         public IActionResult RemoveMed(int id)
         {
             Medication MedToRemove = dbContext.Medications.FirstOrDefault(d => d.MedicationId == id);
             dbContext.Medications.Remove(MedToRemove);
+            dbContext.SaveChanges();
+            return RedirectToAction("UpdateMedicalInfo");
+        }
+
+        // Remove Medication (patient reported)
+        [HttpGet("remove/ptmedication/{id}")]
+        public IActionResult RemovePtMed(int id)
+        {
+            ReportedMedication MedToRemove = dbContext.ReportedMedications.FirstOrDefault(d => d.ReportedMedicationId == id);
+            dbContext.ReportedMedications.Remove(MedToRemove);
             dbContext.SaveChanges();
             return RedirectToAction("UpdateMedicalInfo");
         }

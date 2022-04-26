@@ -32,6 +32,7 @@ namespace VirtualClinic.Models
         // Medications
         public List<Medication> Medications { get; set; }
 
+        public List<ReportedMedication> ReportedMedications { get; set; }
         // Appointments
         public List<Appointment> Appointments { get; set; }
 
