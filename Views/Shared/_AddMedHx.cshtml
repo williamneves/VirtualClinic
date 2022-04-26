@@ -1,0 +1,25 @@
+@model MedicalHistory
+
+<form class="row row-cols-lg-auto g-3 align-items-center" action="/addmedhx" method="post">
+    <div class="col-12">
+        <label class="visually-hidden" for="inlineFormInputGroupUsername">Diagnosis</label>
+        <div class="input-group">
+            <div class="input-group-text"></div>
+            <input type="text" class="form-control" id="inlineFormInputGroupUsername" placeholder="Diagnosis "
+                asp-for="Diagnosis">
+        </div>
+    </div>
+
+    <div class="col-12">
+        <label class="visually-hidden" for="inlineFormSelectPref">Year of Diagnosis</label>
+        <div class="input-group">
+            <div class="input-group-text"></div>
+            <input type="text" class="form-control" id="inlineFormInputGroupUsername" placeholder="YYYY"
+                asp-for="DateofDx">
+        </div>
+    </div>
+
+    <div class="col-12">
+        <button type="submit" class="btn btn-primary" data-bs-display="static">Add Diagnosis</button>
+    </div>
+</form>
