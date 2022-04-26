@@ -82,6 +82,13 @@ namespace VirtualClinic.Models
         [DataType(DataType.Password)]
         [Display(Name = "Confirm Password", Prompt = "Confirm Password")]
         public string Confirm { get; set; }
+        
+        [NotMapped]
+        [Display(Name="Provider Code", Prompt = "Provider Code")]
+        // Regex to match ^ABXY$
+        [RegularExpression(@"^ABXY$", ErrorMessage = "*Invalid Provider Code")]
+        [MinLength(4, ErrorMessage = "*Needs to be at least 4 characters")]
+        public string AuthCode { get; set; }
 
 
         // Created and Updated Date

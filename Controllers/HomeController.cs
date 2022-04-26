@@ -24,9 +24,15 @@ namespace VirtualClinic.Controllers
 
         public IActionResult Index()
         {
-            // var userInDb = dbContext.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"));
-
-            // ViewBag.UserLoggedIn = userInDb;
+            if (HttpContext.Session.GetInt32("UserId") != null)
+            {
+                var userInDb = dbContext.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"));
+            
+                Console.WriteLine("User Logged In: ", HttpContext.Session.GetInt32("UserId"));
+            
+                ViewBag.UserLoggedIn = userInDb;
+            }
+            
             return View();
         }
 
@@ -69,11 +75,6 @@ namespace VirtualClinic.Controllers
                                     .ThenInclude(m => m.MedicalNotes)
                                     .FirstOrDefault(p => p.UserId == userInDb.UserId);
 
-            foreach (var i in ViewBag.PatientAppt.Appointments)
-            {
-                Console.WriteLine("Appointment: ", i.MedicalNotes.Count);
-            }
-            
             // Console.WriteLine(ViewBag.PatientAppt.Appointments.MedicalNotes.Count);
             // Console.WriteLine(ViewBag.PatientAppt.MedicalNotes);
             
@@ -243,14 +244,23 @@ namespace VirtualClinic.Controllers
             
             
             
-            ViewBag.MedicalNote1 = dbContext.MedicalNotes
-                .FirstOrDefault(m => m.PatientId == 1 
+            ViewBag.MedicalNote1Exists = dbContext.MedicalNotes
+                .Any(m => m.PatientId == 1 
                                      && m.ProviderId == 1
                                      && m.AppointmentId == 1);
-            // Console.WriteLine(ViewBag.MedicalNote1.HPI);
-            // Console.WriteLine(ViewBag.MedicalNote1.PE);
-            // Console.WriteLine(ViewBag.MedicalNote1.Summary);
-            // Console.WriteLine(ViewBag.MedicalNote1.AP);
+            ViewBag.MedicalNote2Exists = dbContext.MedicalNotes
+                .Any(m => m.PatientId == 4 
+                          && m.ProviderId == 1
+                          && m.AppointmentId == 1);
+            ViewBag.MedicalNote1 = dbContext.MedicalNotes
+                .FirstOrDefault(m => m.PatientId == 1 
+                          && m.ProviderId == 1
+                          && m.AppointmentId == 1);
+            ViewBag.MedicalNote3 = dbContext.MedicalNotes
+                .FirstOrDefault(m => m.PatientId == 4 
+                                     && m.ProviderId == 1
+                                     && m.AppointmentId == 1);
+            
             
             return View();
         }

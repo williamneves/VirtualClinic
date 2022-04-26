@@ -30,20 +30,28 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-action="Register" asp-controller="Auth">Register</a>
                         </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown"
+                               aria-expanded="false">Admin</a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdown04">
+                                <li><a class="dropdown-item" asp-action="RegisterProvider" asp-controller="Auth" >Provider Register</a></li>
+                                <li><a class="dropdown-item" asp-action="RegisterProvider" asp-controller="Auth" >Admin Access</a></li>
+                            </ul>
+                        </li>
                     }
                 }
                 <li class="nav-item">
                     <a class="nav-link" href="#">Link</a>
                 </li>
-                @* <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown"
-                    aria-expanded="false">Dropdown</a>
-                    <ul class="dropdown-menu" aria-labelledby="dropdown04">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
-                    </li> *@
+                @* <li class="nav-item dropdown"> *@
+                @*     <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown" *@
+                @*     aria-expanded="false">Dropdown</a> *@
+                @*     <ul class="dropdown-menu" aria-labelledby="dropdown04"> *@
+                @*     <li><a class="dropdown-item" href="#">Action</a></li> *@
+                @*     <li><a class="dropdown-item" href="#">Another action</a></li> *@
+                @*     <li><a class="dropdown-item" href="#">Something else here</a></li> *@
+                @*     </ul> *@
+                @*     </li> *@
             </ul>
             @{
                 if (@ViewBag.UserLoggedIn != null)
