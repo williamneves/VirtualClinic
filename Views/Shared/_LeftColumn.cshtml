@@ -24,9 +24,12 @@
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item bg-gray-100">Sex: @ViewBag.UserLoggedIn.Sex </li>
                     <li class="list-group-item bg-gray-100">Height:
-                    @if(ViewBag.PatientInfo.Height != null)
+                    @if(ViewBag.PatientInfo != null)
                     {
-                        @ViewBag.PatientInfo.Height;
+                        @if (ViewBag.PatientInfo.Height != null)
+                        {
+                            @ViewBag.PatientInfo.Height;
+                        }
                     }
                     </li>
                     <li class="list-group-item bg-gray-100 p-0 m-0">
