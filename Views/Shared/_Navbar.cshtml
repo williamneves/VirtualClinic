@@ -19,7 +19,7 @@
                     if (@ViewBag.UserLoggedIn != null)
                     {
                         <li class="nav-item">
-                            <a class="nav-link" asp-action="Welcome" asp-controller="Home">Welcome</a>
+                            <a class="nav-link" asp-action="PatientDashboard" asp-controller="Patient">Welcome</a>
                         </li>
                     }
                     else
@@ -40,9 +40,6 @@
                         </li>
                     }
                 }
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
                 @* <li class="nav-item dropdown"> *@
                 @*     <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown" *@
                 @*     aria-expanded="false">Dropdown</a> *@
@@ -60,8 +57,7 @@
                 }
                 else
                 {
-                    <button class="btn btn-outline-primary btn-sm" onclick="loginModal('registermodal')">Sign-in |
-                        Login</button>
+                    <button class="btn btn-outline-primary btn-sm" onclick="loginModal('registermodal')"><i class="fa-duotone fa-arrow-right-to-arc"></i> Sign-in</button>
                 }
             }
         </div>

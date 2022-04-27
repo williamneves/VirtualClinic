@@ -20,7 +20,7 @@ namespace VirtualClinic.Models
         
         // Patient Foreign Key and Navigation Property
         public int PatientId { get; set; }
-        public Patient Client { get; set; }
+        public Patient Patient { get; set; }
 
         // Created and Updated Date
         public DateTime CreatedAt { get; set; } = DateTime.Now;
