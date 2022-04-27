@@ -229,5 +229,15 @@ $('.text-area-notes').each(function(){
 // //     console.log(event.target.Summary);
 // // }
 
+// DataTable
+let table = new DataTable('#apptTable1', {
+    // options
+    // scrollY: "300px",
+    scrollCollapse: true,
+    paging: true,
+    select: true,
+    "dom": '<"card-header d-flex px-3 pt-2 justify-content-between align-items-center"lf><"bg-light m-0"rt><"card-footer d-flex px-3 pb-2 justify-content-between align-items-center"<"info-pag"i>p><"clear">'
+});
+
 
 

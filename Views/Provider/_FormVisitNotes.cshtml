@@ -9,31 +9,31 @@
 
     @* // Card body *@
     <form id="form-medical-note-pd" asp-action="AddMedicalNotesAutoSave" asp-controller="Provider" method="post">
-        <input type="hidden" asp-for="PatientId" value="@ViewBag.Appointment1.Patient.PatientId"/>
-        <input type="hidden" asp-for="ProviderId" value="@ViewBag.Appointment1.Provider.ProviderId"/>
-        <input type="hidden" asp-for="AppointmentId" value="@ViewBag.Appointment1.AppointmentId"/>
+        <input type="hidden" asp-for="PatientId" value="@ViewBag.ApptInfo.Patient.PatientId"/>
+        <input type="hidden" asp-for="ProviderId" value="@ViewBag.ApptInfo.Provider.ProviderId"/>
+        <input type="hidden" asp-for="AppointmentId" value="@ViewBag.ApptInfo.AppointmentId"/>
         <div class="card-body bg-light">
             @{
-                if (ViewBag.MedicalNote1 != null)
+                if (ViewBag.MedicalNote != null)
                 {
                     <div class="mb-3">
                         <label asp-for="HPI" class="form-label">History of Present Illness</label>
-                        <textarea class="form-control text-area-notes" rows="5" name="HPI">@ViewBag.MedicalNote1.HPI</textarea>
+                        <textarea class="form-control text-area-notes" rows="5" name="HPI">@ViewBag.MedicalNote.HPI</textarea>
                     </div>
                     <hr class="my-3"/>
                     <div class="mb-3">
                         <label asp-for="PE" class="form-label">Physical Exam</label>
-                        <textarea class="form-control text-area-notes" rows="5" name="PE">@ViewBag.MedicalNote1.PE</textarea>
+                        <textarea class="form-control text-area-notes" rows="5" name="PE">@ViewBag.MedicalNote.PE</textarea>
                     </div>
                     <hr class="my-3"/>
                     <div class="mb-3">
                         <label asp-for="Summary" class="form-label">Summary</label>
-                        <textarea class="form-control text-area-notes" rows="3" name="Summary">@ViewBag.MedicalNote1.Summary</textarea>
+                        <textarea class="form-control text-area-notes" rows="3" name="Summary">@ViewBag.MedicalNote.Summary</textarea>
                     </div>
                     <hr class="my-3"/>
                     <div class="mb-3">
                         <label asp-for="AP" class="form-label">Assessment and Plan</label>
-                        <textarea class="form-control text-area-notes" rows="5" name="AP">@ViewBag.MedicalNote1.AP</textarea>
+                        <textarea class="form-control text-area-notes" rows="5" name="AP">@ViewBag.MedicalNote.AP</textarea>
                     </div>
                 }
                 else

@@ -39,37 +39,49 @@ namespace VirtualClinic.Controllers
             return View();                      
         }
 
-        // TEST PROVIDERDOCUMENATION
+        // Appointment Attendance Provider View
 
-        [HttpGet("providerdocumentation")]
-        public IActionResult ProviderDocumentation()
+        [HttpGet("provider/apptattendance/{apptId}")]
+        public IActionResult ProviderAttendance(int apptId)
         {
             if (HttpContext.Session.GetInt32("UserId") == null)
             {
                 TempData["AuthError"] = "You must be logged in to view this page";
                 return RedirectToAction("Index", "Home");
             }
-            
             var userInDb = dbContext.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"));
             
-            Console.WriteLine("User Logged In: ", HttpContext.Session.GetInt32("UserId"));
-            
             ViewBag.UserLoggedIn = userInDb;
-
+            
+            if (userInDb.userType != "provider")
+            {
+                TempData["AuthError"] = "You must be logged Provider to view this page";
+                return RedirectToAction("Index", "Home");
+            }
+            
+            // Appointment Info
+            var apptInfo = dbContext.Appointments
+                .Include(p => p.Patient)
+                .ThenInclude(p => p.User)  
+                .Include(p => p.Provider)
+                .ThenInclude(u => u.User)
+                .Include(p => p.MedicalNotes)
+                .FirstOrDefault(p => p.AppointmentId == apptId);
+            
             // Patient Medications
             ViewBag.PatientInfo = dbContext.Patients
                                     .Include(p => p.Medications)
-                                    .FirstOrDefault(p => p.UserId == userInDb.UserId);
+                                    .FirstOrDefault(p => p.UserId == apptInfo.Patient.UserId);
 
             // Patient Allergies
             ViewBag.PatientAllergies = dbContext.Patients
                                         .Include(p => p.Allergies)
-                                        .FirstOrDefault(p => p.UserId == userInDb.UserId);
+                                        .FirstOrDefault(p => p.UserId == apptInfo.Patient.UserId);
     
             // Patient MedHx
             ViewBag.PatientMedHx = dbContext.Patients
                                     .Include(p => p.MedicalHistory)
-                                    .FirstOrDefault(p => p.UserId == userInDb.UserId);
+                                    .FirstOrDefault(p => p.UserId == apptInfo.Patient.UserId);
 
             // Patient Appointment
             ViewBag.PatientAppt = dbContext.Patients
@@ -78,16 +90,8 @@ namespace VirtualClinic.Controllers
                                     .ThenInclude(u => u.User)
                                     .Include(p => p.Appointments)
                                     .ThenInclude(m => m.MedicalNotes)
-                                    .FirstOrDefault(p => p.UserId == userInDb.UserId);
+                                    .FirstOrDefault(p => p.UserId == apptInfo.Patient.UserId);
 
-            // // List of Appointments Ordered by Date
-            // ViewBag.AllAppointments = dbContext.Appointments
-            //     .Include(p => p.Patient)
-            //     .Include(p => p.Provider)
-            //     .Where(p => p.PatientId == userInDb.UserId)
-            //     .OrderBy(p => p.DateTime)
-            //     .ToList();
-            
             // Next appointment (not in the past)
             ViewBag.NextAppointment = dbContext.Appointments
                 .Include(p => p.Patient)
@@ -97,26 +101,14 @@ namespace VirtualClinic.Controllers
                 .OrderBy(p => p.DateTime)
                 .FirstOrDefault();
             
-            // Appointment with Id 1 and all includes
-            ViewBag.Appointment1 = dbContext.Appointments
-                .Include(p => p.Patient)
-                .Include(p => p.Provider)
-                .ThenInclude(u => u.User)
-                .Include(p => p.MedicalNotes)
-                .FirstOrDefault(p => p.AppointmentId == 1);
-            
-            
-            
 
-            ViewBag.MedicalNote1Exists = dbContext.MedicalNotes
-                .Any(m => m.PatientId == 1 
-                                    && m.ProviderId == 1
-                                    && m.AppointmentId == 1);
 
-            ViewBag.MedicalNote1 = dbContext.MedicalNotes
-                .FirstOrDefault(m => m.PatientId == 1 
-                        && m.ProviderId == 1
-                        && m.AppointmentId == 1);
+            ViewBag.ApptInfo = apptInfo;
+
+            ViewBag.MedicalNote = dbContext.MedicalNotes
+                .FirstOrDefault(m => m.PatientId == apptInfo.PatientId 
+                                            && m.ProviderId == apptInfo.ProviderId
+                                            && m.AppointmentId == apptInfo.AppointmentId);
 
             
             return View();
@@ -240,6 +232,7 @@ namespace VirtualClinic.Controllers
                 .Include(a => a.Patient)
                 .Include(a => a.Provider)
                 .Where(a => a.ProviderId == providerInfo.ProviderId)
+                .OrderBy(a => a.DateTime)
                 .ToList();
             
             return View();
