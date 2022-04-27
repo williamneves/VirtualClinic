@@ -31,17 +31,17 @@ namespace VirtualClinic.Models
         
         // Patient Foreign Key and Navigation Property
         public int PatientId { get; set; }
-        public Patient Client { get; set; }
+        public Patient Patient { get; set; }
 
         // Provider Foreign Key and Navigation Property
         public int ProviderId { get; set; }
-        public Provider Clinician { get; set; }
+        public Provider Provider { get; set; }
 
         
         // Appointment Foreign Key and Navigation Property
 
         public int  AppointmentId { get; set; }
-        public Appointment Visit { get; set; }
+        public Appointment Appointment { get; set; }
 
 
         // Created and Updated Date

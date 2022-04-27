@@ -1,0 +1,33 @@
+<div class="col-12 col-sm-4">
+    <div class="sticky-top" style="top: 4rem; z-index: 1">
+
+        <div class="card col-sm-10 col-10 mx-auto mb-4 bg-gray-500 rounded-3">
+
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRptIbvFgU67rEonXt8DIq-1UB6FSQcemQtdA&usqp=CAU" class="rounded-circle mx-auto border border-5 shadow border-white w-50 my-2" alt="Profile Picture">
+            @if(ViewBag.UserLoggedIn.PreferredName != null)
+            {
+                <h4 class="text-center my-2">"@ViewBag.UserLoggedIn.PreferredName"</h4>
+            }
+            <h5 class="my-2 text-center"> @ViewBag.UserLoggedIn.FirstName @ViewBag.UserLoggedIn.LastName</h5>
+
+            <a href="/edit/providerprofile" class="btn btn-sm btn-outline-light col-8 mx-auto my-3"><i class="bi bi-gear"></i> Edit Profile</a>
+        </div>
+
+        <div class="card col-sm-10 col-10 mx-auto mb-4 bg-gray-100 rounded-3">
+            
+            <div class="card col-sm-10 col-10 mx-auto mb-4 bg-gray-100 rounded-3">
+                <div class="card-header border-bottom bg-gray-500">
+                    <span class="card-title fw-bold"></span>
+                </div>
+                <div class="card-body p-0">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item bg-gray-100">Number of Appointments Today: 35</li>
+                        <li class="list-group-item bg-gray-100">Links to References</li>
+
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

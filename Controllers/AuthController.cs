@@ -66,10 +66,10 @@ namespace VirtualClinic.Controllers
 
                 if (userInDb.userType == "provider")
                 {
-                    return RedirectToAction("ProviderDashboard", "Home");
+                    return RedirectToAction("ProviderDashboard", "Provider");
                 }
 
-                return RedirectToAction("Welcome", "Home");
+                return RedirectToAction("PatientDashboard", "Patient");
             }
 
             // Not Valid ModelState
@@ -185,7 +185,7 @@ namespace VirtualClinic.Controllers
 
                 ViewBag.UserLoggedIn = newUser;
 
-                return RedirectToAction("ProviderDashboard", "Home");
+                return RedirectToAction("ProviderDashboard", "Provider");
             }
 
             // Not Valid ModelState
@@ -198,182 +198,6 @@ namespace VirtualClinic.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
-        }
-
-        // Show Edit Patient Profile Page
-        [HttpGet("edit/patientprofile")]
-        public IActionResult EditPatientProfile()
-        {
-            if (HttpContext.Session.GetInt32("UserId") == null)
-            {
-                TempData["AuthError"] = "You must be logged in to view this page";
-                return RedirectToAction("Index", "Home");
-            }
-
-            var userInDb = dbContext.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"));
-
-            ViewBag.User = userInDb;
-
-            
-            // Patient Medications
-            ViewBag.PatientInfo = dbContext.Patients
-                                    .Include(p => p.Medications)
-                                    .FirstOrDefault(p => p.UserId == userInDb.UserId);
-
-            // Patient Allergies
-            ViewBag.PatientAllergies = dbContext.Patients
-                                        .Include(p => p.Allergies)
-                                        .FirstOrDefault(p => p.UserId == userInDb.UserId);
-    
-            // Patient MedHx
-            ViewBag.PatientMedHx = dbContext.Patients
-                                    .Include(p => p.MedicalHistory)
-                                    .FirstOrDefault(p => p.UserId == userInDb.UserId);
-
-
-            return View();
-        }
-
-        // Edit Patient Profile Information
-        [HttpPost("edit/patientinfo/")]
-        public IActionResult EditPatientInfo(User UpdatedUser)
-        {
-            User OldPatient = dbContext.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"));
-
-            OldPatient.PreferredName = UpdatedUser.PreferredName;
-            OldPatient.Pronouns = UpdatedUser.Pronouns;
-            OldPatient.Email = UpdatedUser.Email;
-             // Initialize hasher object
-            PasswordHasher<User> Hasher = new PasswordHasher<User>();
-            // Hash password
-            OldPatient.Password = Hasher.HashPassword(UpdatedUser, UpdatedUser.Password);
-            OldPatient.StreetAddress = UpdatedUser.StreetAddress;
-            OldPatient.City = UpdatedUser.City;
-            OldPatient.State = UpdatedUser.State;
-            OldPatient.Zipcode = UpdatedUser.Zipcode;
-            OldPatient.PhoneNumber = UpdatedUser.PhoneNumber;
-            
-            dbContext.SaveChanges();
-
-            return RedirectToAction("Welcome", "Home");
-        }
-    
-        // Get the Edit Page for Medical Info
-        [HttpGet("edit/medicalinfo")]
-        public IActionResult UpdateMedicalInfo()
-        {
-            var userInDb = dbContext.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"));
-            
-            ViewBag.UserLoggedIn = userInDb;
-
-            // Patient Medications
-            ViewBag.PatientInfo = dbContext.Patients
-                                    .Include(p => p.Medications)
-                                    .Include(l => l.ReportedMedications)
-                                    .FirstOrDefault(p => p.UserId == userInDb.UserId);
-
-            // Patient Allergies
-            ViewBag.PatientAllergies = dbContext.Patients
-                                        .Include(p => p.Allergies)
-                                        .FirstOrDefault(p => p.UserId == userInDb.UserId);
-    
-            // Patient MedHx
-            ViewBag.PatientMedHx = dbContext.Patients
-                                    .Include(p => p.MedicalHistory)
-                                    .FirstOrDefault(p => p.UserId == userInDb.UserId);
-
-            return View();
-        }
-
-        // Add medications (provider in appt)
-        [HttpPost("addmed")]
-
-        public IActionResult AddMed(Medication NewMed)
-        {
-            NewMed.PatientId = (int) HttpContext.Session.GetInt32("UserId");
-
-            dbContext.Add(NewMed);
-            dbContext.SaveChanges();
-            return RedirectToAction("UpdateMedicalInfo");
-
-        }
-        // Add medications (pt reported)
-        [HttpPost("addptmed")]
-
-        public IActionResult AddPtMed(ReportedMedication NewMed)
-        {
-            NewMed.PatientId = (int) HttpContext.Session.GetInt32("UserId");
-
-            dbContext.Add(NewMed);
-            dbContext.SaveChanges();
-            return RedirectToAction("UpdateMedicalInfo");
-
-        }
-
-        // Add Allergy
-        [HttpPost("addallergy")]
-
-        public IActionResult AddAllergy(Allergy newAllergy)
-        {
-            newAllergy.PatientId = (int) HttpContext.Session.GetInt32("UserId");
-
-            dbContext.Add(newAllergy);
-            dbContext.SaveChanges();
-            return RedirectToAction("UpdateMedicalInfo");
-
-        }
-        
-        // Add Medical History
-        [HttpPost("addmedhx")]
-
-        public IActionResult AddMedHx(MedicalHistory newMedHx)
-        {
-            newMedHx.PatientId = (int) HttpContext.Session.GetInt32("UserId");
-
-            dbContext.Add(newMedHx);
-            dbContext.SaveChanges();
-            return RedirectToAction("UpdateMedicalInfo");
-
-        }
-
-        // Remove Medication (prescribed)
-        [HttpGet("remove/medication/{id}")]
-        public IActionResult RemoveMed(int id)
-        {
-            Medication MedToRemove = dbContext.Medications.FirstOrDefault(d => d.MedicationId == id);
-            dbContext.Medications.Remove(MedToRemove);
-            dbContext.SaveChanges();
-            return RedirectToAction("UpdateMedicalInfo");
-        }
-
-        // Remove Medication (patient reported)
-        [HttpGet("remove/ptmedication/{id}")]
-        public IActionResult RemovePtMed(int id)
-        {
-            ReportedMedication MedToRemove = dbContext.ReportedMedications.FirstOrDefault(d => d.ReportedMedicationId == id);
-            dbContext.ReportedMedications.Remove(MedToRemove);
-            dbContext.SaveChanges();
-            return RedirectToAction("UpdateMedicalInfo");
-        }
-
-        // Remove Allergy
-        [HttpGet("remove/allergy/{id}")]
-        public IActionResult RemoveAllergy(int id)
-        {
-            Allergy AllergyToRemove = dbContext.Allergies.FirstOrDefault(d => d.AllergyId == id);
-            dbContext.Allergies.Remove(AllergyToRemove);
-            dbContext.SaveChanges();
-            return RedirectToAction("UpdateMedicalInfo");
-        }
-
-        // Remove MedicalHistory
-        [HttpGet("remove/medicalhx/{id}")]
-        public IActionResult RemoveMedicalHistory(int id)
-        {
-            MedicalHistory MedicalHistoryToRemove = dbContext.MedicalHistories.FirstOrDefault(d => d.MedicalHistoryId == id);
-            dbContext.MedicalHistories.Remove(MedicalHistoryToRemove);
-            dbContext.SaveChanges();
-            return RedirectToAction("UpdateMedicalInfo");
         }
     }
 }

@@ -1,0 +1,85 @@
+@{
+    ViewData["Title"] = "Welcome";
+    Layout = "_LayoutBS";
+}
+
+@model Appointment
+
+<div class="row">
+
+    <partial name="_LeftColumnProvider"/>
+
+    <div class="col-12 col-sm-8">
+
+        <div class="col-sm-12 row me-0 mt-3 justify-content-between">
+            <div class="col-md-9 col-sm-12 mb-4">
+                <h4>
+                    <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+                    <span>Appointments</span>
+                </h4>
+                <hr/>
+                <form asp-action="ProviderCreateApptPost" asp-controller="Provider" method="post">
+
+                    <input type="hidden" asp-for="PatientId" value="1">
+                    <input type="hidden" asp-for="ProviderId" value="@ViewBag.ProviderInfo.ProviderId">
+                    <input type="hidden" asp-for="Status" value="created">
+
+                    <div class="input-group mb-3">
+                        <label asp-for="DateTime" class="input-group-text"></label>
+                        <input asp-for="DateTime" class="form-control">
+                        <label asp-for="Duration" class="input-group-text"></label>
+                        <select asp-for="Duration" class="form-select">
+                            <option value="30" selected="">Select</option>
+                            <option value="15">15 min</option>
+                            <option value="20">20 min</option>
+                            <option value="30">30 min</option>
+                            <option value="60">60 min</option>
+                        </select>
+                        <button class="btn btn-primary" type="submit" id="button-addon2">Create <i class="fa-solid fa-calendar-plus"></i></button>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="col-md-9 col-sm-12">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th scope="col">Appoitment Date</th>
+                                <th scope="col">Appoitment Time</th>
+                                <th scope="col">Appoitment Duration</th>
+                                <th scope="col">Appoitment Provider</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var appt in ViewBag.ProviderAppointments)
+                                {
+                                    <tr>
+                                        <th scope="row">@appt.DateTime.ToString("MMMM d, yyyy")</th>
+                                        <td>@appt.DateTime.ToString("hh:mm tt")</td>
+                                        <td>@appt.Duration minutes</td>
+                                        <td>@appt.Provider.User.getFullName()</td>
+                                        <td>
+                                            <a class="btn btn-sm btn-danger" asp-action="ProviderDeleteAppt" asp-controller="Provider" asp-route-appointmentId="@appt.AppointmentId">Remove</a>
+                                        </td>
+                                    </tr>
+                                    
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+            </div>
+        
+
+    </div>
+    
+</div>

@@ -1,0 +1,97 @@
+@{
+    ViewData["Title"] = "Welcome";
+    Layout = "_LayoutBS";
+}
+
+<div class="row">
+    
+    <partial name="_LeftColumn"/>
+       
+    <div class="col-12 col-sm-8">
+
+        <div class="col-sm-12">
+            <div class="btn-group w-100">
+                <button type="button" class="btn btn-outline-primary col-sm-9" disabled>
+                    <small>“Books are a uniquely portable magic.”</small>
+                </button>
+        </div>
+
+        <div class="col-sm-12 row me-0 mt-3 justify-content-between">
+
+            <div class="col-sm-4 col-md-12 col-lg-3">
+                <div class="card">
+                    <div class="card-body bg-gray-400 p-2 text-center">
+                        <h6 class="card-title">Recent Blood Pressure:</h6>
+                        <hr class="my-2 mx-auto">
+                        <p class="fs-4">120/80</p>
+                        <hr class="my-2 mx-auto">
+                        <small class="text-muted">Jun 12, 2022</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-3 col-md-12 col-lg-3">
+                <div class="card">
+                    <div class="card-body bg-gray-400 p-2 text-center">
+                        <h6 class="card-title">Weight:</h6>
+                        <hr class="my-2 mx-auto">
+                        <p class="fs-4">@ViewBag.PatientInfo.Weight kg</p>
+                        <hr class="my-2 mx-auto">
+                        <small class="text-muted">@((int)(Convert.ToDouble(ViewBag.PatientInfo.Weight)*2.2)) lbs</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-5 col-md-12 col-lg-6">
+                <div class="card">
+                    <div class="card-body bg-gray-400 p-2 text-center">
+                        <h6 class="card-title">Next Appointment:</h6>
+                        <hr class="my-2 mx-auto">
+
+                        @if(ViewBag.NextAppointment != null)
+                        {
+                            <p class="fs-4"> @ViewBag.NextAppointment.DateTime.ToString("MMMM dd") at
+                                @ViewBag.NextAppointment.DateTime.ToString("h:mm tt")</p>
+                            <hr class="my-2 mx-auto">
+                            <small class="text-muted fst-italic">Dr.
+                                @ViewBag.NextAppointment.Provider.User.PreferredName</small>
+                        }
+                        else
+                        {
+                            <p class="fs-4"> You have No Upcoming Appointments Scheduled</p>
+                        }
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="rowtwo">
+
+            <div class="card">
+                <div class="card-header bg-gray-500">
+                    <h5 class="mb-0">Medications:</h5>
+                </div>
+                <div class="card-body p-0">
+                    <partial name="_PatientMeds" />
+                    <partial name="_PtAddedMeds" />
+                </div>
+                
+            </div>
+
+            <div class="card">
+                <div class="card-header bg-gray-500">
+                    <h5 class="mb-0">Visit History:</h5>
+                </div>
+                <div class="card-body p-0">
+                    <partial name="_PatientAppt"/>
+                </div>
+                
+            </div>
+
+
+            <partial name="_MedicalNotesAcc"/>
+
+    </div>
+    
+</div>

@@ -76,3 +76,13 @@ textarea:focus-visible.form-control-plaintext {
   -webkit-appearance:none;
   box-shadow: none !important;
 }
+
+.btn-left-sidebar {
+  width: 3.8rem;
+  height: 3.8rem;
+  line-height: 3rem;
+  border: 2px solid;
+}
+.btn-left-sidebar:hover {
+  border: 2px solid;
+}

@@ -1,0 +1,70 @@
+@model User
+
+@{
+    ViewData["Title"] = "Welcome";
+    Layout = "_LayoutBS";
+}
+
+<div class="row">
+    
+    <partial name="_LeftColumn"/>
+
+    <div class="col-12 col-sm-8">
+        <div>
+            <h4>Edit Patient Information</h4>
+            <form action="/edit/patientinfo" method="post" class="row g-3 align-items-center">
+                <div class="col-md-6">
+                    <label for="preferredName" class="form-label">Preferred Name</label>
+                    <input type="text" class="form-control" id="inputpreferredname" value="@ViewBag.UserLoggedIn.PreferredName"
+                        asp-for="PreferredName">
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Pronouns" class="col-form-label"></label>
+                    <select class="form-select"  asp-for="Pronouns">
+                        <option value="@ViewBag.UserLoggedIn.Pronouns" selected> @ViewBag.UserLoggedIn.Pronouns</option>
+                        <option value="He/Him">He/Him</option>
+                        <option value="She/Her">She/Her</option>
+                        <option value="They/Them">They/Them</option>
+                        <option value="Other">Other</option>
+                        <option value="NoAnswer">Prefer Not to Answer</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputEmail4" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="inputEmail4" value="@ViewBag.UserLoggedIn.Email" asp-for="Email" disabled>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputPassword4" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="inputPassword4" asp-for="Password" disabled>
+                </div>
+                <div class="col-12">
+                    <label for="inputAddress" class="form-label">Address</label>
+                    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St"
+                        value="@ViewBag.UserLoggedIn.StreetAddress" asp-for="StreetAddress">
+                </div>
+                <div class="col-md-6">
+                    <label for="inputCity" class="form-label">City</label>
+                    <input type="text" class="form-control" id="inputCity" value="@ViewBag.UserLoggedIn.City" asp-for="City">
+                </div>
+                <div class="col-md-4">
+                    <label for="inputState" class="form-label">State</label>
+                    <input type="text" class="form-control" id="inputState" value="@ViewBag.UserLoggedIn.State" asp-for="State">
+                </div>
+                <div class="col-md-2">
+                    <label for="inputZip" class="form-label">Zip</label>
+                    <input type="text" class="form-control" id="inputZip" value="@ViewBag.UserLoggedIn.Zipcode" asp-for="Zipcode">
+                </div>
+                <div class="col-md-6">
+                    <label for="inputEmail4" class="form-label">Phone Number</label>
+                    <input type="text" class="form-control" id="inputPhonenumber" value="@ViewBag.UserLoggedIn.PhoneNumber"
+                        asp-for="PhoneNumber">
+                </div>
+                <div class="col-sm-12" id="btnsubmit-register-page-block">
+                    <button type="submit" class="btn btn-primary btn-lg my-3 col-sm-12 align-content-end"
+                        id="btnsubmit-register-page">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

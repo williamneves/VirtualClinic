@@ -1,0 +1,51 @@
+@model ProviderUpdate
+
+@{
+    ViewData["Title"] = "Welcome";
+    Layout = "_LayoutBS";
+}
+
+<div class="row">
+    <partial name= "_LeftColumnProvider"/>
+
+    <div class="col-12 col-sm-8">
+        <div>
+            <h4>Edit Provider Information</h4>
+            <form action="/edit/providerinfo" method="post" class="row g-3 align-items-center">
+                <div class="col-md-6">
+                    <label for="preferredName" class="form-label">Preferred Name</label>
+                    <input type="text" class="form-control" id="inputpreferredname" value="@ViewBag.UserLoggedIn.PreferredName"
+                        asp-for="PreferredName">
+                </div>
+                <div class="col-md-6">
+                    <label for="Specialty" class="form-label">Specialty</label>
+                    <input type="text" class="form-control" id="inputSpecialty" value="@ViewBag.ProviderInfo.Specialty" asp-for="Specialty">
+                </div>
+                <div class="col-md-6">
+                    <label for="NPInumber" class="form-label">NPI Number</label>
+                    <input type="text" class="form-control" id="inputNPInumber" value="@ViewBag.ProviderInfo.NPInumber" asp-for="NPInumber">
+                </div>
+                <div class="col-md-6">
+                    <label for="DEAnumber" class="form-label">DEA Number</label>
+                    <input type="text" class="form-control" id="inputDEAnumber" value="@ViewBag.ProviderInfo.DEAnumber" asp-for="DEAnumber">
+                </div>
+                <div class="col-md-6">
+                    <label for="BankName" class="form-label">Bank Name</label>
+                    <input type="text" class="form-control" id="inputBankName" value="@ViewBag.ProviderInfo.BankName" asp-for="BankName">
+                </div>
+                <div class="col-md-6">
+                    <label for="RoutingNumber" class="form-label">Routing Number</label>
+                    <input type="text" class="form-control" id="inputRoutingNumber" value="@ViewBag.ProviderInfo.RoutingNumber" asp-for="RoutingNumber">
+                </div>
+                <div class="col-md-6">
+                    <label for="AdditionalInformation" class="form-label">Additional Information</label>
+                    <input type="text" class="form-control" id="inputAdditionalInformation" value="@ViewBag.ProviderInfo.AdditionalInformation" asp-for="AdditionalInformation">
+                </div>
+                <div class="col-sm-12" id="btnsubmit-register-page-block">
+                    <button type="submit" class="btn btn-primary btn-lg my-3 col-sm-12 align-content-end"
+                        id="btnsubmit-register-page">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

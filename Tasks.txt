@@ -1,42 +1,55 @@
-William's Tasks 
--Login and Register: 
-    - Need Provider
-        -- need a pin code to register as a doctor
 
-- create an appt page. 
+Meeting 4/26
 
+HomePage: 
+DONE 1. remove "link" in top navbar
+2. Create about us page
+3. AdminAccess
+DONE 4. Login values for pronouns need to be changed
 
+ Left NavBAr links patient
+DONE 1. Dashboard
+2. Messages
+3. Create Appointment
+4. Medical History view
+DONE 5. Profile view
+DONE 6. Logout
 
-Theresa's Tasks
-    - Create Provider Dashboard
-    
-    -view a patient page. 
+Patient: 
+Dashboard: 
+2. Figure out what to put in HardCode "BP"
+DONE 3. Dashboard Action buttons- CSS -- smaller text
+DONE 4. Meds table --> place in card to match css.. as well as display user reported medication
+5. Upload profile image 
+DONE 6. function to say if preferred name != null should display preferred name over the legal name
+DONE 7. show patient ht and sex if available
+8. Information Pt need more Information
 
-    -view provider dash
+Edit Patient Page: 
+2. readonly until you press the edit button also add legal name read only
+DONE 3. delete margintop / center page
+4. edit image profile button
 
-    -edit profile for patient
+Edit Medical history page: 
+1. CSS
+2. Query not to reload page
+DONE 3. Left column
+DONE 4. medication table in scrollpsy?
 
-
-
-What needs to be done: 
-
-Login and Register: 
-    - Need Provider
-        -- need a pin code to register as a doctor
-    * Admin Login
+dONE Left NavBAr links provider
+DONE 1. Dashboard
+2. Messages
+3. Create Appointment/ view appt
+4. Start Visit PAge
+DONE 5. Profile/Editprofile
+6. All patients 
+DONE 7. Logout
 
 Provider Dashboard: 
-    - Create Provider Dashboard
+1. Calendar click on 
 
-    - Create an appt page
+Done 1. . Make Profile Edit Page
+DONE 2. Make a Page for all patients
 
-    - Page view patient --- link -- read only patient Dashboard
-
-    - Attend an appt page --- with the link to the provider documentation
-
-    -Edit profile
-
-Patient Dashboard: 
-    - edit profile- add button
-
-    - schedule an appt. 
+3. Make a page to view past notes for Doctor
+4. Link a profile page to patient on allpatients page.

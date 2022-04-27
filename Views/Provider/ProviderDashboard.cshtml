@@ -1,0 +1,149 @@
+@{
+    ViewData["Title"] = "Welcome";
+    Layout = "_LayoutBS";
+}
+
+<div class="mainbody">
+
+</div>
+<div class="row">
+
+    <partial name="_LeftColumnProvider"/>
+
+    <div class="col-12 col-sm-8">
+
+        <div class="col-sm-12 row me-0 mt-3 justify-content-between">
+            
+            <div class="col-sm-4 col-md-12 col-lg-4">
+                <div class="card">
+                    <div class="card-body bg-gray-400 p-2 text-center">
+                        <h6 class="card-title"> Labs to Review:</h6>
+                        <hr class="my-2 mx-auto">
+                        <p class="display-6">3</p>
+                        <hr class="my-2 mx-auto">
+                        <small class="text-muted"></small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-4 col-md-12 col-lg-4">
+                <div class="card">
+                    <div class="card-body bg-gray-400 p-2 text-center">
+                        <h6 class="card-title">Messages:</h6>
+                        <hr class="my-2 mx-auto">
+                        <p class="display-6">5</p>
+                        <hr class="my-2 mx-auto">
+                        <small class="text-muted"></small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-4 col-md-12 col-lg-4">
+                <div class="card">
+                    <div class="card-body bg-gray-400 p-2 text-center">
+                        <h6 class="card-title">Next Appointment:</h6>
+                        <hr class="my-2 mx-auto">
+
+                        @if (ViewBag.NextAppointment != null)
+                        {
+                            <p class="fs-3"> @ViewBag.NextAppointment.DateTime.ToString("MMMM dd") at
+                                @ViewBag.NextAppointment.DateTime.ToString("h:mm tt")</p>
+                            <hr class="my-2 mx-auto">
+                            <small class="text-muted fst-italic">Dr.
+                                @ViewBag.NextAppointment.Provider.User.PreferredName</small>
+                        }
+                        else
+                        {
+                            <p class="fs-3"> You have No Upcoming Appointments Scheduled</p>
+                        }
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="rowtwo">
+
+            <div>
+                <h4>Appointment Calendar</h4>
+            </div>
+            @* CALENDAR TABS *@
+            <div>
+                <div>
+                    <partial name="_ProviderCalendar.cshtml"/>
+                </div>
+            </div>
+
+
+            @* <div class="card">
+                <div class="card-header bg-gray-500">
+                    <h5 class="mb-0">Patient Information:</h5>
+                </div>
+            </div> *@
+        </div>
+    </div>
+
+    @* Canvas *@
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+        @* <div class="offcanvas-header">
+            <p>Patient Info</p>
+            </div>
+
+            <div class="offcanvas-body">
+            <div class="card col-sm-10 col-10 mx-auto mb-4 bg-gray-500 rounded-3">
+
+            <img src="https://www.newsshare.in/wp-content/uploads/2/Cartoon-WhatsApp-DP-44.jpg"
+            class="rounded-circle mx-auto border border-5 shadow border-white w-50 my-2" alt="Profile Picture">
+            <h4 class="my-2 text-center"> ViewBag.UserLoggedIn.FirstName ViewBag.UserLoggedIn.LastName</h4>
+            <p class="my-2 text-center">Preferred Pronouns: ViewBag.UserLoggedIn.Pronouns</p>
+            </div>
+
+            <div class="card col-sm-10 col-10 mx-auto mb-4 bg-gray-100 rounded-3">
+            <div class="card-header border-bottom bg-gray-500">
+            <span class="card-title fw-bold">Medical Information:</span>
+            </div>
+            <div class="card-body p-0">
+            <ul class="list-group list-group-flush">
+            <li class="list-group-item bg-gray-100">Sex:</li>
+            <li class="list-group-item bg-gray-100">Height:</li>
+            <li class="list-group-item bg-gray-100">Weight:</li>
+            <li class="list-group-item bg-gray-100 p-0 m-0">
+            @* <partial name="_Allergies-MedHx" /> *@
+        @* </li>
+            <li class="list-group-item bg-gray-100 p-0 m-0">
+            <div class="accordion accordion-flush" id="accordionPanelsStayOpenExample">
+            <div class="accordion-item">
+            <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+            <button class="accordion-button py-2 bg-gray-100 collapsed" type="button"
+            data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne"
+            aria-expanded="false" aria-controls="panelsStayOpen-collapseOne">
+            Allergies:
+            </button>
+            </h2>
+            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse"
+            aria-labelledby="panelsStayOpen-headingOne">
+            <div class="accordion-body p-0">
+            <ul class="list-group list-group-flush">
+            @if (@ViewBag.PatientAllergies.Allergies.Count != 0)
+            {
+            foreach (var i in ViewBag.PatientAllergies.Allergies)
+            {
+            <li class="list-group-item"><b>@i.Name</b> | Type of Reaction:
+            <em>@i.Reaction</em></li>
+            }
+            }
+            else
+            {
+            <li class="list-group-item">No Known Allergies</li>
+            }
+            </ul>
+            </div>
+            </div>
+            </div>
+            </li>
+
+            </ul>
+            </div> *@
+    </div>
+</div>

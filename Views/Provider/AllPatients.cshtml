@@ -1,0 +1,56 @@
+@{
+    ViewData["Title"] = "Welcome";
+    Layout = "_LayoutBS";
+}
+
+<div class="mainbody">
+
+</div>
+<div class="row">
+
+    <partial name="_LeftColumnProvider"/>
+
+    <div class="col-12 col-sm-8">
+
+        <div>
+            <div class="card mb-4">
+                <div class="card-header bg-gray-500">
+
+                    <h5 class="mb-0">All Patients</h5>
+
+                </div>
+                @if (ViewBag.AllPatients.Count != 0)
+                {                        
+                    <div class="card-body" style="max-height: 250px;overflow-y: scroll;">
+                    <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Patient Name</th>
+                                        <th scope="col">Age</th>
+                                        <th scope="col">Date of Birth</th>
+                                        <th scope="col">Gender</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach(var i in ViewBag.AllPatients)
+                                    {
+                                        <tr>
+                                            <td>@i.User.getFullName()</td>
+                                            <td>@i.User.getAgeInYear()y</td>
+                                            <td>@i.User.DOB.ToString("MMMM dd yyyy")</td>
+                                            <td>@i.User.Sex</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <p>You currently do not have any patients listed. </p>
+                    }
+            </div>
+        </div>
+    </div>
+</div>
+
