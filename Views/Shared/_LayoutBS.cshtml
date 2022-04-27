@@ -29,7 +29,7 @@
         @* <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">Company name</a> *@
         <div class="navbar-nav">
             <div class="nav-item text-nowrap">
-                <a class="nav-link px-3" asp-action="logout" asp-controller="Auth">Logout <i class="fa-duotone fa-arrow-right-to-arc"></i></a>
+                <a class="nav-link px-3" asp-action="logout" asp-controller="Auth">Logout <i class="fa-duotone fa-person-walking-arrow-right"></i></a>
             </div>
         </div>
     </header>
@@ -40,30 +40,46 @@
                 <div class="position-sticky pt-3">
                     <ul class="nav flex-column align-content-center">
                         <li class="nav-item text-center mb-2">
-                            <a class="btn btn-outline-secondary btn-sm w-75 rounded-3 mx-auto px-4 py-1 text-center" aria-current="page" href="#" data-bs-placement="right" data-bs-toggle="tooltip" data-bs-html="true" title="Dashboard">
+                            
+                        @if (@ViewBag.UserLoggedIn.userType == "provider")
+                        {
+                            <a asp-action="ProviderDashboard" asp-controller="Provider" class="btn btn-outline-secondary text-center fs-3" aria-current="page" data-bs-placement="right" data-bs-toggle="tooltip" data-bs-html="true" title="Dashboard">
                                 <i class="fa-duotone fa-grid-horizontal"></i>
-                
+                            </a>  
+                        }
+                        else
+                        {
+                            <a asp-action="PatientDashboard" asp-controller="Patient" class="btn btn-outline-secondary text-center fs-3" aria-current="page" data-bs-placement="right" data-bs-toggle="tooltip" data-bs-html="true" title="Dashboard">
+                                <i class="fa-duotone fa-grid-horizontal"></i>
                             </a>
+                        }
+                            
+
                         </li>
                         <li class="nav-item text-center mb-2">
-                            <a class="btn btn-outline-secondary btn-sm w-75 rounded-3 mx-auto px-4 py-1 text-center" aria-current="page" href="#" data-bs-placement="right" data-bs-toggle="tooltip" data-bs-html="true" title="Messages">
+                            <a class="btn-left-sidebar btn btn-outline-secondary fs-3 text-center" aria-current="page"  data-bs-placement="right" data-bs-toggle="tooltip" data-bs-html="true" title="Messages">
                                 <i class="fa-duotone fa-messages"></i>
                             </a>
                         </li>
                         <li class="nav-item text-center mb-2">
-                            <a class="btn btn-outline-secondary btn-sm w-75 rounded-3 mx-auto px-4 py-1 text-center" aria-current="page" href="#" data-bs-placement="right" data-bs-toggle="tooltip" data-bs-html="true" title="Appoitments">
+                            <a class="btn-left-sidebar btn btn-outline-secondary fs-3 text-center" aria-current="page"  data-bs-placement="right" data-bs-toggle="tooltip" data-bs-html="true" title="Appoitments">
                                 <i class="fa-duotone fa-calendar-plus"></i>
                             </a>
                         </li>
                         <li class="nav-item text-center mb-2">
-                            <a class="btn btn-outline-secondary btn-sm w-75 rounded-3 mx-auto px-4 py-1 text-center" aria-current="page" href="#" data-bs-placement="right" data-bs-toggle="tooltip" data-bs-html="true" title="Attend">
+                            <a class="btn-left-sidebar btn btn-outline-secondary fs-3 text-center" aria-current="page"  data-bs-placement="right" data-bs-toggle="tooltip" data-bs-html="true" title="Attend">
                                 <i class="fa-duotone fa-laptop-mobile"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item text-center mb-2">
+                            <a class="btn-left-sidebar btn btn-outline-secondary fs-3 text-center" aria-current="page"  data-bs-placement="right" data-bs-toggle="tooltip" data-bs-html="true" title="Attend">
+                                <i class="fa-solid fa-hospital-user"></i>
                             </a>
                         </li>
                         @if (@ViewBag.UserLoggedIn.userType == "provider")
                         {
                             <li class="nav-item text-center mb-2">
-                                <a class="btn btn-outline-secondary btn-sm w-75 rounded-3 mx-auto px-4 py-1 text-center" aria-current="page" href="#" data-bs-placement="right" data-bs-toggle="tooltip" data-bs-html="true" title="Profile">
+                                <a asp-action="EditProviderProfile" asp-controller="Provider" class="btn-left-sidebar btn btn-outline-secondary fs-3 text-center" aria-current="page"  data-bs-placement="right" data-bs-toggle="tooltip" data-bs-html="true" title="Profile">
                                     <i class="fa-duotone fa-user-doctor"></i>
                                 </a>
                             </li>
@@ -71,13 +87,13 @@
                         else
                         {
                             <li class="nav-item text-center mb-2">
-                                <a class="btn btn-outline-secondary btn-sm w-75 rounded-3 mx-auto px-4 py-1 text-center" aria-current="page" href="#" data-bs-placement="right" data-bs-toggle="tooltip" data-bs-html="true" title="Profile">
+                                <a asp-action="EditPatientProfile" asp-controller="Patient" class="btn-left-sidebar btn btn-outline-secondary btn-sm w-75 rounded-3 mx-auto px-4 py-1 text-center" aria-current="page"  data-bs-placement="right" data-bs-toggle="tooltip" data-bs-html="true" title="Profile">
                                     <i class="fa-duotone fa-id-badge"></i>
                                 </a>
                             </li>
                         }
                             <li class="nav-item text-center mb-2">
-                                <a class="btn btn-outline-secondary btn-sm w-75 rounded-3 mx-auto px-4 py-1 text-center" aria-current="page" href="#" data-bs-placement="right" data-bs-toggle="tooltip" data-bs-html="true" title="Profile">
+                                <a asp-action="logout" asp-controller="Auth" class="btn-left-sidebar btn btn-outline-secondary btn-sm w-75 rounded-3 mx-auto px-4 py-1 text-center" aria-current="page"  data-bs-placement="right" data-bs-toggle="tooltip" data-bs-html="true" title="Profile">
                                     <i class="fa-duotone fa-right-from-bracket"></i>
                                 </a>
                             </li>

@@ -121,7 +121,7 @@ namespace VirtualClinic.Controllers
 
             var userInDb = dbContext.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"));
 
-            ViewBag.User = userInDb;
+            ViewBag.UserLoggedIn = userInDb;
 
             
             // Patient Medications

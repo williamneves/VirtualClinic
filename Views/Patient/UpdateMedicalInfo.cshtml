@@ -3,54 +3,9 @@
     Layout = "_LayoutBS";
 }
 
-<div class="text-center card p-3 my-5 shadow col-6 m-auto">
-    <h3>Welcome @ViewBag.UserLoggedIn.FirstName @ViewBag.UserLoggedIn.LastName !</h3>
-    <p>You email is @ViewBag.UserLoggedIn.Email</p>
-    <a href="/edit/patientprofile" class="btn btn-sm btn-outline-light col-8 mx-auto my-3"><i class="bi bi-gear"></i>
-        Edit Profile</a>
-
-    <a asp-action="logout" asp-controller="Auth" class="w-50 m-auto btn btn-warning my-2">Logout</a>
-</div>
-
-<div class="mainbody">
-
-</div>
 <div class="row">
-    <div class="col-12 col-sm-4">
-
-        <div class="sticky-top" style="top: 4rem; z-index: -9999">
-
-
-            <div class="card col-sm-10 col-10 mx-auto mb-4 bg-gray-500 rounded-3">
-
-                <img src="https://www.newsshare.in/wp-content/uploads/2/Cartoon-WhatsApp-DP-44.jpg"
-                    class="rounded-circle mx-auto border border-5 shadow border-white w-50 my-2" alt="Profile Picture">
-                <h4 class="my-2 text-center"> @ViewBag.UserLoggedIn.FirstName @ViewBag.UserLoggedIn.LastName</h4>
-                <p class="my-2 text-center">Preferred Pronouns: @ViewBag.UserLoggedIn.Pronouns</p>
-
-                <a href="/edit/patientprofile" class="btn btn-sm btn-outline-light col-8 mx-auto my-3"><i
-                        class="bi bi-gear"></i> Edit Profile</a>
-            </div>
-
-            <div class="card col-sm-10 col-10 mx-auto mb-4 bg-gray-100 rounded-3">
-                <div class="card-header border-bottom bg-gray-500">
-                    <span class="card-title fw-bold">Patient Information:</span>
-                </div>
-                <div class="card-body p-0">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item bg-gray-100">Sex:</li>
-                        <li class="list-group-item bg-gray-200">Allergies:
-
-                            <partial name="_Allergies-MedHx" />
-                        </li>
-                        <li class="list-group-item bg-gray-100">Height:</li>
-                        <li class="list-group-item bg-gray-200">Medical History:</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-    </div>
+    
+    <partial name="_LeftColumn"/>
 
     <div class="col-12 col-sm-8">
         <h3>Add Medical Information:</h3>
@@ -59,6 +14,33 @@
             <partial name="_AddPtMed" />
         </div>
         <div>
+        <nav id="navbar-example2" class="navbar navbar-light bg-light px-3">
+  <a class="navbar-brand" href="#">Navbar</a>
+  <ul class="nav nav-pills">
+    <li class="nav-item">
+      <a class="nav-link" href="#scrollspyHeading1">First</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#scrollspyHeading2">Second</a>
+    </li>
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Dropdown</a>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="#scrollspyHeading3">Third</a></li>
+        <li><a class="dropdown-item" href="#scrollspyHeading4">Fourth</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="#scrollspyHeading5">Fifth</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+<div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-offset="0" class="scrollspy-example" tabindex="0">
+  <h4 id="scrollspyHeading1">Prescribed Medications</h4>
+  <p>...</p>
+  <h4 id="scrollspyHeading2">Patient Reported Medications</h4>
+  <p>...</p>
+
+</div>
             @if (ViewBag.PatientInfo.Medications.Count != 0)
 {    
     <table class="table">

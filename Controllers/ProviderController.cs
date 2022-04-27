@@ -34,7 +34,7 @@ namespace VirtualClinic.Controllers
 
             int UserId = (int) HttpContext.Session.GetInt32("UserId");
 
-            ViewBag.userInDb = dbContext.Users.FirstOrDefault(p => p.UserId == UserId);
+            ViewBag.UserLoggedIn = dbContext.Users.FirstOrDefault(p => p.UserId == UserId);
 
             return View();                      
         }
@@ -110,13 +110,13 @@ namespace VirtualClinic.Controllers
 
             ViewBag.MedicalNote1Exists = dbContext.MedicalNotes
                 .Any(m => m.PatientId == 1 
-                                     && m.ProviderId == 1
-                                     && m.AppointmentId == 1);
+                                    && m.ProviderId == 1
+                                    && m.AppointmentId == 1);
 
             ViewBag.MedicalNote1 = dbContext.MedicalNotes
                 .FirstOrDefault(m => m.PatientId == 1 
-                          && m.ProviderId == 1
-                          && m.AppointmentId == 1);
+                        && m.ProviderId == 1
+                        && m.AppointmentId == 1);
 
             
             return View();
@@ -138,8 +138,8 @@ namespace VirtualClinic.Controllers
                 
             var newNoteInDb = dbContext.MedicalNotes
                 .FirstOrDefault(m => m.PatientId == newNote.PatientId 
-                                     && m.ProviderId == newNote.ProviderId
-                                     && m.AppointmentId == newNote.AppointmentId);
+                                    && m.ProviderId == newNote.ProviderId
+                                    && m.AppointmentId == newNote.AppointmentId);
             if (newNoteInDb != null)
             {
                 newNoteInDb.HPI = newNote.HPI;
@@ -165,5 +165,13 @@ namespace VirtualClinic.Controllers
             }
 
         }
+            
+        // Edit Provider Profile
+        [HttpGet("edit/providerprofile")]
+        public IActionResult EditProviderProfile()
+        {
+            return View();
+        }
+
     }
 }

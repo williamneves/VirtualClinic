@@ -51,7 +51,7 @@ HomePage:
 3. AdminAccess
 4. Login values for pronouns need to be changed
 
-Left NavBAr links patient
+DONE Left NavBAr links patient
 1. Dashboard
 2. Messages
 3. Create Appointment
@@ -61,32 +61,30 @@ Left NavBAr links patient
 
 Patient: 
 Dashboard: 
-1. Remove Example User- extra button
 2. Figure out what to put in HardCode "BP"
-3. Dashboard Action buttons- CSS -- smaller text
-4. Meds table --> place in card to match css.. as well as display user reported medication
+DONE 3. Dashboard Action buttons- CSS -- smaller text
+DONE 4. Meds table --> place in card to match css.. as well as display user reported medication
 5. Upload profile image 
-6. function to say if preferred name != null should display preferred name over the legal name
-7. show patient ht and sex if available
+DONE 6. function to say if preferred name != null should display preferred name over the legal name
+DONE 7. show patient ht and sex if available
 8. Information Pt need more Information
 
 Edit Patient Page: 
-1. Left column -- partial?
 2. readonly until you press the edit button also add legal name read only
-3. delete margintop / center page
+DONE 3. delete margintop / center page
 4. edit image profile button
 
 Edit Medical history page: 
 1. CSS
 2. Query not to reload page
-3. Left column
+DONE 3. Left column
 4. medication table in scrollpsy?
 
-Left NavBAr links provider
+dONE Left NavBAr links provider
 1. Dashboard
 2. Messages
 3. Create Appointment/ view appt
-4. Start Visit Button
+4. Start Visit PAge
 5. Profile/Editprofile
 6. All patients 
 7. Logout
