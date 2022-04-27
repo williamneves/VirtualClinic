@@ -290,5 +290,7 @@ namespace VirtualClinic.Controllers
             dbContext.SaveChanges();
             return RedirectToAction("UpdateMedicalInfo");
         }
+        
+        
     }
 }

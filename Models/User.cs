@@ -106,7 +106,7 @@ namespace VirtualClinic.Models
 
         // Methods
         // Get Full Name
-        public string GetFullName()
+        public string getFullName()
         {
             return $"{FirstName} {LastName}";
         }

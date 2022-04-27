@@ -17,6 +17,10 @@ namespace VirtualClinic.Models
         [DataType(DataType.DateTime)]
         public DateTime DateTime { get; set; }
 
+        // Duration
+        [Display(Name = "Duration", Prompt = "Duration")]
+        public int Duration { get; set; } = 20;
+
         // Appointment Status
         public string Status { get; set; }
 

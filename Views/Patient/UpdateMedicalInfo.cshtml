@@ -4,162 +4,172 @@
 }
 
 <div class="row">
-    
+
     <partial name="_LeftColumn"/>
 
     <div class="col-12 col-sm-8">
         <h3>Add Medical Information:</h3>
-        <div>
-            <h4>Medications</h4>
-            <partial name="_AddPtMed" />
-        </div>
-        <div>
-        <nav id="navbar-example2" class="navbar navbar-light bg-light px-3">
-  <a class="navbar-brand" href="#">Navbar</a>
-  <ul class="nav nav-pills">
-    <li class="nav-item">
-      <a class="nav-link" href="#scrollspyHeading1">First</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#scrollspyHeading2">Second</a>
-    </li>
-    <li class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Dropdown</a>
-      <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="#scrollspyHeading3">Third</a></li>
-        <li><a class="dropdown-item" href="#scrollspyHeading4">Fourth</a></li>
-        <li><hr class="dropdown-divider"></li>
-        <li><a class="dropdown-item" href="#scrollspyHeading5">Fifth</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
-<div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-offset="0" class="scrollspy-example" tabindex="0">
-  <h4 id="scrollspyHeading1">Prescribed Medications</h4>
-  <p>...</p>
-  <h4 id="scrollspyHeading2">Patient Reported Medications</h4>
-  <p>...</p>
-
-</div>
-            @if (ViewBag.PatientInfo.Medications.Count != 0)
-{    
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">Prescribed Medication Name</th>
-                <th scope="col">Description</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var i in ViewBag.PatientInfo.Medications)
-            {
-                <tr>
-                    <td>@i.Name</td>
-                    <td>@i.Description</td>
-                    <td>
-                        <a href="/remove/medication/@i.MedicationId" class="btn btn-primary">Remove Medication</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-        </table>
-        } else {
-            <p>You currently do not have any prescribed medications listed. </p>
-        }
-
-        </div>
-                <div>
-            @if (ViewBag.PatientInfo.ReportedMedications.Count != 0)
-{    
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">Reported Medication Name</th>
-                <th scope="col">Description</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var i in ViewBag.PatientInfo.ReportedMedications)
-            {
-                <tr>
-                    <td>@i.Name</td>
-                    <td>@i.Description</td>
-                    <td>
-                        <a href="/remove/ptmedication/@i.ReportedMedicationId" class="btn btn-primary">Remove Medication</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-        </table>
-        } else {
-            <p>You do not have any reported medications listed. </p>
-        }
-
-        </div>
 
         <div>
-            <h4>Allergies</h4>
-            <partial name="_AddAllergy" />
-        </div>
-        <div>
-            @if (@ViewBag.PatientAllergies.Allergies.Count != 0)
-            {
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Name</th>
-                            <th scope="col">Reaction</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var i in ViewBag.PatientAllergies.Allergies)
-                        {
+            <div class="card mb-4">
+                <div class="card-header bg-gray-500">
+
+                    <h5 class="mb-0">Prescribed Medications</h5>
+
+                </div>
+                @if (ViewBag.PatientInfo.Medications.Count != 0)
+                {
+                    <div class="card-body" style="max-height: 250px;overflow-y: scroll;">
+                        <table class="table table-sm">
+                            <thead>
                             <tr>
-                                <td>@i.Name</td>
-                                <td>@i.Reaction</td>
-                                <td>
-                                    <a href="/remove/allergy/@i.AllergyId" class="btn btn-primary">Remove Allergy</a>
-                                </td>
+                                <th scope="col">Prescribed Medication Name</th>
+                                <th scope="col">Description</th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
-            }
-            else
-            {
-                <p>You currently do not have any allergies listed. </p>
-            }
-        </div>
-        <div>
-            <h4>Medical History </h4>
-            <partial name="_AddMedHx" />
-        </div>
-        <div>
-            @if (@ViewBag.PatientMedHx.MedicalHistory.Count != 0)
-            {
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Diagnosis</th>
-                            <th scope="col">Year Diagnosed</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var i in ViewBag.PatientMedHx.MedicalHistory)
-                        {
+                            </thead>
+                            <tbody>
+                            @foreach (var i in ViewBag.PatientInfo.Medications)
+                            {
+                                <tr>
+                                    <td>@i.Name</td>
+                                    <td>@i.Description</td>
+                                    @* <td> *@
+                                    @*     <a href="/remove/medication/@i.MedicationId" class="btn btn-primary btn-sm">Remove Medication</a> *@
+                                    @* </td> *@
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+
+                    </div>
+                }
+                else
+                {
+                    <p>You currently do not have any prescribed medications listed. </p>
+                }
+            </div>
+            <div class="card mb-4">
+                <div class="card-header bg-gray-500">
+                    <h5 mb-0>Patient Reported Medications</h5>
+
+                </div>
+                <div class="card-body">
+
+                    <div>
+                        <p class="fs-5">Add Medications</p>
+                        <partial name="_AddPtMed"/>
+                    </div>
+                    <hr/>
+
+                    @if (ViewBag.PatientInfo.ReportedMedications.Count != 0)
+                    {
+                        <table class="table table-sm">
+                            <thead>
                             <tr>
-                                <td>@i.Diagnosis</td>
-                                <td>@i.DateofDx</td>
-                                <td><a href="/remove/medicalhx/@i.MedicalHistoryId" class="btn btn-primary">Remove Diagnosis</a> </td>
+                                <th scope="col">Reported Medication Name</th>
+                                <th scope="col">Description</th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
-            }
-            else
-            {
-                <p>You currently do not have any diagnoses listed. </p>
-            }
+                            </thead>
+                            <tbody>
+                            @foreach (var i in ViewBag.PatientInfo.ReportedMedications)
+                            {
+                                <tr>
+                                    <td>@i.Name</td>
+                                    <td>@i.Description</td>
+                                    <td>
+                                        <a href="/remove/ptmedication/@i.ReportedMedicationId" class="btn btn-primary btn-sm">Remove Medication</a>
+                                    </td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        <p>You do not have any reported medications listed. </p>
+                    }
+                </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-header bg-gray-500">
+                    <h5 mb-0>Patient Reported Medications</h5>
+
+                </div>
+                <div class="card-body">
+                    <p class="fs-5">Add Allergies</p>
+                    <partial name="_AddAllergy"/>
+                    <hr/>
+
+                    @if (@ViewBag.PatientAllergies.Allergies.Count != 0)
+                    {
+                        <table class="table table-sm">
+                            <thead>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Reaction</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (var i in ViewBag.PatientAllergies.Allergies)
+                            {
+                                <tr>
+                                    <td>@i.Name</td>
+                                    <td>@i.Reaction</td>
+                                    <td>
+                                        <a href="/remove/allergy/@i.AllergyId" class="btn btn-primary">Remove Allergy</a>
+                                    </td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        <p>You currently do not have any allergies listed. </p>
+                    }
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header bg-gray-500">
+                    <h5 mb-0>Patient Reported </h5>
+
+                </div>
+                <div class="card-body">
+                    <p class="fs-5">Medical History</p>
+                    <partial name="_AddMedHx"/>
+
+                    <hr/>
+                    @if (@ViewBag.PatientMedHx.MedicalHistory.Count != 0)
+                    {
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">Diagnosis</th>
+                                <th scope="col">Year Diagnosed</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (var i in ViewBag.PatientMedHx.MedicalHistory)
+                            {
+                                <tr>
+                                    <td>@i.Diagnosis</td>
+                                    <td>@i.DateofDx</td>
+                                    <td>
+                                        <a href="/remove/medicalhx/@i.MedicalHistoryId" class="btn btn-primary">Remove Diagnosis</a>
+                                    </td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        <p>You currently do not have any diagnoses listed. </p>
+                    }
+
+                </div>
+            </div>
         </div>
     </div>
 </div>

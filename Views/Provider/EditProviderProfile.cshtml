@@ -1,113 +1,51 @@
-@model User
+@model ProviderUpdate
 
+@{
+    ViewData["Title"] = "Welcome";
+    Layout = "_LayoutBS";
+}
 
-<h1 class="h3 mb-4 fw-normal text-center" id="registertext-reg-page">Edit Profile Page</h1>
-<form asp-action="RegisterUserProvider" autocomplete="off" asp-controller="Auth" method="post" class="row justify-content-between">
-    <hr class="dropdown-divider"/>
-    <div class="col-sm-6">
-        <small>
-            <span asp-validation-for="FirstName" class="text-danger"></span>
-        </small>
-        <div class="form-floating mb-3">
-            <input asp-for="FirstName" class="form-control required">
-            <label asp-for="FirstName" class="col-form-label"></label>
-        </div>
-        <small>
-            <span asp-validation-for="LastName" class="text-danger"></span>
-        </small>
-        <div class="form-floating mb-3">
-            <input asp-for="LastName" class="form-control">
-            <label asp-for="LastName" class="col-form-label"></label>
-        </div>
-        <small>
-            <span asp-validation-for="Email" class="text-danger"></span>
-        </small>
-        <div class="form-floating mb-3">
-            <input asp-for="Email" class="form-control">
-            <label asp-for="Email" class="col-form-label"></label>
-        </div>
-        <small>
-            <span asp-validation-for="Password" class="text-danger"></span>
-        </small>
-        <div class="form-floating mb-3">
-            <input asp-for="Password" class="form-control">
-            <label asp-for="Password" class="col-form-label"></label>
-        </div>
-        <small>
-            <span asp-validation-for="Confirm" class="text-danger"></span>
-        </small>
-        <div class="form-floating mb-3">
-            <input asp-for="Confirm" class="form-control">
-            <label asp-for="Confirm" class="col-form-label"></label>
-        </div>
-        <small>
-            <span asp-validation-for="AuthCode" class="text-danger"></span>
-        </small>
-        <div class="form-floating">
-            <input asp-for="AuthCode" class="form-control" required>
-            <label asp-for="AuthCode" class="col-form-label"></label>
-            <small class="mb-3 text-muted text-end me-2">
-                Provide the Code to Register as a Provider**
-            </small>
+<div class="row">
+    <partial name= "_LeftColumnProvider"/>
+
+    <div class="col-12 col-sm-8">
+        <div>
+            <h4>Edit Provider Information</h4>
+            <form action="/edit/providerinfo" method="post" class="row g-3 align-items-center">
+                <div class="col-md-6">
+                    <label for="preferredName" class="form-label">Preferred Name</label>
+                    <input type="text" class="form-control" id="inputpreferredname" value="@ViewBag.UserLoggedIn.PreferredName"
+                        asp-for="PreferredName">
+                </div>
+                <div class="col-md-6">
+                    <label for="Specialty" class="form-label">Specialty</label>
+                    <input type="text" class="form-control" id="inputSpecialty" value="@ViewBag.ProviderInfo.Specialty" asp-for="Specialty">
+                </div>
+                <div class="col-md-6">
+                    <label for="NPInumber" class="form-label">NPI Number</label>
+                    <input type="text" class="form-control" id="inputNPInumber" value="@ViewBag.ProviderInfo.NPInumber" asp-for="NPInumber">
+                </div>
+                <div class="col-md-6">
+                    <label for="DEAnumber" class="form-label">DEA Number</label>
+                    <input type="text" class="form-control" id="inputDEAnumber" value="@ViewBag.ProviderInfo.DEAnumber" asp-for="DEAnumber">
+                </div>
+                <div class="col-md-6">
+                    <label for="BankName" class="form-label">Bank Name</label>
+                    <input type="text" class="form-control" id="inputBankName" value="@ViewBag.ProviderInfo.BankName" asp-for="BankName">
+                </div>
+                <div class="col-md-6">
+                    <label for="RoutingNumber" class="form-label">Routing Number</label>
+                    <input type="text" class="form-control" id="inputRoutingNumber" value="@ViewBag.ProviderInfo.RoutingNumber" asp-for="RoutingNumber">
+                </div>
+                <div class="col-md-6">
+                    <label for="AdditionalInformation" class="form-label">Additional Information</label>
+                    <input type="text" class="form-control" id="inputAdditionalInformation" value="@ViewBag.ProviderInfo.AdditionalInformation" asp-for="AdditionalInformation">
+                </div>
+                <div class="col-sm-12" id="btnsubmit-register-page-block">
+                    <button type="submit" class="btn btn-primary btn-lg my-3 col-sm-12 align-content-end"
+                        id="btnsubmit-register-page">Submit</button>
+                </div>
+            </form>
         </div>
     </div>
-    <div class="col-sm-6">
-        <small>
-            <span asp-validation-for="DOB" class="text-danger"></span>
-        </small>
-        <div class="form-floating mb-3">
-            <input asp-for="DOB" class="form-control">
-            <label asp-for="DOB" class="col-form-label"></label>
-        </div>
-
-        <small>
-            <span asp-validation-for="Sex" class="text-danger"></span>
-        </small>
-        <div class="form-floating mb-3">
-            <select class="form-select" asp-for="Sex">
-                <option selected>Open this select menu</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-            </select>
-            <label asp-for="Sex" class="col-form-label"></label>
-        </div>
-        <div class="form-floating mb-3">
-            <select class="form-select" asp-for="Pronouns">
-                <option selected>Open this select menu</option>
-                <option value="Male">He/Him</option>
-                <option value="Female">She/Her</option>
-                <option value="Female">They/Them</option>
-                <option value="Female">Preferred Name</option>
-            </select>
-            <label asp-for="Pronouns" class="col-form-label"></label>
-        </div>
-        <small>
-            <span asp-validation-for="PreferredName" class="text-danger"></span>
-        </small>
-        <div class="form-floating mb-3">
-            <input asp-for="PreferredName" class="form-control">
-            <label asp-for="PreferredName" class="col-form-label"></label>
-        </div>
-        <small>
-            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-        </small>
-        <div class="form-floating mb-3">
-            <input asp-for="PhoneNumber" class="form-control">
-            <label asp-for="PhoneNumber" class="col-form-label"></label>
-        </div>
-
-
-    </div>
-    
-    <!-- <div class="mb-3 form-check">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-        <label class="form-check-label" for="exampleCheck1">Check me out</label>
-    </div> -->
-    <hr class="dropdown-divider"/>
-    <div class="col-sm-12" id="btnsubmit-register-page-block">
-        <button type="submit" class="btn btn-primary btn-lg my-3 col-sm-12 align-content-end" id="btnsubmit-register-page">Submit</button>
-    </div>
-</form>
-<script>
-$('input').attr('autocomplete', 'off');
-</script>
+</div>

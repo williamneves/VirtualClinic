@@ -1,63 +1,19 @@
-William's Tasks 
--Login and Register: 
-    - Need Provider
-        -- need a pin code to register as a doctor
-
-- create an appt page. 
-
-
-
-Theresa's Tasks
-    - Create Provider Dashboard
-    
-    -view a patient page. 
-
-    -view provider dash
-
-    -edit profile for patient
-
-
-
-What needs to be done: 
-
-Login and Register: 
-    - Need Provider
-        -- need a pin code to register as a doctor
-    * Admin Login
-
-Provider Dashboard: 
-    - Create Provider Dashboard
-
-    - Create an appt page
-
-    - Page view patient --- link -- read only patient Dashboard
-
-    - Attend an appt page --- with the link to the provider documentation
-
-    -Edit profile
-
-Patient Dashboard: 
-    - edit profile- add button
-
-    - schedule an appt. 
-
-
 
 Meeting 4/26
 
 HomePage: 
-1. remove "link" in top navbar
+DONE 1. remove "link" in top navbar
 2. Create about us page
 3. AdminAccess
-4. Login values for pronouns need to be changed
+DONE 4. Login values for pronouns need to be changed
 
-DONE Left NavBAr links patient
-1. Dashboard
+ Left NavBAr links patient
+DONE 1. Dashboard
 2. Messages
 3. Create Appointment
 4. Medical History view
-5. Profile view
-6. Logout
+DONE 5. Profile view
+DONE 6. Logout
 
 Patient: 
 Dashboard: 
@@ -78,16 +34,22 @@ Edit Medical history page:
 1. CSS
 2. Query not to reload page
 DONE 3. Left column
-4. medication table in scrollpsy?
+DONE 4. medication table in scrollpsy?
 
 dONE Left NavBAr links provider
-1. Dashboard
+DONE 1. Dashboard
 2. Messages
 3. Create Appointment/ view appt
 4. Start Visit PAge
-5. Profile/Editprofile
+DONE 5. Profile/Editprofile
 6. All patients 
-7. Logout
+DONE 7. Logout
 
 Provider Dashboard: 
 1. Calendar click on 
+
+Done 1. . Make Profile Edit Page
+DONE 2. Make a Page for all patients
+
+3. Make a page to view past notes for Doctor
+4. Link a profile page to patient on allpatients page.
