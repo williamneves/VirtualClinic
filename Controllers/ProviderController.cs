@@ -349,7 +349,7 @@ namespace VirtualClinic.Controllers
                 .Include(p => p.Appointments)
                 .Where(p => p.Appointments.Any(a => a.ProviderId == providerInDb.ProviderId))
                 .ToList();
-
+            
             // Create the veiewbags
             ViewBag.AllAppointments = AllAppointments;
             ViewBag.AllPatients = AllPatients;
@@ -358,5 +358,74 @@ namespace VirtualClinic.Controllers
 
             return View();
         } 
+
+        // Single Patient Provider View
+        [HttpGet("/patientinfo/{patientId}")]
+        public IActionResult SinglePtProviderView(int patientId)
+        {
+            if (HttpContext.Session.GetInt32("UserId") == null)
+            {
+                TempData["AuthError"] = "You must be logged in to view this page";
+                return RedirectToAction("Index", "Home");
+            }
+
+            var userInDb = dbContext.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"));
+
+            // Catch the provider in Db
+            var providerInDb = dbContext.Providers
+                .Include(p => p.User)
+                .FirstOrDefault(p => p.UserId == userInDb.UserId);
+
+            // ViewBag.AllPatients = dbContext.
+
+            // All the appointments for that the patient has
+            var AllAppointments = dbContext.Appointments
+                .Include(p => p.Patient)
+                .Include(p => p.Provider)
+                .Where(p => p.PatientId == patientId)
+                .OrderBy(p => p.DateTime)
+                .ToList();
+
+            // Create the veiewbags
+            ViewBag.AllAppointments = AllAppointments;
+            ViewBag.ProviderInfo = providerInDb;
+            ViewBag.UserLoggedIn = userInDb;
+             // Patient Info
+            
+            ViewBag.PatientInfo = dbContext.Patients
+                                    .Include(p => p.Medications)
+                                    .Include(p => p.ReportedMedications)
+                                    .SingleOrDefault(p => p.PatientId == patientId);
+
+            // Patient Allergies
+            ViewBag.PatientAllergies = dbContext.Patients
+                                        .Include(p => p.Allergies)
+                                        .SingleOrDefault(p => p.PatientId == patientId);
+    
+            // Patient MedHx
+            ViewBag.PatientMedHx = dbContext.Patients
+                                    .Include(p => p.MedicalHistory)
+                                    .SingleOrDefault(p => p.PatientId == patientId);
+
+            // Patient Appointment
+            ViewBag.PatientAppt = dbContext.Patients
+                                    .Include(p => p.Appointments)
+                                    .ThenInclude(l => l.Provider)
+                                    .ThenInclude(u => u.User)
+                                    .Include(p => p.Appointments)
+                                    .ThenInclude(m => m.MedicalNotes)
+                                    .SingleOrDefault(p => p.PatientId == patientId);
+
+             // Next appointment (not in the past)
+            ViewBag.NextAppointment = dbContext.Appointments
+                .Include(p => p.Patient)
+                .Include(p => p.Provider)
+                .ThenInclude(u => u.User)
+                .Where(p => p.PatientId == patientId && p.DateTime >= DateTime.Now.AddHours(-1))
+                .OrderBy(p => p.DateTime)
+                .FirstOrDefault();
+
+            return View();
+        }
     }
 }

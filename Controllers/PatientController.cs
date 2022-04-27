@@ -40,6 +40,7 @@ namespace VirtualClinic.Controllers
             // Patient Medications
             ViewBag.PatientInfo = dbContext.Patients
                                     .Include(p => p.Medications)
+                                    .Include(p => p.ReportedMedications)
                                     .FirstOrDefault(p => p.UserId == userInDb.UserId);
 
             // Patient Allergies
