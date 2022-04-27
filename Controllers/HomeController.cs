@@ -175,9 +175,9 @@ namespace VirtualClinic.Controllers
         [HttpGet("providerdashboard")]
         public IActionResult ProviderDashboard()
         {
-            int UserId = (int) HttpContext.Session.GetInt32("UserId");
+            // int UserId = (int) HttpContext.Session.GetInt32("UserId");
 
-            ViewBag.userInDb = dbContext.Users.FirstOrDefault(p => p.UserId == UserId);
+            // ViewBag.userInDb = dbContext.Users.FirstOrDefault(p => p.UserId == UserId);
             return View();                      
         }
 

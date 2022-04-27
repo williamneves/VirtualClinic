@@ -53,8 +53,8 @@
                 </div>
                 <div class="col-md-6">
                     <label asp-for="Pronouns" class="col-form-label"></label>
-                    <select class="form-select" value="@ViewBag.User.Pronouns" asp-for="Pronouns">
-                        <option selected>Open this select menu</option>
+                    <select class="form-select"  asp-for="Pronouns">
+                        <option value="@ViewBag.User.Pronouns" selected> @ViewBag.User.Pronouns</option>
                         <option value="He/Him">He/Him</option>
                         <option value="She/Her">She/Her</option>
                         <option value="They/Them">They/Them</option>

@@ -123,290 +123,85 @@
             </div>
             @* CALENDAR TABS *@
             <div>
-                <ul class="nav nav-tabs" id="myTab">
-                    <li class="active"><a href="#nav-today" data-toggle="tab"
-                            class="nav-link maintext">@DateTime.Today.ToString("dddd, MMMM dd yyyy")</a></li>
-                    <li><a href="#nav-tomorrow" data-toggle="tab" class="nav-link maintext">
-                            @DateTime.Today.AddDays(1).ToString("dddd, MMMM dd yyyy")</a></li>
-                    <li><a href="#nav-t2" data-toggle="tab"
-                            class="nav-link maintext">@DateTime.Today.AddDays(2).ToString("dddd, MMMM dd yyyy")</a></li>
-                    <li><a href="#nav-t3" data-toggle="tab"
-                            class="nav-link maintext">@DateTime.Today.AddDays(3).ToString("dddd, MMMM dd yyyy")</a></li>
-                    <li><a href="#nav-t4" data-toggle="tab"
-                            class="nav-link maintext">@DateTime.Today.AddDays(4).ToString("dddd, MMMM dd yyyy")</a></li>
-                    <li><a href="#nav-t5" data-toggle="tab"
-                            class="nav-link maintext">@DateTime.Today.AddDays(5).ToString("dddd, MMMM dd yyyy")</a></li>
-                    <li><a href="#nav-t6" data-toggle="tab"
-                            class="nav-link maintext">@DateTime.Today.AddDays(6).ToString("dddd, MMMM dd yyyy")</a></li>
-                </ul>
-
-                @* dbContext ==> where (DateTime.Today.AddDays(2 + (7 * Count))) *@
-
-
-            </div>
-            @* CALENDAR TABS *@
-
-            <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade" id="nav-today" role="tabpanel" aria-labelledby="nav-today-tab">
-                    <table class="maintext table table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Patient Name</th>
-                                <th scope="col">Duration of Appointment</th>
-                                <th scope="col">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if (ViewBag.AppointmentToday != null)
-                            {
-                                @foreach (var i in ViewBag.AppointmentToday)
-                                {
-                                    <tr>
-                                        <td scope="col">i </td>
-                                        <td>i.User.FirstName i.User.LastName</td>
-                                        <td>i.Duration minutes</td>
-                                        <td>i.Status </td>
-                                    </tr>
-                                }
-                            }
-                        </tbody>
-                    </table>
-
+                <div>
+                    <partial name="_ProviderCalendar.cshtml"/>
                 </div>
-
-                <div class="tab-pane fade" id="nav-tomorrow" role="tabpanel" aria-labelledby="nav-tomorrow-tab">
-                    <table class="maintext table table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Patient Name</th>
-                                <th scope="col">Duration of Appointment</th>
-                                <th scope="col">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @* @if(ViewBag.AppointmentToday){
-                                @foreach (var i in ViewBag.AppointmentToday)
-                                { *@
-                            <tr>
-                                <td scope="col">i </td>
-                                <td>i.User.FirstName i.User.LastName</td>
-                                <td>i.Duration minutes</td>
-                                <td>i.Status </td>
-                            </tr>
-                            @* }
-                                } *@
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="tab-pane fade" id="nav-t2" role="tabpanel" aria-labelledby="nav-t2-tab">
-                    <table class="maintext table table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">t2</th>
-                                <th scope="col">Patient Name</th>
-                                <th scope="col">Duration of Appointment</th>
-                                <th scope="col">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @* @if(ViewBag.AppointmentToday){
-                                @foreach (var i in ViewBag.AppointmentToday)
-                                { *@
-                            <tr>
-                                <td scope="col">i </td>
-                                <td>i.User.FirstName i.User.LastName</td>
-                                <td>i.Duration minutes</td>
-                                <td>i.Status </td>
-                            </tr>
-                            @* }
-                                } *@
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="tab-pane fade" id="nav-t3" role="tabpanel" aria-labelledby="nav-t3-tab">
-                    <table class="maintext table table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">#t3</th>
-                                <th scope="col">Patient Name</th>
-                                <th scope="col">Duration of Appointment</th>
-                                <th scope="col">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @* @if(ViewBag.AppointmentToday){
-                                @foreach (var i in ViewBag.AppointmentToday)
-                                { *@
-                            <tr>
-                                <td scope="col">i </td>
-                                <td>i.User.FirstName i.User.LastName</td>
-                                <td>i.Duration minutes</td>
-                                <td>i.Status </td>
-                            </tr>
-                            @* }
-                                } *@
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="tab-pane fade" id="nav-t4" role="tabpanel" aria-labelledby="nav-t4-tab">
-                    <table class="maintext table table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Patient Name</th>
-                                <th scope="col">Duration of Appointment</th>
-                                <th scope="col">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @* @if(ViewBag.AppointmentToday){
-                                @foreach (var i in ViewBag.AppointmentToday)
-                                { *@
-                            <tr>
-                                <td scope="col">i </td>
-                                <td>i.User.FirstName i.User.LastName</td>
-                                <td>i.Duration minutes</td>
-                                <td>i.Status </td>
-                            </tr>
-                            @* }
-                                } *@
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="tab-pane fade" id="nav-t5" role="tabpanel" aria-labelledby="nav-t5-tab">
-                    <table class="maintext table table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Patient Name</th>
-                                <th scope="col">Duration of Appointment</th>
-                                <th scope="col">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @* @if(ViewBag.AppointmentToday){
-                                @foreach (var i in ViewBag.AppointmentToday)
-                                { *@
-                            <tr>
-                                <td scope="col">i </td>
-                                <td>i.User.FirstName i.User.LastName</td>
-                                <td>i.Duration minutes</td>
-                                <td>i.Status </td>
-                            </tr>
-                            @* }
-                                } *@
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="tab-pane fade" id="nav-t6" role="tabpanel" aria-labelledby="nav-t6-tab">test6
-                    <table class="maintext table table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Patient Name</th>
-                                <th scope="col">Duration of Appointment</th>
-                                <th scope="col">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @* @if(ViewBag.AppointmentToday){
-                                @foreach (var i in ViewBag.AppointmentToday)
-                                { *@
-                            <tr>
-                                <td scope="col">i </td>
-                                <td>i.User.FirstName i.User.LastName</td>
-                                <td>i.Duration minutes</td>
-                                <td>i.Status </td>
-                            </tr>
-                            @* }
-                                } *@
-                        </tbody>
-                    </table>
-                </div>
-
             </div>
 
 
-            @*
-                <div class="card">
+            @* <div class="card">
                 <div class="card-header bg-gray-500">
-                <h5 class="mb-0">Patient Information:</h5>
+                    <h5 class="mb-0">Patient Information:</h5>
                 </div>
-                </div> *@
+            </div> *@
         </div>
     </div>
 
     @* Canvas *@
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-        <div class="offcanvas-header">
+        @* <div class="offcanvas-header">
             <p>Patient Info</p>
-        </div>
+            </div>
 
-        <div class="offcanvas-body">
+            <div class="offcanvas-body">
             <div class="card col-sm-10 col-10 mx-auto mb-4 bg-gray-500 rounded-3">
 
-                <img src="https://www.newsshare.in/wp-content/uploads/2/Cartoon-WhatsApp-DP-44.jpg"
-                    class="rounded-circle mx-auto border border-5 shadow border-white w-50 my-2" alt="Profile Picture">
-                <h4 class="my-2 text-center"> ViewBag.UserLoggedIn.FirstName ViewBag.UserLoggedIn.LastName</h4>
-                <p class="my-2 text-center">Preferred Pronouns: ViewBag.UserLoggedIn.Pronouns</p>
+            <img src="https://www.newsshare.in/wp-content/uploads/2/Cartoon-WhatsApp-DP-44.jpg"
+            class="rounded-circle mx-auto border border-5 shadow border-white w-50 my-2" alt="Profile Picture">
+            <h4 class="my-2 text-center"> ViewBag.UserLoggedIn.FirstName ViewBag.UserLoggedIn.LastName</h4>
+            <p class="my-2 text-center">Preferred Pronouns: ViewBag.UserLoggedIn.Pronouns</p>
             </div>
 
             <div class="card col-sm-10 col-10 mx-auto mb-4 bg-gray-100 rounded-3">
-                <div class="card-header border-bottom bg-gray-500">
-                    <span class="card-title fw-bold">Medical Information:</span>
-                </div>
-                <div class="card-body p-0">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item bg-gray-100">Sex:</li>
-                        <li class="list-group-item bg-gray-100">Height:</li>
-                        <li class="list-group-item bg-gray-100">Weight:</li>
-                        <li class="list-group-item bg-gray-100 p-0 m-0">
-                            @* <partial name="_Allergies-MedHx" /> *@
-                        </li>
-                        <li class="list-group-item bg-gray-100 p-0 m-0">
-                            <div class="accordion accordion-flush" id="accordionPanelsStayOpenExample">
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-                                        <button class="accordion-button py-2 bg-gray-100 collapsed" type="button"
-                                            data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne"
-                                            aria-expanded="false" aria-controls="panelsStayOpen-collapseOne">
-                                            Allergies:
-                                        </button>
-                                    </h2>
-                                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse"
-                                        aria-labelledby="panelsStayOpen-headingOne">
-                                        <div class="accordion-body p-0">
-                                            <ul class="list-group list-group-flush">
-                                                @if (@ViewBag.PatientAllergies.Allergies.Count != 0)
-                                                {
-                                                    foreach (var i in ViewBag.PatientAllergies.Allergies)
-                                                    {
-                                                        <li class="list-group-item"><b>@i.Name</b> | Type of Reaction:
-                                                            <em>@i.Reaction</em></li>
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    <li class="list-group-item">No Known Allergies</li>
-                                                }
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                        </li>
-
-                    </ul>
-                </div>
+            <div class="card-header border-bottom bg-gray-500">
+            <span class="card-title fw-bold">Medical Information:</span>
             </div>
-        </div>
+            <div class="card-body p-0">
+            <ul class="list-group list-group-flush">
+            <li class="list-group-item bg-gray-100">Sex:</li>
+            <li class="list-group-item bg-gray-100">Height:</li>
+            <li class="list-group-item bg-gray-100">Weight:</li>
+            <li class="list-group-item bg-gray-100 p-0 m-0">
+            @* <partial name="_Allergies-MedHx" /> *@
+        @* </li>
+            <li class="list-group-item bg-gray-100 p-0 m-0">
+            <div class="accordion accordion-flush" id="accordionPanelsStayOpenExample">
+            <div class="accordion-item">
+            <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+            <button class="accordion-button py-2 bg-gray-100 collapsed" type="button"
+            data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne"
+            aria-expanded="false" aria-controls="panelsStayOpen-collapseOne">
+            Allergies:
+            </button>
+            </h2>
+            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse"
+            aria-labelledby="panelsStayOpen-headingOne">
+            <div class="accordion-body p-0">
+            <ul class="list-group list-group-flush">
+            @if (@ViewBag.PatientAllergies.Allergies.Count != 0)
+            {
+            foreach (var i in ViewBag.PatientAllergies.Allergies)
+            {
+            <li class="list-group-item"><b>@i.Name</b> | Type of Reaction:
+            <em>@i.Reaction</em></li>
+            }
+            }
+            else
+            {
+            <li class="list-group-item">No Known Allergies</li>
+            }
+            </ul>
+            </div>
+            </div>
+            </div>
+            </li>
+
+            </ul>
+            </div> *@
     </div>
+</div>
+</div>
 
 </div>
 </div>
+
