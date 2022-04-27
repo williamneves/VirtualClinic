@@ -34,5 +34,22 @@ namespace VirtualClinic.Models
         
         // Relationship with Medical Notes
         public List<MedicalNote> MedicalNotes { get; set; }
+        
+        public string getStatus()
+        {
+            switch (Status)
+            {
+                case "created":
+                    return "Open";
+                case "blocked":
+                    return "Blocked";
+                case "taken":
+                    return "Upcoming";
+                case "done":
+                    return "Finished";
+                default:
+                    return "No Status";
+            }
+        }
     }
 }

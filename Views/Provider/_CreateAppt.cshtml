@@ -1,0 +1,30 @@
+﻿@model Appointment
+
+
+<div class="col-md-12 col-sm-12 mb-4">
+    <h4>
+        <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+        <span>Appointments</span>
+    </h4>
+    <hr/>
+    <form asp-action="ProviderCreateApptPost" asp-controller="Provider" method="post">
+
+        <input type="hidden" asp-for="PatientId" value="1">
+        <input type="hidden" asp-for="ProviderId" value="@ViewBag.ProviderInfo.ProviderId">
+        <input type="hidden" asp-for="Status" value="created">
+
+        <div class="input-group mb-3">
+            <label asp-for="DateTime" class="input-group-text"></label>
+            <input asp-for="DateTime" class="form-control">
+            <label asp-for="Duration" class="input-group-text"></label>
+            <select asp-for="Duration" class="form-select">
+                <option value="30" selected="">Select</option>
+                <option value="15">15 min</option>
+                <option value="20">20 min</option>
+                <option value="30">30 min</option>
+                <option value="60">60 min</option>
+            </select>
+            <button class="btn btn-primary" type="submit" id="button-addon2">Create <i class="fa-solid fa-calendar-plus"></i></button>
+        </div>
+    </form>
+</div>
