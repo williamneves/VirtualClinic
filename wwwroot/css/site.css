@@ -86,3 +86,5 @@ textarea:focus-visible.form-control-plaintext {
 .btn-left-sidebar:hover {
   border: 2px solid;
 }
+div#apptTable1_info.dataTables_info {padding: 0;}
+table#apptTable1 {margin: 0!important;}
