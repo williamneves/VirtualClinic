@@ -426,7 +426,7 @@ namespace VirtualClinic.Controllers
             return View();
         }
 
-        // Provider Messages page
+        // Provider Inbox
         [HttpGet("/providerinbox")]
         public IActionResult ProviderInbox()
         {
@@ -441,7 +441,7 @@ namespace VirtualClinic.Controllers
             ViewBag.AllMessages = dbContext.Messages
                                 .Include(p => p.Patient)
                                 .Include(p => p.Provider)
-                                .Where(p => p.PatientId == userInDb.UserId)
+                                .Where(p => p.ProviderId == userInDb.UserId)
                                 .ToList();
             
             ViewBag.AllPatients = dbContext.Patients
@@ -460,6 +460,15 @@ namespace VirtualClinic.Controllers
         [HttpGet("/providerinbox/partial/{providerId}/{patientId}")]
         public IActionResult ProviderInboxParital(int providerId, int patientId)
         {
+            if (HttpContext.Session.GetInt32("UserId") == null)
+            {
+                TempData["AuthError"] = "You must be logged in to view this page";
+                return RedirectToAction("Index", "Home");
+            }
+
+            var userInDb = dbContext.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"));
+            ViewBag.UserLoggedIn = userInDb;
+
             ViewBag.ProviderId = providerId;
             ViewBag.PatientId = patientId;
 
@@ -478,6 +487,15 @@ namespace VirtualClinic.Controllers
         [HttpGet("/updateproviderinbox/partial/{text}/{providerId}/{patientId}")]
         public IActionResult ProviderInbox(Message newMessage, int providerId, int patientId)
         {
+            if (HttpContext.Session.GetInt32("UserId") == null)
+            {
+                TempData["AuthError"] = "You must be logged in to view this page";
+                return RedirectToAction("Index", "Home");
+            }
+
+            var userInDb = dbContext.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"));
+            ViewBag.UserLoggedIn = userInDb;
+
             dbContext.Add(newMessage);
             dbContext.SaveChanges();
 
@@ -491,7 +509,7 @@ namespace VirtualClinic.Controllers
                                 .ToList();
             
             ViewBag.Patients = dbContext.Patients.FirstOrDefault(p => p.PatientId == patientId);
-  
+
 
             return PartialView(@"~/Views/Shared/_InboxProvider.cshtml");
         }

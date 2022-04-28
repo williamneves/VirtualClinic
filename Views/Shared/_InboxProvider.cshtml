@@ -1,15 +1,28 @@
-    <form id="messageForm" action="/sendptmessage" method="post">
+<form id="messageForm" action="/sendptmessage" method="post">
     <div class="col-12 col-sm-8" style="border: 1px solid black; border-radius: 5px; padding: 10px;">
-        <div class="m-3" style="max-height: 250px;overflow-y: scroll;">
+        <div class="container m-3" style="max-height: 250px;overflow-y: scroll;">
             <input type="hidden" name="ProviderId" value="@ViewBag.ProviderId">
             <input type="hidden" name="PatientId" value="@ViewBag.PatientId">
+            <input type="hidden" name="WriterId" value="@ViewBag.UserLoggedIn.UserId">
 
             @if (ViewBag.Messages != null)
             {
                 @foreach (var i in ViewBag.Messages)
                 {
-                    <p>NEED IF STATEMENT FOR TEXT LEFT VS RIGHT</p>
-                    <p>@i.Text</p>
+                    @if (i.WriterId != ViewBag.UserLoggedIn.UserId)
+                    {
+                        <div class="row">
+                            <div class="col align-self-start"></div>
+                            <p>@i.Text</p>
+                            <p>@i.CreatedAt</p>
+                        </div>
+                    } else {
+                        <div class="row">
+                            <div class="col align-self-end"></div>
+                            <p>@i.Text</p>
+                            <p>@i.CreatedAt</p>
+                        </div>
+                    }
                 }
             }
             else
@@ -23,6 +36,8 @@
             <label for="exampleFormControlTextarea1" class="form-label">Message</label>
             <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="Text"></textarea>
         </div>
-        <a href="#" class="btn btn-primary" aria-current="true" value="@ViewBag.ProviderId" onclick="UpdateProviderMessages(document.getElementById('exampleFormControlTextarea1').value, @ViewBag.ProviderId, @ViewBag.PatientId)">Send Message</a>
+        <a href="#" class="btn btn-primary" aria-current="true" value="@ViewBag.ProviderId"
+            onclick="UpdateProviderMessages(document.getElementById('exampleFormControlTextarea1').value, @ViewBag.ProviderId, @ViewBag.PatientId)">Send
+            Message</a>
     </div>
-    </form>
+</form>

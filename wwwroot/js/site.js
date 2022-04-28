@@ -538,7 +538,7 @@ function UpdateMessages(text, providerId, patientId) {
         });
 }
 
-// get Patient Messages
+// get Provider Messages
 function ShowProviderMessages(providerId, patientId) {
     axios({
         method: "get",
@@ -557,7 +557,7 @@ function ShowProviderMessages(providerId, patientId) {
 }
 
 
-// update Patient Messages
+// update Provider Messages
 function UpdateProviderMessages(text, providerId, patientId) {
     axios({
         method: "get",
@@ -565,8 +565,6 @@ function UpdateProviderMessages(text, providerId, patientId) {
     })
         .then((res) => {
             console.log(res);
-            // var Inbox = createHtml(res.data);
-            // document.getElementById("PtInbox").innerHTML(Inbox);
             $("#PrInbox").html(res.data);
             document.getElementById( 'bottom' ).scrollIntoView();
         })

@@ -294,7 +294,7 @@ namespace VirtualClinic.Controllers
         }
         
         
-        // Messages
+        // Patient Inbox
         [HttpGet("/patientinbox")]
         public IActionResult PatientInbox()
         {
@@ -324,7 +324,7 @@ namespace VirtualClinic.Controllers
             return View();
         }
 
-        // Partial Message
+        // Partial Message for Patient
         [HttpGet("/patientinbox/partial/{providerId}/{patientId}")]
         public IActionResult PatientInboxPartial(int providerId, int patientId)
         {
