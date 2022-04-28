@@ -175,6 +175,79 @@ namespace VirtualClinic.Controllers
                 videoUrl = (string)jsonResult["url"]
             });
         }
+        
+        // Save videoCall Url in appointment
+        [HttpPost("/provider/appt/setvideourl/{videoRoom}/{apptId}/")]
+        public IActionResult SetVideoUrl(string videoRoom, int apptId)
+        {
+            Console.WriteLine("New Room Object: " + videoRoom);
+            Console.WriteLine("New Room Object: " + apptId);
+            if (HttpContext.Session.GetInt32("UserId") == null)
+            {
+                TempData["AuthError"] = "You must be logged in to view this page";
+                return RedirectToAction("Index", "Home");
+            }
+            
+            // Get the Appointment with the apptId
+            Console.WriteLine("Get the Appointment with the apptId");
+            var apptInDb = dbContext.Appointments
+                .FirstOrDefault(p => p.AppointmentId == apptId);
+            
+            // If has videoUrl in apptInDb, post delete request to delete the room
+            if (apptInDb.videoUrl != null && !apptInDb.roomIsExpired())
+            {
+                var url = $"https://api.daily.co/v1/rooms/{apptInDb.videoRoom}";
+
+                var httpRequest = (HttpWebRequest)WebRequest.Create(url);
+                httpRequest.Method = "DELETE";
+                
+                httpRequest.ContentType = "application/json";
+                httpRequest.Headers["Authorization"] = "Bearer 03aca7a0426cbe7eb6b6fb068dba0fd4c9b25aff6413607a606f9cdfd7ea9d61";
+
+
+                var httpResponse = (HttpWebResponse)httpRequest.GetResponse();
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
+                }
+
+                Console.WriteLine(httpResponse.StatusCode);
+            }
+
+            var dailyDomain = "https://williamneves.daily.co/";
+            
+            // Update the videoUrl in the Appointment
+            Console.WriteLine("Update the videoUrl in the Appointment");
+            apptInDb.videoUrl = $"{dailyDomain}{videoRoom}";
+            apptInDb.videoRoom = videoRoom;
+            apptInDb.videoRoomCreateDate = DateTime.UtcNow;
+            dbContext.SaveChanges();
+            
+            // Return Json result
+            return Json("OK");
+        }
+        
+        // Change appointment status
+        [HttpPost("/provider/appt/status/{apptId}/{status}/")]
+        public IActionResult ChangeStatus(int apptId, string status)
+        {
+            if (HttpContext.Session.GetInt32("UserId") == null)
+            {
+                TempData["AuthError"] = "You must be logged in to view this page";
+                return RedirectToAction("Index", "Home");
+            }
+            
+            // Get the Appointment with the apptId
+            var apptInDb = dbContext.Appointments
+                .FirstOrDefault(p => p.AppointmentId == apptId);
+            
+            // Update the status in the Appointment
+            apptInDb.Status = status;
+            dbContext.SaveChanges();
+            
+            // Return Json result
+            return Json("OK");
+        }
 
     }
 }
