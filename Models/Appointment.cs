@@ -50,6 +50,10 @@ namespace VirtualClinic.Models
                     return "Blocked";
                 case "taken":
                     return "Upcoming";
+                case "patient_waiting":
+                    return "Patient is Waiting";
+                case "canceled":
+                    return "Canceled";
                 case "inprogress":
                     return "In Progress";
                 case "done":

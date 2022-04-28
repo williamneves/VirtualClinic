@@ -15,13 +15,12 @@
 
         <div class="input-group mb-3">
             <label asp-for="DateTime" class="input-group-text"></label>
-            <input asp-for="DateTime" class="form-control">
+            <input asp-for="DateTime" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-ddThh:00")">
             <label asp-for="Duration" class="input-group-text"></label>
             <select asp-for="Duration" class="form-select">
-                <option value="30" selected="">Select</option>
                 <option value="15">15 min</option>
                 <option value="20">20 min</option>
-                <option value="30">30 min</option>
+                <option value="30" selected>30 min</option>
                 <option value="60">60 min</option>
             </select>
             <button class="btn btn-primary" type="submit" id="button-addon2">Create <i class="fa-solid fa-calendar-plus"></i></button>

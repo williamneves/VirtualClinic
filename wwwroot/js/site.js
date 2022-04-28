@@ -153,13 +153,13 @@ function autosaveForm(run = false, FormID = "form-medical-note-pd", interval = 5
 //     this.style.height = "auto";
 //     this.style.height = (this.scrollHeight) + "px";
 // }
-// autosize(document.querySelectorAll('textarea'));
 
 $('.text-area-notes').each(function () {
     autosize(this);
 }).on('autosize:resized', function () {
     console.log('textarea height updated');
 });
+
 
 // Auto Save Medical Notes - End
 
@@ -228,6 +228,60 @@ $('.text-area-notes').each(function () {
 // //     console.log(event.target.Summary);
 // // 
 
+// Function to reload the page
+function reloadPage() {
+    
+    // setTimeout with 3 seconds
+    setTimeout(function () {
+        // reload the page
+        location.reload();
+    }, 3500);
+}
+
+// Get date like ddd dd, MMM, yyyy @ hh:mm tt with javascript
+function getDateTime() {
+// get a new date (locale machine date time)
+    var date = new Date();
+// get the date as a string
+    var n = date.toDateString();
+// get the time as a string
+    var time = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+    
+    let topmenu = document.getElementById("timetopmenu");
+    topmenu.innerHTML = ' @ ' + time;
+}
+function refreshEveryInterval(interval){
+    // setInterval with 60 seconds
+    console.log("Refresh every " + interval + " seconds");
+    getDateTime();
+    
+    setInterval(function () {
+        // reload the page
+        console.log("Refreshed");
+        getDateTime();
+    }, interval);
+}
+refreshEveryInterval(60000);
+
+
+
+// Copy to clipboard
+function autoCopyURL() {
+    /* Get the text field */
+    var copyText = document.querySelector(".videoUrltoCopy");
+
+    /* Select the text field */
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); /* For mobile devices */
+
+    /* Copy the text inside the text field */
+    navigator.clipboard.writeText(copyText.value);
+
+    /* Alert the copied text */
+    alert("Copied!\n" + copyText.value);
+}
+
+
 // Create Room Video API
 function createRoom(element = null,apptId){
     if(element){
@@ -257,14 +311,14 @@ function createRoom(element = null,apptId){
             console.log(error);
         });
 
-    element.classList.remove('disabled');
+    // element.classList.remove('disabled');
     return videoUrl;
     
 }
 // Save Room at Appointment
 function saveRoom(apptId,room){
-    console.log(room)
-    console.log(apptId)
+    console.log(room);
+    console.log(apptId);
     axios({
         method: 'POST',
         url: `/provider/appt/setvideourl/${room}/${apptId}`,
@@ -272,9 +326,9 @@ function saveRoom(apptId,room){
         .then((res) => {
             console.log(res);
             if (res.data.success) {
-                console.log(res)
+                console.log(res);
             } else {
-                console.log(res)
+                console.log(res);
             }
         })
         .catch((error) => {
@@ -345,16 +399,16 @@ function startAttendence(element,apptId,videoUrl){
         .then((res) => {
             // console.log(res);
             if (res.data.success) {
-                // console.log(res)
+                // console.log(res);
             } else {
-                // console.log(res)
+                // console.log(res);
             }
         })
         .catch((error) => {
             // console.log(error);
         });
     
-    console.log(videoUrl)
+    console.log(videoUrl);
     
     
     // Set a timer to exec another function after 5 seconds
@@ -420,9 +474,9 @@ function finishAttend(element,apptId){
         .then((res) => {
             // console.log(res);
             if (res.data.success) {
-                // console.log(res)
+                // console.log(res);
             } else {
-                // console.log(res)
+                // console.log(res);
             }
         })
         .catch((error) => {
@@ -431,8 +485,26 @@ function finishAttend(element,apptId){
 }
 
 
-// DataTable
-let table = new DataTable('#apptTable1', {
+// DataTables
+let apptTable1 = new DataTable('#apptTable1', {
+    // options
+    // scrollY: "300px",
+    scrollCollapse: true,
+    paging: true,
+    select: true,
+    "dom": '<"card-header d-flex px-3 pt-2 justify-content-between align-items-center"lf><"bg-light m-0"rt><"card-footer d-flex px-3 pb-2 justify-content-between align-items-center"<"info-pag"i>p><"clear">'
+});
+
+let apptTableAllToday = new DataTable('#apptTableAllToday', {
+    // options
+    // scrollY: "300px",
+    scrollCollapse: true,
+    paging: true,
+    select: true,
+    "dom": '<"card-header d-flex px-3 pt-2 justify-content-between align-items-center"lf><"bg-light m-0"rt><"card-footer d-flex px-3 pb-2 justify-content-between align-items-center"<"info-pag"i>p><"clear">'
+});
+
+let apptTablePatientWating = new DataTable('#apptTablePatientWating', {
     // options
     // scrollY: "300px",
     scrollCollapse: true,
@@ -442,24 +514,10 @@ let table = new DataTable('#apptTable1', {
 });
 
 
-// VIDEO CHAT
-DailyIframe.createFrame({
-    layoutConfig: {
-        grid: {
-            minTilesPerPage: 3, // default: 1, minimum required: 1
-            maxTilesPerPage: 36, // default: 25, maximum allowable: 49
-        },
-    },
-    iframeStyle: {
-    position: 'fixed',
-    border: '1px solid black',
-    width: '700px',
-    height: '750px',
-    right: '1em',
-    bottom: '1em',
-    }
-});
 
+
+
+// End DataTables
 
 // Get Provider Messages
 
@@ -575,9 +633,3 @@ function UpdateProviderMessages(text, writerId, providerId, patientId) {
             console.log(err);
         });
 }
-
-
-
-
-
-

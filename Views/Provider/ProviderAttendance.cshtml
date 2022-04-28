@@ -16,13 +16,14 @@
             
             <div class="col-sm-10 col-10 mx-auto mb-4">
                 <div class="btn-group w-100" role="group" aria-label="Actions Buttom">
-                    @if (!ViewBag.ApptInfo.roomIsExpired())
-                    {
-                        <button type="button" class="btn btn-primary" onclick='startAttendence(this,@ViewBag.ApptInfo.AppointmentId,"@ViewBag.ApptInfo.videoUrl")'><i class="fa-solid fa-play"></i><br/>Start</button>
-                    }
+                    
                     @if(ViewBag.ApptInfo.Status == "done")
                     {
                         <button type="button" class="btn btn-primary" disabled=""><i class="fa-duotone fa-lock"></i><br/>Closed</button>
+                    }
+                    else if (!ViewBag.ApptInfo.roomIsExpired())
+                    {
+                        <button type="button" class="btn btn-primary" onclick='startAttendence(this,@ViewBag.ApptInfo.AppointmentId,"@ViewBag.ApptInfo.videoUrl")'><i class="fa-solid fa-play"></i><br/>Start</button>
                     }
                     else
                     {

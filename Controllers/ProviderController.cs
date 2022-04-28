@@ -313,6 +313,52 @@ namespace VirtualClinic.Controllers
             TempData["AuthError"] = "You must be a Provider to view this page";
             return RedirectToAction("ProviderCreateAppt", "Provider");
         }
+        
+        // Provider Create Appointment
+        // GET METHOD
+        [HttpGet("provider/attendappointment")]
+        public IActionResult ProviderAttendAppt()
+        {
+            // Check if user is logged in
+            if (HttpContext.Session.GetInt32("UserId") == null)
+            {
+                TempData["AuthError"] = "You must be logged in to view this page";
+                return RedirectToAction("Index", "Home");
+            }
+            
+            // UserInDb
+            var userInDb = dbContext.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"));
+            // Check if user is a provider, and if not, redirect to home
+            if (userInDb.userType != "provider")
+            {
+                TempData["AuthError"] = "You must be a Provider to view this page";
+                return RedirectToAction("Index", "Home");
+            }
+
+            // ProviderInfo
+            var providerInfo = dbContext.Providers
+                .Include(p => p.User)
+                .FirstOrDefault(p => p.UserId == userInDb.UserId);
+
+
+            // Get all appointments for the logged in provider with all patients
+            var providerAppointments = dbContext.Appointments
+                .Include(a => a.Patient)
+                .ThenInclude(p => p.User)
+                .Include(a => a.Provider)
+                .ThenInclude(p => p.User)
+                .Where(a => a.ProviderId == providerInfo.ProviderId)
+                .OrderBy(a => a.DateTime)
+                .ToList();
+            
+            // ViewBags
+            ViewBag.ProviderAppointments = providerAppointments;
+            ViewBag.ProviderInfo = providerInfo;
+            ViewBag.UserLoggedIn = userInDb;
+            
+            // Return View
+            return View();
+        }
 
         // Get all Patients
         [HttpGet("allpatients")]

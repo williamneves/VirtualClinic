@@ -1,0 +1,237 @@
+@{
+    ViewData["Title"] = "Welcome";
+    Layout = "_LayoutBS";
+}
+
+@model Appointment
+
+
+<div class="col-12 col-sm-12 mx-auto">
+<div class="col-sm-12 row me-0 mt-3 justify-content-between">
+<div class="col-md-12 col-sm-12">
+    @* Table with all appointments *@
+    <div class="card mb-3">
+        <div class="card-header bg-gray-500">
+            <h5 class="card-title mb-0">Appoiments With user Waiting:</h5>
+        </div>
+        <div class="card-body p-0">
+            <table id="apptTablePatientWating" class="table table-striped table align-middle mb-0 display" style="width:100%">
+                <thead class="bg-light">
+                <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Duration</th>
+                    <th scope="col">Patient Info</th>
+                    <th scope="col" class="text-center">Video Url</th>
+                    <th scope="col" class="text-center">Status</th>
+                    <th scope="col" class="text-center">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var appt in ViewBag.ProviderAppointments)
+                {
+                                @* Check the status and if is for today *@
+                    if (appt.Status == "patient_waiting" && appt.DateTime.Date == DateTime.Now.Date)
+                    {
+                        <tr>
+                            <th scope="row">Today @@ @appt.DateTime.ToString("hh:mm tt")</th>
+                            <td>@appt.Duration minutes</td>
+                            <td><b>@appt.Patient.User.getFullName()</b>, @appt.Patient.User.Sex, @appt.Patient.User.getAgeInYear() y </td>
+                            <td class="text-center">
+                                <input class="videoUrltoCopy" style="display: none" value="@appt.videoUrl"/>
+                                <button class="btn btn-sm btn-light" onclick="autoCopyURL()" data-bs-placement="right" data-bs-toggle="tooltip" data-bs-html="true" title="Click to Copy<br/>The Video URL<br/>and share">Copy Url <i class="fa-duotone fa-copy"></i></button>
+                            </td>
+                            @if (appt.getStatus() == "Open")
+                            {
+                                <td class="text-center">
+                                    <span class="badge bg-purple-700 text-light">@appt.getStatus()</span>
+                                </td>
+                            }
+                            else if (appt.getStatus() == "Blocked")
+                            {
+                                <td class="text-center">
+                                    <span class="badge bg-dark text-light">@appt.getStatus()</span>
+                                </td>
+                            }
+                            else if (appt.getStatus() == "Upcoming")
+                            {
+                                <td class="text-center">
+                                    <span class="badge bg-primary text-light">@appt.getStatus()</span>
+                                </td>
+                            }
+                            else if (appt.getStatus() == "Finished")
+                            {
+                                <td class="text-center">
+                                    <span class="badge bg-success text-light">@appt.getStatus()</span>
+                                </td>
+                            }
+                            else if (appt.getStatus() == "In Progress")
+                            {
+                                <td class="text-center">
+                                    <span class="badge bg-warning text-dark">@appt.getStatus()</span>
+                                </td>
+                            }
+                            else
+                            {
+                                <td class="text-center">
+                                    <span class="badge bg-orange-600 text-light">@appt.getStatus()</span>
+                                </td>
+                            }
+                            
+                            <td class="text-center">
+                                @if (appt.getStatus() == "Open")
+                                {
+                                    <a class="btn btn-sm btn-danger px-3" asp-action="ProviderDeleteAppt" asp-controller="Provider" asp-route-appointmentId="@appt.AppointmentId" data-bs-placement="left" data-bs-toggle="tooltip" data-bs-html="true" title="Remove">
+                                        <i class="fa-solid fa-calendar-circle-minus"></i>
+                                    </a>
+                                }
+                                else if (appt.getStatus() == "Finished")
+                                {
+                                    <a class="btn btn-sm btn-primary px-3" asp-action="ProviderAttendance" asp-controller="Provider" asp-route-apptId="@appt.AppointmentId" data-bs-placement="left" data-bs-toggle="tooltip" data-bs-html="true" title="See it">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </a>
+                                }
+                                else if (appt.getStatus() == "Upcoming" || appt.getStatus() == "In Progress" || appt.Status == "patient_waiting")
+                                {
+                                    <a class="btn btn-sm btn-success px-3" asp-action="ProviderAttendance" asp-controller="Provider" asp-route-apptId="@appt.AppointmentId" data-bs-placement="left" data-bs-toggle="tooltip" data-bs-html="true" title="Attend">
+                                        <i class="fa-solid fa-circle-play"></i>
+                                    </a>
+
+                                    @if (@appt.roomIsExpired())
+                                    {
+                                        <a class="btn btn-sm btn-warning px-3" data-bs-placement="right" data-bs-toggle="tooltip" data-bs-html="true" title="Create Video Room" onclick="createRoom(this,@appt.AppointmentId), reloadPage()">
+                                            <i class="fa-duotone fa-camera-web"></i>
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a class="btn btn-sm btn-secondary px-3" data-bs-placement="right" data-bs-toggle="tooltip" data-bs-html="true" title="Room is created">
+                                            <i class="fa-duotone fa-camera-web" disabled></i>
+                                        </a>
+                                    }
+                                }
+
+                            </td>
+                        </tr>
+                    }
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+    
+<hr/>
+    
+<div class="col-md-12 col-sm-12">
+    @* Table with all appointments *@
+    <div class="card mb-3">
+        <div class="card-header bg-gray-500">
+            <h5 class="card-title mb-0">All Appointments for Today:</h5>
+        </div>
+        <div class="card-body p-0">
+            <table id="apptTablePatientWating" class="table table-striped table align-middle mb-0 display" style="width:100%">
+                <thead class="bg-light">
+                <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Duration</th>
+                    <th scope="col">Patient Info</th>
+                    <th scope="col" class="text-center">Video Url</th>
+                    <th scope="col" class="text-center">Status</th>
+                    <th scope="col" class="text-center">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var appt in ViewBag.ProviderAppointments)
+                {
+                                    @* Check the status and if is for today *@
+                    if ((appt.Status == "patient_waiting" || appt.Status == "taken") && appt.DateTime.Date == DateTime.Now.Date)
+                    {
+                        <tr>
+                            <th scope="row">Today @@ @appt.DateTime.ToString("hh:mm tt")</th>
+                            <td>@appt.Duration minutes</td>
+                            <td><b>@appt.Patient.User.getFullName()</b>, @appt.Patient.User.Sex, @appt.Patient.User.getAgeInYear() y </td>
+                            <td class="text-center">
+                                <input class="videoUrltoCopy" style="display: none" value="@appt.videoUrl"/>
+                                <button class="btn btn-sm btn-light" onclick="autoCopyURL()" data-bs-placement="right" data-bs-toggle="tooltip" data-bs-html="true" title="Click to Copy<br/>The Video URL<br/>and share">Copy Url <i class="fa-duotone fa-copy"></i></button>
+                            </td>
+                            @if (appt.getStatus() == "Open")
+                            {
+                                <td class="text-center">
+                                    <span class="badge bg-purple-700 text-light">@appt.getStatus()</span>
+                                </td>
+                            }
+                            else if (appt.getStatus() == "Blocked")
+                            {
+                                <td class="text-center">
+                                    <span class="badge bg-dark text-light">@appt.getStatus()</span>
+                                </td>
+                            }
+                            else if (appt.getStatus() == "Upcoming")
+                            {
+                                <td class="text-center">
+                                    <span class="badge bg-primary text-light">@appt.getStatus()</span>
+                                </td>
+                            }
+                            else if (appt.getStatus() == "Finished")
+                            {
+                                <td class="text-center">
+                                    <span class="badge bg-success text-light">@appt.getStatus()</span>
+                                </td>
+                            }
+                            else if (appt.getStatus() == "In Progress")
+                            {
+                                <td class="text-center">
+                                    <span class="badge bg-warning text-dark">@appt.getStatus()</span>
+                                </td>
+                            }
+                            else
+                            {
+                                <td class="text-center">
+                                    <span class="badge bg-orange-600 text-light">@appt.getStatus()</span>
+                                </td>
+                            }
+                            <td class="text-center">
+                                @if (appt.getStatus() == "Open")
+                                {
+                                    <a class="btn btn-sm btn-danger px-3" asp-action="ProviderDeleteAppt" asp-controller="Provider" asp-route-appointmentId="@appt.AppointmentId" data-bs-placement="left" data-bs-toggle="tooltip" data-bs-html="true" title="Remove">
+                                        <i class="fa-solid fa-calendar-circle-minus"></i>
+                                    </a>
+                                }
+                                else if (appt.getStatus() == "Finished")
+                                {
+                                    <a class="btn btn-sm btn-primary px-3" asp-action="ProviderAttendance" asp-controller="Provider" asp-route-apptId="@appt.AppointmentId" data-bs-placement="left" data-bs-toggle="tooltip" data-bs-html="true" title="See it">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </a>
+                                }
+                                else if (appt.getStatus() == "Upcoming" || appt.getStatus() == "In Progress" || appt.Status == "patient_waiting")
+                                {
+                                    <a class="btn btn-sm btn-success px-3" asp-action="ProviderAttendance" asp-controller="Provider" asp-route-apptId="@appt.AppointmentId" data-bs-placement="left" data-bs-toggle="tooltip" data-bs-html="true" title="Attend">
+                                        <i class="fa-solid fa-circle-play"></i>
+                                    </a>
+    
+                                    @if (@appt.roomIsExpired())
+                                    {
+                                        <a class="btn btn-sm btn-warning px-3" data-bs-placement="right" data-bs-toggle="tooltip" data-bs-html="true" title="Create Video Room" onclick="createRoom(this,@appt.AppointmentId), reloadPage()">
+                                            <i class="fa-duotone fa-camera-web"></i>
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a class="btn btn-sm btn-secondary px-3" data-bs-placement="right" data-bs-toggle="tooltip" data-bs-html="true" title="Room is created" disabled>
+                                            <i class="fa-duotone fa-camera-web"></i>
+                                        </a>
+                                    }
+                                }
+    
+                            </td>
+                        </tr>
+                    }
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+</div>
+</div>
