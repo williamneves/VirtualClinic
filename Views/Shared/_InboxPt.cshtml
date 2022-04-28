@@ -1,0 +1,30 @@
+    
+    
+    <form id="messageForm" action="/senddrmessage" method="post">
+    <div class="col-12 col-sm-8" style="border: 1px solid black; border-radius: 5px; padding: 10px;">
+        <div class="m-3" style="max-height: 250px;overflow-y: scroll;">
+            <input type="hidden" name="ProviderId" value="@ViewBag.ProviderId">
+            <input type="hidden" name="PatientId" value="@ViewBag.PatientId">
+
+            @if (ViewBag.Messages != null)
+            {
+                @foreach (var i in ViewBag.Messages)
+                {
+                    @* @if(ViewBag.Messages.) *@
+                    <p>@i.Text</p>
+                }
+            }
+            else
+            {
+                <p> You have no messages</p>
+            }
+        </div>
+
+        <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Message</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="Text"></textarea>
+        </div>
+        <a href="#" class="btn btn-primary" aria-current="true" value="@ViewBag.ProviderId" onclick="UpdateMessages(document.getElementById('exampleFormControlTextarea1').value, @ViewBag.ProviderId, @ViewBag.PatientId)">Send Message</a>
+    </div>
+    </form>
+

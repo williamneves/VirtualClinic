@@ -10,75 +10,75 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
 
 function loginModal(partial) {
-  var modalExist = document.getElementById("exampleModal");
-  var myModal;
-  if (!modalExist) {
-    axios
-      .get(partial)
-      .then((res) => {
-        //console.log(res.data);
-        let htmlElement = createHtml(res.data);
-        document.getElementById(partial).append(htmlElement);
+    var modalExist = document.getElementById("exampleModal");
+    var myModal;
+    if (!modalExist) {
+        axios
+            .get(partial)
+            .then((res) => {
+                //console.log(res.data);
+                let htmlElement = createHtml(res.data);
+                document.getElementById(partial).append(htmlElement);
 
-        myModal = new bootstrap.Modal(document.getElementById("exampleModal"), {
-          keyboard: false,
-        });
-        myModal.toggle();
+                myModal = new bootstrap.Modal(document.getElementById("exampleModal"), {
+                    keyboard: false,
+                });
+                myModal.toggle();
 
-        return this;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-  myModal = new bootstrap.Modal(document.getElementById("exampleModal"), {
-    keyboard: false,
-  });
-  myModal.toggle();
+                return this;
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+    myModal = new bootstrap.Modal(document.getElementById("exampleModal"), {
+        keyboard: false,
+    });
+    myModal.toggle();
 }
 function createHtml(data) {
-  let htmlElement = document.createElement("div");
-  htmlElement.innerHTML = data;
-  return htmlElement;
+    let htmlElement = document.createElement("div");
+    htmlElement.innerHTML = data;
+    return htmlElement;
 }
 
 // Call Medical Notes
 
-function getMedicalNotes(id){
+function getMedicalNotes(id) {
     return new Promise((resolve, reject) => {
-        $("#accordionMedicalNotes").fadeIn('slow');        
-        document.getElementById("medical-notes-card").style.opacity="1";
+        $("#accordionMedicalNotes").fadeIn('slow');
+        document.getElementById("medical-notes-card").style.opacity = "1";
 
         $.when($.ajax(
             {
                 url: `json/medicalnotes/${id}`,
                 method: 'GET'
-            })).done(function(data){
+            })).done(function (data) {
 
-            $('#First-Accordion-aHPI-ajax').html(data.hpi);
-            $('#First-Accordion-aPE-ajax').html(data.pe);
-            $('#First-Accordion-aSMRY-ajax').html(data.summary);
-            $('#First-Accordion-aAP-ajax').html(data.ap);
-            
-            let apptid = data.appointmentId
-            // Get appointment info
-            $.when($.ajax(
-                {
-                    url: `json/appointments/${apptid}`,
-                    method: 'GET'
-                })).done(function(apptData){
-                $('#apptId-card-mn-ajax').html(apptData.appointmentId);
-                let date = new Date(apptData.dateTime);
-                $('#apptDate-card-mn-ajax').html(date.toDateString() +" at "+ date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })); 
+                $('#First-Accordion-aHPI-ajax').html(data.hpi);
+                $('#First-Accordion-aPE-ajax').html(data.pe);
+                $('#First-Accordion-aSMRY-ajax').html(data.summary);
+                $('#First-Accordion-aAP-ajax').html(data.ap);
+
+                let apptid = data.appointmentId
+                // Get appointment info
+                $.when($.ajax(
+                    {
+                        url: `json/appointments/${apptid}`,
+                        method: 'GET'
+                    })).done(function (apptData) {
+                        $('#apptId-card-mn-ajax').html(apptData.appointmentId);
+                        let date = new Date(apptData.dateTime);
+                        $('#apptDate-card-mn-ajax').html(date.toDateString() + " at " + date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }));
+                    });
+
+
+
+                resolve();
+
+            }).fail(function (error) {
+                reject(error);
             });
-            
-            
-            
-            resolve();
-
-        }).fail(function(error){
-            reject(error);
-        });
 
     });
 }
@@ -88,14 +88,14 @@ function getMedicalNotes(id){
 let auto_refresh;
 
 // Catch the form submit forms by .text-area-notes
-document.querySelectorAll('.text-area-notes').forEach(function(element) {
+document.querySelectorAll('.text-area-notes').forEach(function (element) {
     // Add event listener Focus to each element, to catch the focus event and start the auto save
-    element.addEventListener('focus', function(evt) {
+    element.addEventListener('focus', function (evt) {
         autosaveForm(true);
     });
-    
+
     // Add event listener Blur to each element, to catch the blur event and stop the auto save
-    element.addEventListener('blur', function(evt) {
+    element.addEventListener('blur', function (evt) {
         autosaveForm(false);
     });
 });
@@ -104,28 +104,27 @@ document.querySelectorAll('.text-area-notes').forEach(function(element) {
 
 // Auto Save Function 
 // Set parameter run to true or false, set parameter FormID to the ID of the form, set the parameter interval to the interval of the auto save
-function autosaveForm(run = false,FormID = "form-medical-note-pd", interval = 500 ) {
-    
+function autosaveForm(run = false, FormID = "form-medical-note-pd", interval = 500) {
+
     // If run is true, start the auto save
     if (run) {
-    auto_refresh = setInterval(
-        function()
-        {
-            post();
-        }, interval);
+        auto_refresh = setInterval(
+            function () {
+                post();
+            }, interval);
     }
     // If run is false, stop the auto save
     else {
         clearInterval(auto_refresh);
     }
-    
+
     // Function to Save the form (if is new, backend will create a new record, if is update, backend will update the record)
-    function post(){
-        
+    function post() {
+
         let form = document.getElementById(FormID);
         let formAction = form.getAttribute("action");
         let formMethod = form.getAttribute("method");
-        
+
         // Using Axios js library to make the post request
         axios({
             method: formMethod,
@@ -140,7 +139,7 @@ function autosaveForm(run = false,FormID = "form-medical-note-pd", interval = 50
                 console.log(err);
             });
     }
-    
+
 }
 // const tx = document.querySelectorAll('.text-area-notes');
 // // const tx = document.getElementsByTagName("textarea");
@@ -156,9 +155,9 @@ function autosaveForm(run = false,FormID = "form-medical-note-pd", interval = 50
 // }
 // autosize(document.querySelectorAll('textarea'));
 
-$('.text-area-notes').each(function(){
+$('.text-area-notes').each(function () {
     autosize(this);
-}).on('autosize:resized', function(){
+}).on('autosize:resized', function () {
     console.log('textarea height updated');
 });
 
@@ -238,6 +237,139 @@ let table = new DataTable('#apptTable1', {
     select: true,
     "dom": '<"card-header d-flex px-3 pt-2 justify-content-between align-items-center"lf><"bg-light m-0"rt><"card-footer d-flex px-3 pb-2 justify-content-between align-items-center"<"info-pag"i>p><"clear">'
 });
+
+
+// VIDEO CHAT
+DailyIframe.createFrame({
+    layoutConfig: {
+        grid: {
+            minTilesPerPage: 3, // default: 1, minimum required: 1
+            maxTilesPerPage: 36, // default: 25, maximum allowable: 49
+        },
+    },
+    iframeStyle: {
+    position: 'fixed',
+    border: '1px solid black',
+    width: '700px',
+    height: '750px',
+    right: '1em',
+    bottom: '1em',
+    }
+});
+
+
+// Get Provider Messages
+
+// function getProviderMessages(id) {
+    // return new Promise((resolve, reject) => {
+    //     $("#ProviderMessages").fadeIn('slow');
+    //     document.getElementById("MessageBox").style.opacity = "1";
+
+    //     $.when($.ajax(
+    //         {
+    //             url: `json/medicalnotes/${id}`,
+    //             method: 'GET'
+    //         })).done(function (data) {
+
+    //             $('#First-Accordion-aHPI-ajax').html(data.hpi);
+    //             $('#First-Accordion-aPE-ajax').html(data.pe);
+    //             $('#First-Accordion-aSMRY-ajax').html(data.summary);
+    //             $('#First-Accordion-aAP-ajax').html(data.ap);
+
+    //             let apptid = data.appointmentId
+                // Get appointment info
+//                 $.when($.ajax(
+//                     {
+//                         url: `json/appointments/${apptid}`,
+//                         method: 'GET'
+//                     })).done(function (apptData) {
+//                         $('#apptId-card-mn-ajax').html(apptData.appointmentId);
+//                         let date = new Date(apptData.dateTime);
+//                         $('#apptDate-card-mn-ajax').html(date.toDateString() + " at " + date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }));
+//                     });
+
+
+
+//                 resolve();
+
+//             }).fail(function (error) {
+//                 reject(error);
+//             });
+
+//     });
+// }
+
+// get Patient Messages
+function ShowMessages(providerId, patientId) {
+    axios({
+        method: "get",
+        url: `/patientinbox/partial/${providerId}/${patientId}`,
+    })
+        .then((res) => {
+            console.log(res);
+            // var Inbox = createHtml(res.data);
+            // document.getElementById("PtInbox").innerHTML(Inbox);
+            $("#PtInbox").html(res.data);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+
+// update Patient Messages
+function UpdateMessages(text, providerId, patientId) {
+    axios({
+        method: "get",
+        url: `/updateinbox/partial/${text}/${providerId}/${patientId}`,
+    })
+        .then((res) => {
+            console.log(res);
+            // var Inbox = createHtml(res.data);
+            // document.getElementById("PtInbox").innerHTML(Inbox);
+            $("#PtInbox").html(res.data);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+
+// get Patient Messages
+function ShowProviderMessages(providerId, patientId) {
+    axios({
+        method: "get",
+        url: `/providerinbox/partial/${providerId}/${patientId}`,
+    })
+        .then((res) => {
+            console.log(res);
+            // var Inbox = createHtml(res.data);
+            // document.getElementById("PtInbox").innerHTML(Inbox);
+            $("#PrInbox").html(res.data);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+
+// update Patient Messages
+function UpdateProviderMessages(text, providerId, patientId) {
+    axios({
+        method: "get",
+        url: `/updateproviderinbox/partial/${text}/${providerId}/${patientId}`,
+    })
+        .then((res) => {
+            console.log(res);
+            // var Inbox = createHtml(res.data);
+            // document.getElementById("PtInbox").innerHTML(Inbox);
+            $("#PrInbox").html(res.data);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+
+
+
+
 
 
 

@@ -152,11 +152,12 @@ namespace VirtualClinic.Controllers
 
             OldPatient.PreferredName = UpdatedUser.PreferredName;
             OldPatient.Pronouns = UpdatedUser.Pronouns;
-            OldPatient.Email = UpdatedUser.Email;
+            OldPatient.Email = OldPatient.Email;
+            OldPatient.Password = OldPatient.Password;
              // Initialize hasher object
-            PasswordHasher<User> Hasher = new PasswordHasher<User>();
-            // Hash password
-            OldPatient.Password = Hasher.HashPassword(UpdatedUser, UpdatedUser.Password);
+            // PasswordHasher<User> Hasher = new PasswordHasher<User>();
+            // // Hash password
+            // OldPatient.Password = Hasher.HashPassword(UpdatedUser, UpdatedUser.Password);
             OldPatient.StreetAddress = UpdatedUser.StreetAddress;
             OldPatient.City = UpdatedUser.City;
             OldPatient.State = UpdatedUser.State;
@@ -293,5 +294,82 @@ namespace VirtualClinic.Controllers
         }
         
         
+        // Messages
+        [HttpGet("/patientinbox")]
+        public IActionResult PatientInbox()
+        {
+            if (HttpContext.Session.GetInt32("UserId") == null)
+            {
+                TempData["AuthError"] = "You must be logged in to view this page";
+                return RedirectToAction("Index", "Home");
+            }
+
+            var userInDb = dbContext.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"));
+
+            ViewBag.AllMessages = dbContext.Messages
+                                .Include(p => p.Patient)
+                                .Include(p => p.Provider)
+                                .Where(p => p.PatientId == userInDb.UserId)
+                                .ToList();
+            
+            ViewBag.AllProviders = dbContext.Providers
+                                .Include(p => p.User)
+                                .ToList();
+
+            ViewBag.UserLoggedIn = userInDb;
+
+            ViewBag.Patient = dbContext.Patients
+                            .FirstOrDefault(p => p.User.UserId == userInDb.UserId);
+            
+            return View();
+        }
+
+        // Partial Message
+        [HttpGet("/patientinbox/partial/{providerId}/{patientId}")]
+        public IActionResult PatientInboxPartial(int providerId, int patientId)
+        {
+            ViewBag.ProviderId = providerId;
+            ViewBag.PatientId = patientId;
+
+            ViewBag.Messages = dbContext.Messages
+                                .Include(p => p.Patient)
+                                .Include(p => p.Provider)
+                                .Where(p => p.PatientId == patientId && p.ProviderId == providerId)
+                                .ToList();
+            
+            ViewBag.Providers = dbContext.Providers.FirstOrDefault(p => p.ProviderId == providerId);
+
+            return PartialView(@"~/Views/Shared/_InboxPt.cshtml");
+        }
+        
+        // Post Message
+        [HttpGet("/updateinbox/partial/{text}/{providerId}/{patientId}")]
+        public IActionResult UpdateMessages(Message newMessage, int providerId, int patientId)
+        {
+            dbContext.Add(newMessage);
+            dbContext.SaveChanges();
+            
+            ViewBag.ProviderId = providerId;
+            ViewBag.PatientId = patientId;
+
+            ViewBag.Messages = dbContext.Messages
+                                .Include(p => p.Patient)
+                                .Include(p => p.Provider)
+                                .Where(p => p.PatientId == patientId && p.ProviderId == providerId)
+                                .ToList();
+            
+            ViewBag.Providers = dbContext.Providers.FirstOrDefault(p => p.ProviderId == providerId);
+
+            return PartialView(@"~/Views/Shared/_InboxPt.cshtml");
+        }
+
+        // Post Message
+        // [HttpPost("senddrmessage")]
+        // public IActionResult SendMessage(Message newMessage)
+        // {
+        //     dbContext.Add(newMessage);
+        //     dbContext.SaveChanges();
+        //     return RedirectToAction("PatientInbox");
+        // }
     }
 }
