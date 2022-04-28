@@ -320,7 +320,7 @@ namespace VirtualClinic.Controllers
 
             ViewBag.Patient = dbContext.Patients
                             .FirstOrDefault(p => p.User.UserId == userInDb.UserId);
-            
+
             return View();
         }
 
@@ -353,6 +353,12 @@ namespace VirtualClinic.Controllers
             
             ViewBag.Providers = dbContext.Providers.FirstOrDefault(p => p.ProviderId == providerId);
 
+            ViewBag.ReadMessages = dbContext.Messages
+                                .Where(p => p.PatientId == patientId && p.ProviderId == providerId)
+                                .Any(p => p.Read == false);
+
+            Console.WriteLine(ViewBag.ReadMessages);
+
             return PartialView(@"~/Views/Shared/_InboxPt.cshtml");
         }
         
@@ -378,6 +384,12 @@ namespace VirtualClinic.Controllers
                                 .ToList();
             
             ViewBag.Providers = dbContext.Providers.FirstOrDefault(p => p.ProviderId == providerId);
+
+                        ViewBag.ReadMessages = dbContext.Messages
+                                .Where(p => p.PatientId == patientId && p.ProviderId == providerId)
+                                .Any(p => p.Read == false);
+
+            Console.WriteLine(ViewBag.ReadMessages);
 
             return PartialView(@"~/Views/Shared/_InboxPt.cshtml");
         }
