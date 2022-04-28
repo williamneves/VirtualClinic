@@ -43,7 +43,7 @@
                                     @if (appt.getStatus() == "Open")
                                     {
                                         <td class="text-center">
-                                            <span class="badge bg-info text-dark">@appt.getStatus()</span>
+                                            <span class="badge bg-purple-700 text-light">@appt.getStatus()</span>
                                         </td>
                                     }
                                     else if (appt.getStatus() == "Blocked")
@@ -67,13 +67,13 @@
                                     else if (appt.getStatus() == "In Progress")
                                     {
                                         <td class="text-center">
-                                            <span class="badge bg-warning text-light">@appt.getStatus()</span>
+                                            <span class="badge bg-warning text-dark">@appt.getStatus()</span>
                                         </td>
                                     }
                                     else
                                     {
                                         <td class="text-center">
-                                            <span class="badge bg-light text-dark">@appt.getStatus()</span>
+                                            <span class="badge bg-orange-600 text-light">@appt.getStatus()</span>
                                         </td>
                                     }
                                     <td class="text-center">
@@ -86,7 +86,7 @@
 
                                             <a class="btn btn-sm btn-primary px-3" asp-action="ProviderAttendance" asp-controller="Provider" asp-route-apptId="@appt.AppointmentId" data-bs-placement="left" data-bs-toggle="tooltip" data-bs-html="true" title="See it"><i class="fa-solid fa-eye"></i></a>
                                         }
-                                        else if (appt.getStatus() == "Upcoming" || appt.getStatus() == "In Progress")
+                                        else if (appt.getStatus() == "Upcoming" || appt.getStatus() == "In Progress" || appt.Status == "patient_waiting")
                                         {
 
                                             <a class="btn btn-sm btn-success px-3" asp-action="ProviderAttendance" asp-controller="Provider" asp-route-apptId="@appt.AppointmentId" data-bs-placement="left" data-bs-toggle="tooltip" data-bs-html="true" title="Attend"><i class="fa-solid fa-circle-play"></i></a>
@@ -94,11 +94,11 @@
                                             @if (@appt.roomIsExpired())
                                             {
                                                 
-                                                <a class="btn btn-sm btn-warning px-3" data-bs-placement="right" data-bs-toggle="tooltip" data-bs-html="true" title="Create Video Room" onclick="createRoom(this,@appt.AppointmentId)"><i class="fa-duotone fa-camera-web"></i></a>
+                                                <a class="btn btn-sm btn-warning px-3" data-bs-placement="right" data-bs-toggle="tooltip" data-bs-html="true" title="Create Video Room" onclick="createRoom(this,@appt.AppointmentId), reloadPage()"><i class="fa-duotone fa-camera-web"></i></a>
                                             }
                                             else
                                             {
-                                                <a class="btn btn-sm btn-secondary px-3" data-bs-placement="right" data-bs-toggle="tooltip" data-bs-html="true" title="Room is created"><i class="fa-duotone fa-camera-web" disabled></i></a>
+                                                <a class="btn btn-sm btn-secondary px-3" data-bs-placement="right" data-bs-toggle="tooltip" data-bs-html="true" title="Room is created" disabled><i class="fa-duotone fa-camera-web"></i></a>
                                             }
                                             
                                         }
