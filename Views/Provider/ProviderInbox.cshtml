@@ -11,7 +11,7 @@
             <div class="list-group">
                 @foreach (Patient i in ViewBag.AllPatients)
                 {
-                    <a href="#" class="list-group-item" aria-current="true" value="@i.PatientId" onclick="ShowProviderMessages(@i.PatientId, @ViewBag.Provider.ProviderId)">@i.User.FirstName
+                    <a href="#" class="list-group-item" aria-current="true" value="@i.PatientId" onclick="ShowProviderMessages(@ViewBag.Provider.ProviderId, @i.PatientId)">@i.User.FirstName
                         @i.User.LastName</a>
                 }
             </div>

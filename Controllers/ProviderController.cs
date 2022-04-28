@@ -478,7 +478,6 @@ namespace VirtualClinic.Controllers
         [HttpGet("/updateproviderinbox/partial/{text}/{providerId}/{patientId}")]
         public IActionResult ProviderInbox(Message newMessage, int providerId, int patientId)
         {
-
             dbContext.Add(newMessage);
             dbContext.SaveChanges();
 
@@ -492,7 +491,7 @@ namespace VirtualClinic.Controllers
                                 .ToList();
             
             ViewBag.Patients = dbContext.Patients.FirstOrDefault(p => p.PatientId == patientId);
-
+  
 
             return PartialView(@"~/Views/Shared/_InboxProvider.cshtml");
         }
