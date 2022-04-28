@@ -38,5 +38,7 @@ namespace VirtualClinic.Models
 
         // Medical History
         public List<MedicalHistory> MedicalHistory { get; set; }
+
+        public List<Message> Messages { get; set; }
     }
 }

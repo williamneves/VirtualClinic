@@ -1,9 +1,12 @@
-﻿@{
-    ViewBag.Title = "title";
-    Layout = "_LayoutBS";
-}
+﻿
+<html>
+<script crossorigin src="https://unpkg.com/@@daily-co/daily-js"></script>
 
-<div class="col-12 card" style="height: 600px">
-    
-</div>
-     
+<body>
+    <script>
+        callFrame = window.DailyIframe.createFrame();
+        callFrame.join({ url: 'https://virtualclinic.daily.co/ExamRoom2' });
+    </script>
+</body>
+
+</html>

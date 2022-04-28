@@ -420,5 +420,85 @@ namespace VirtualClinic.Controllers
 
             return View();
         }
+
+// Provider Messages page
+        [HttpGet("/providerinbox")]
+        public IActionResult ProviderInbox()
+        {
+            if (HttpContext.Session.GetInt32("UserId") == null)
+            {
+                TempData["AuthError"] = "You must be logged in to view this page";
+                return RedirectToAction("Index", "Home");
+            }
+
+            var userInDb = dbContext.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"));
+
+            ViewBag.AllMessages = dbContext.Messages
+                                .Include(p => p.Patient)
+                                .Include(p => p.Provider)
+                                .Where(p => p.PatientId == userInDb.UserId)
+                                .ToList();
+            
+            ViewBag.AllPatients = dbContext.Patients
+                                .Include(p => p.User)
+                                .ToList();
+
+            ViewBag.UserLoggedIn = userInDb;
+
+            ViewBag.Provider = dbContext.Providers
+                            .FirstOrDefault(p => p.User.UserId == userInDb.UserId);
+            
+            return View();
+        }
+        
+        // Messages
+        [HttpGet("/providerinbox/partial/{providerId}/{patientId}")]
+        public IActionResult ProviderInboxParital(int providerId, int patientId)
+        {
+            ViewBag.ProviderId = providerId;
+            ViewBag.PatientId = patientId;
+
+            ViewBag.Messages = dbContext.Messages
+                                .Include(p => p.Patient)
+                                .Include(p => p.Provider)
+                                .Where(p => p.PatientId == patientId && p.ProviderId == providerId)
+                                .ToList();
+            
+            ViewBag.Patients = dbContext.Patients.FirstOrDefault(p => p.PatientId == patientId);
+
+            return PartialView(@"~/Views/Shared/_InboxProvider.cshtml");
+        }
+
+        // Messages
+        [HttpGet("/updateproviderinbox/partial/{text}/{providerId}/{patientId}")]
+        public IActionResult ProviderInbox(Message newMessage, int providerId, int patientId)
+        {
+
+            dbContext.Add(newMessage);
+            dbContext.SaveChanges();
+
+            ViewBag.ProviderId = providerId;
+            ViewBag.PatientId = patientId;
+            
+            ViewBag.Messages = dbContext.Messages
+                                .Include(p => p.Patient)
+                                .Include(p => p.Provider)
+                                .Where(p => p.PatientId == patientId && p.ProviderId == providerId)
+                                .ToList();
+            
+            ViewBag.Patients = dbContext.Patients.FirstOrDefault(p => p.PatientId == patientId);
+
+
+            return PartialView(@"~/Views/Shared/_InboxProvider.cshtml");
+        }
+        
+        // MESSAGE
+    //     [HttpPost("sendptmessage")]
+    //     public IActionResult SendMessage(Message newMessage)
+    //     {
+    //         dbContext.Add(newMessage);
+    //         dbContext.SaveChanges();
+    //         return RedirectToAction("ProviderInbox");
+    //     }
     }
 }

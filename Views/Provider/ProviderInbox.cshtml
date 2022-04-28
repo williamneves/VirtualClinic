@@ -1,0 +1,25 @@
+@{
+    ViewData["Title"] = "Provider Inbox";
+    Layout = "_LayoutBS";
+}
+
+@model Message
+
+<div class="row">
+
+        <div class="col-12 col-sm-4">
+            <div class="list-group">
+                @foreach (Patient i in ViewBag.AllPatients)
+                {
+                    <a href="#" class="list-group-item" aria-current="true" value="@i.PatientId" onclick="ShowProviderMessages(@i.PatientId, @ViewBag.Provider.ProviderId)">@i.User.FirstName
+                        @i.User.LastName</a>
+                }
+            </div>
+
+        </div>
+
+        <div class="col-12 col-sm-8">
+            <div id="PrInbox"> </div>
+        </div>
+
+</div>
