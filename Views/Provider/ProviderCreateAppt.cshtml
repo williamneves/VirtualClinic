@@ -64,6 +64,12 @@
                                             <span class="badge bg-success text-light">@appt.getStatus()</span>
                                         </td>
                                     }
+                                    else if (appt.getStatus() == "In Progress")
+                                    {
+                                        <td class="text-center">
+                                            <span class="badge bg-warning text-light">@appt.getStatus()</span>
+                                        </td>
+                                    }
                                     else
                                     {
                                         <td class="text-center">
@@ -73,17 +79,28 @@
                                     <td class="text-center">
                                         @if (appt.getStatus() == "Open")
                                         {
-                                            <a class="btn btn-sm btn-danger px-3" asp-action="ProviderDeleteAppt" asp-controller="Provider" asp-route-appointmentId="@appt.AppointmentId"><i class="fa-solid fa-calendar-circle-minus"></i></a>
+                                            <a class="btn btn-sm btn-danger px-3" asp-action="ProviderDeleteAppt" asp-controller="Provider" asp-route-appointmentId="@appt.AppointmentId" data-bs-placement="left" data-bs-toggle="tooltip" data-bs-html="true" title="Remove"><i class="fa-solid fa-calendar-circle-minus"></i></a>
                                         }
                                         else if (appt.getStatus() == "Finished")
                                         {
 
-                                            <a class="btn btn-sm btn-primary px-3" asp-action="ProviderAttendance" asp-controller="Provider" asp-route-apptId="@appt.AppointmentId"><i class="fa-solid fa-eye"></i></a>
+                                            <a class="btn btn-sm btn-primary px-3" asp-action="ProviderAttendance" asp-controller="Provider" asp-route-apptId="@appt.AppointmentId" data-bs-placement="left" data-bs-toggle="tooltip" data-bs-html="true" title="See it"><i class="fa-solid fa-eye"></i></a>
                                         }
-                                        else if (appt.getStatus() == "Upcoming")
+                                        else if (appt.getStatus() == "Upcoming" || appt.getStatus() == "In Progress")
                                         {
 
-                                            <a class="btn btn-sm btn-success px-3" asp-action="ProviderAttendance" asp-controller="Provider" asp-route-apptId="@appt.AppointmentId"><i class="fa-solid fa-circle-play"></i></a>
+                                            <a class="btn btn-sm btn-success px-3" asp-action="ProviderAttendance" asp-controller="Provider" asp-route-apptId="@appt.AppointmentId" data-bs-placement="left" data-bs-toggle="tooltip" data-bs-html="true" title="Attend"><i class="fa-solid fa-circle-play"></i></a>
+                                            
+                                            @if (@appt.roomIsExpired())
+                                            {
+                                                
+                                                <a class="btn btn-sm btn-warning px-3" data-bs-placement="right" data-bs-toggle="tooltip" data-bs-html="true" title="Create Video Room" onclick="createRoom(this,@appt.AppointmentId)"><i class="fa-duotone fa-camera-web"></i></a>
+                                            }
+                                            else
+                                            {
+                                                <a class="btn btn-sm btn-secondary px-3" data-bs-placement="right" data-bs-toggle="tooltip" data-bs-html="true" title="Room is created"><i class="fa-duotone fa-camera-web" disabled></i></a>
+                                            }
+                                            
                                         }
 
                                     </td>

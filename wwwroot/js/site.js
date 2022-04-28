@@ -227,7 +227,210 @@ $('.text-area-notes').each(function(){
 // //     console.log(event.target.HPI);
 // //     console.log(event.target.PE);
 // //     console.log(event.target.Summary);
-// // }
+// // 
+
+// Create Room Video API
+function createRoom(element = null,apptId){
+    if(element){
+        element.classList.add('disabled');
+    }
+    
+    let videoUrl = "";
+    
+    axios({
+        method: 'GET',
+        url: '/videoapi/createroom/',
+    })
+        .then((res) => {
+            console.log(res, res.data["videoUrl"]);
+            videoUrl = res.data["videoUrl"];
+            let dataSaveRoom = `{
+                "videoUrl": "${res.data["videoUrl"]}",
+                "videoRoom": "${res.data["videoRoom"]}",
+                "apptId": "${apptId}"
+            }`;
+            console.log(dataSaveRoom);
+            console.log("sending data to save room");
+            saveRoom(apptId,res.data["videoRoom"]);
+            
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+
+    element.classList.remove('disabled');
+    return videoUrl;
+    
+}
+// Save Room at Appointment
+function saveRoom(apptId,room){
+    console.log(room)
+    console.log(apptId)
+    axios({
+        method: 'POST',
+        url: `/provider/appt/setvideourl/${room}/${apptId}`,
+        })
+        .then((res) => {
+            console.log(res);
+            if (res.data.success) {
+                console.log(res)
+            } else {
+                console.log(res)
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+}
+
+function getMedicalNotes(id){
+    return new Promise((resolve, reject) => {
+        $("#accordionMedicalNotes").fadeIn('slow');
+        document.getElementById("medical-notes-card").style.opacity="1";
+
+        $.when($.ajax(
+            {
+                url: `json/medicalnotes/${id}`,
+                method: 'GET'
+            })).done(function(data){
+
+            $('#First-Accordion-aHPI-ajax').html(data.hpi);
+            $('#First-Accordion-aPE-ajax').html(data.pe);
+            $('#First-Accordion-aSMRY-ajax').html(data.summary);
+            $('#First-Accordion-aAP-ajax').html(data.ap);
+
+            let apptid = data.appointmentId
+            // Get appointment info
+            $.when($.ajax(
+                {
+                    url: `json/appointments/${apptid}`,
+                    method: 'GET'
+                })).done(function(apptData){
+                $('#apptId-card-mn-ajax').html(apptData.appointmentId);
+                let date = new Date(apptData.dateTime);
+                $('#apptDate-card-mn-ajax').html(date.toDateString() +" at "+ date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }));
+            });
+
+
+
+            resolve();
+
+        }).fail(function(error){
+            reject(error);
+        });
+
+    });
+}
+
+// Attendence Page
+function startAttendence(element,apptId,videoUrl){
+    element.classList.add('disabled');
+    element.classList.remove('btn-primary');
+    element.classList.add('btn-secondary');
+    document.querySelector("#btn-Finish-visit").disabled = false;
+    document.querySelector("#btn-finish-left").disabled = false;
+    
+    // Select all textarea elements
+    let textareas = document.querySelectorAll('textarea');
+    // Loop through the textarea elements
+    for (let i = 0; i < textareas.length; i++) {
+        // Set the textarea to readonly
+        textareas[i].disabled = false;
+    }
+    
+    // make a post request to the server to start the attendence
+    axios({
+        method: 'POST',
+        url: `/provider/appt/status/${apptId}/inprogress/`,
+        })
+        .then((res) => {
+            // console.log(res);
+            if (res.data.success) {
+                // console.log(res)
+            } else {
+                // console.log(res)
+            }
+        })
+        .catch((error) => {
+            // console.log(error);
+        });
+    
+    console.log(videoUrl)
+    
+    
+    // Set a timer to exec another function after 5 seconds
+    setTimeout(function() {
+        let urlvideo;
+        if(videoUrl == null){
+            // Call the frame video
+            
+            let videourl = createRoom(null,apptId)
+            videoCallFrame(videourl)
+        }
+        else{
+            
+            // Call the frame video
+            videoCallFrame(videoUrl)
+        }
+    }, 2000);
+    
+    // Create video room if not exist or expired
+    
+}
+function videoCallFrame(videoUrl){
+    
+    const MY_IFRAME = document.createElement('iframe');
+    MY_IFRAME.setAttribute(
+        'allow',
+        'microphone; camera; autoplay; display-capture'
+    );
+
+    const iframeProperties = { url: `${videoUrl}` };
+
+    let videoIframe = document.getElementById('videoConferenceIframe');
+    let videocallblock = videoIframe.appendChild(MY_IFRAME);
+
+    videoIframe.style.height = '470px';
+    videocallblock.style.width = '100%';
+    videocallblock.style.height = '100%';
+    videocallblock.classList = ["iframevideo"];
+
+    let callFrame = DailyIframe.wrap(MY_IFRAME, iframeProperties);
+
+    callFrame.join();
+}
+
+// Finish Attendence Page
+function finishAttend(element,apptId){
+    element.classList.add('disabled');
+    element.classList.remove('btn-primary');
+    element.classList.add('btn-secondary');
+    document.querySelector("#btn-Finish-visit").disabled = true;
+    // Select all textarea elements
+    let textareas = document.querySelectorAll('textarea');
+    // Loop through the textarea elements
+    for (let i = 0; i < textareas.length; i++) {
+        // Set the textarea to readonly
+        textareas[i].disabled = true;
+    }
+    // make a post request to the server to start the attendence
+    axios({
+        method: 'POST',
+        url: `/provider/appt/status/${apptId}/done/`,
+        })
+        .then((res) => {
+            // console.log(res);
+            if (res.data.success) {
+                // console.log(res)
+            } else {
+                // console.log(res)
+            }
+        })
+        .catch((error) => {
+            // console.log(error);
+        });
+}
+
 
 // DataTable
 let table = new DataTable('#apptTable1', {

@@ -1,0 +1,54 @@
+﻿@{
+    ViewData["Title"] = "Welcome";
+    Layout = "_Layout";
+}
+<button class="btn btn-primary" onclick="callMeet()">Call</button>
+<form asp-controller="Home" asp-action="CreateRoom">
+    <button>Separate Page</button>
+</form>
+<div class="row">
+    <div class="col-9 my-5 m-auto">
+        <div id="videocall"></div>
+    </div>
+</div>
+<script>
+ function callMeet(){
+    callFrame = window.DailyIframe.createTransparentFrame({
+      iframeStyle: {
+        position: 'fixed',
+        border: '1px solid black',
+        width: '375px',
+        height: '450px',
+        left: '2em',
+        bottom: '4em',
+      },
+      showLeaveButton: true,
+      showFullscreenButton: true,
+    });
+    callFrame.join({ url: 'https://williamneves.daily.co/apptId3' });
+   }
+   
+   const MY_IFRAME = document.createElement('iframe');
+   MY_IFRAME.setAttribute(
+     'allow',
+     'microphone; camera; autoplay; display-capture'
+   );
+   
+   const iframeProperties = { url: 'https://williamneves.daily.co/apptId3' };
+   
+   let videocallblock = document.querySelector("#videocall").appendChild(MY_IFRAME);
+   
+   videocallblock.style.width = '375px';
+   videocallblock.style.height = '450px';
+   videocallblock.style.border = '1px solid black';
+   videocallblock.classList = ["rounded-3 p-3 bg-white shadow-md"];
+   
+   
+   
+   
+   let callFrame = DailyIframe.wrap(MY_IFRAME, iframeProperties);
+   
+   callFrame.join();
+
+    
+</script>

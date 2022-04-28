@@ -9,17 +9,53 @@
     <div class="col-12 col-sm-4">
 
         <div class="sticky-top" style="top: 4rem; z-index: 1">
-            
-            <div class="card col-sm-10 col-10 mx-auto mb-4 bg-gray-500 rounded-3">
 
-                <img src="https://www.newsshare.in/wp-content/uploads/2/Cartoon-WhatsApp-DP-44.jpg"
-                     class="rounded-circle mx-auto border border-5 shadow border-white w-50 my-2" alt="Profile Picture">
-                <h4 class="my-2 text-center">"@ViewBag.ApptInfo.Patient.User.PreferredName"</h4>
-                <h4> @ViewBag.ApptInfo.Patient.User.getFullName()</h4>
-                <a href="#" class="btn btn-sm btn-outline-light col-8 mx-auto my-3">
-                    <i class="bi bi-gear"></i> Edit
-                    Profile
-                </a>
+            <div class="card col-sm-10 col-10 mx-auto mb-4 bg-gray-500 rounded-3" style="min-height: 200px">
+                <div id="videoConferenceIframe"></div>
+            </div>
+            
+            <div class="col-sm-10 col-10 mx-auto mb-4">
+                <div class="btn-group w-100" role="group" aria-label="Actions Buttom">
+                    @if (!ViewBag.ApptInfo.roomIsExpired())
+                    {
+                        <button type="button" class="btn btn-primary" onclick='startAttendence(this,@ViewBag.ApptInfo.AppointmentId,"@ViewBag.ApptInfo.videoUrl")'><i class="fa-solid fa-play"></i><br/>Start</button>
+                    }
+                    @if(ViewBag.ApptInfo.Status == "done")
+                    {
+                        <button type="button" class="btn btn-primary" disabled=""><i class="fa-duotone fa-lock"></i><br/>Closed</button>
+                    }
+                    else
+                    {
+                        <button type="button" class="btn btn-primary" onclick="startAttendence(this,@ViewBag.ApptInfo.AppointmentId,null)"><i class="fa-solid fa-play"></i><br/>Start</button>
+                    }
+                    <button type="button" class="btn btn-primary" disabled><i class="fa-duotone fa-circle-video"></i><br/>Video Room</button>
+                    <button id="btn-finish-left" type="button" class="btn btn-primary" onclick="finishAttend(this,@ViewBag.ApptInfo.AppointmentId)" disabled><i class="fa-duotone fa-flag-checkered"></i><br/>Finish</button>
+                </div>
+            </div>
+
+            <div class="card col-sm-10 col-10 mx-auto mb-4 bg-gray-500 rounded-3 flex-row justify-content-between">
+                <div class="col-sm-12 col-lg-4">
+                    
+                    <img src="https://www.newsshare.in/wp-content/uploads/2/Cartoon-WhatsApp-DP-44.jpg"
+                         class="rounded-circle border border-4 shadow border-white w-75 m-3" alt="Profile Picture">
+                </div>
+                
+                <div class="col-sm-12 col-lg-7 d-flex flex-column justify-content-center align-content-center text-center">
+                    @{
+                        <div>
+                            @if(ViewBag.ApptInfo.Patient.User.PreferredName != null)
+                            {
+                                <h6 class="text-center fst-italic mb-0">"@ViewBag.ApptInfo.Patient.User.PreferredName"</h6>
+                            }
+                            @if(ViewBag.ApptInfo.Patient.User.Pronouns != null)
+                            {
+                                <small class="text-center fst-italic text-muted">"@ViewBag.ApptInfo.Patient.User.Pronouns"</small>
+                            }
+                        </div>
+                        <h6 class="text-center"> @ViewBag.ApptInfo.Patient.User.getFullName()</h6>
+                    }
+                    
+                </div>
             </div>
 
             <div class="card col-sm-10 col-10 mx-auto mb-4 bg-gray-100 rounded-3">
@@ -31,7 +67,7 @@
                         <li class="list-group-item bg-gray-100">Sex: @ViewBag.ApptInfo.Patient.User.Sex</li>
                         <li class="list-group-item bg-gray-100">Height: @ViewBag.ApptInfo.Patient.Height cm</li>
                         <li class="list-group-item bg-gray-100">Weight: @ViewBag.ApptInfo.Patient.Weight kg (@((int) (Convert.ToDouble(ViewBag.ApptInfo.Patient.Weight) * 2.2)) lbs)</li>
-                        <li class="list-group-item bg-gray-200">
+                        <li class="list-group-item bg-gray-200 p-0">
                             <partial name="_Allergies-MedHx"/>
                         </li>
                     </ul>
@@ -43,7 +79,7 @@
     </div>
     <div class="col-12 col-sm-8">
         <div class="col-sm-12">
-            
+
             <div class="rowtwo">
 
                 <partial name="_FormVisitNotes"/>
@@ -51,7 +87,7 @@
                 <partial name="_AddMedication"/>
 
             </div>
-            
+
         </div>
 
 

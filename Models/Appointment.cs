@@ -23,6 +23,11 @@ namespace VirtualClinic.Models
 
         // Appointment Status
         public string Status { get; set; }
+        
+        public string videoUrl { get; set; }
+        public string videoRoom { get; set; }
+        
+        public DateTime videoRoomCreateDate { get; set; }
 
         // Relationship with Provider
         public int ProviderId { get; set; }
@@ -45,11 +50,27 @@ namespace VirtualClinic.Models
                     return "Blocked";
                 case "taken":
                     return "Upcoming";
+                case "inprogress":
+                    return "In Progress";
                 case "done":
                     return "Finished";
                 default:
                     return "No Status";
             }
+        }
+
+        public bool roomIsExpired(int extraTime = 90)
+        {
+                Console.WriteLine(videoRoom == null);
+                Console.WriteLine(videoRoomCreateDate.AddMinutes(extraTime));
+                Console.WriteLine(DateTime.UtcNow.AddMinutes(0));
+                Console.WriteLine(videoRoomCreateDate.AddMinutes(extraTime) < DateTime.UtcNow.AddMinutes(-20));
+                
+            if (videoRoom == null || videoRoomCreateDate.AddMinutes(extraTime) < DateTime.UtcNow.AddMinutes(-20))
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

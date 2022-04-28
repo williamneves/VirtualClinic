@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -9,6 +11,7 @@ using VirtualClinic.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json.Linq;
 
 namespace VirtualClinic.Controllers
 {
@@ -16,12 +19,12 @@ namespace VirtualClinic.Controllers
     {
         private MyContext dbContext;
 
-        public ProviderController( MyContext context)
+        public ProviderController(MyContext context)
         {
             dbContext = context;
         }
 
-        
+
         // PROVIDER DASHBOARD
         [HttpGet("providerdashboard")]
         public IActionResult ProviderDashboard()
@@ -36,7 +39,7 @@ namespace VirtualClinic.Controllers
 
             ViewBag.UserLoggedIn = dbContext.Users.FirstOrDefault(p => p.UserId == UserId);
 
-            return View();                      
+            return View();
         }
 
         // Appointment Attendance Provider View
@@ -49,48 +52,49 @@ namespace VirtualClinic.Controllers
                 TempData["AuthError"] = "You must be logged in to view this page";
                 return RedirectToAction("Index", "Home");
             }
+
             var userInDb = dbContext.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"));
-            
+
             ViewBag.UserLoggedIn = userInDb;
-            
+
             if (userInDb.userType != "provider")
             {
                 TempData["AuthError"] = "You must be logged Provider to view this page";
                 return RedirectToAction("Index", "Home");
             }
-            
+
             // Appointment Info
             var apptInfo = dbContext.Appointments
                 .Include(p => p.Patient)
-                .ThenInclude(p => p.User)  
+                .ThenInclude(p => p.User)
                 .Include(p => p.Provider)
                 .ThenInclude(u => u.User)
                 .Include(p => p.MedicalNotes)
                 .FirstOrDefault(p => p.AppointmentId == apptId);
-            
+
             // Patient Medications
             ViewBag.PatientInfo = dbContext.Patients
-                                    .Include(p => p.Medications)
-                                    .FirstOrDefault(p => p.UserId == apptInfo.Patient.UserId);
+                .Include(p => p.Medications)
+                .FirstOrDefault(p => p.UserId == apptInfo.Patient.UserId);
 
             // Patient Allergies
             ViewBag.PatientAllergies = dbContext.Patients
-                                        .Include(p => p.Allergies)
-                                        .FirstOrDefault(p => p.UserId == apptInfo.Patient.UserId);
-    
+                .Include(p => p.Allergies)
+                .FirstOrDefault(p => p.UserId == apptInfo.Patient.UserId);
+
             // Patient MedHx
             ViewBag.PatientMedHx = dbContext.Patients
-                                    .Include(p => p.MedicalHistory)
-                                    .FirstOrDefault(p => p.UserId == apptInfo.Patient.UserId);
+                .Include(p => p.MedicalHistory)
+                .FirstOrDefault(p => p.UserId == apptInfo.Patient.UserId);
 
             // Patient Appointment
             ViewBag.PatientAppt = dbContext.Patients
-                                    .Include(p => p.Appointments)
-                                    .ThenInclude(l => l.Provider)
-                                    .ThenInclude(u => u.User)
-                                    .Include(p => p.Appointments)
-                                    .ThenInclude(m => m.MedicalNotes)
-                                    .FirstOrDefault(p => p.UserId == apptInfo.Patient.UserId);
+                .Include(p => p.Appointments)
+                .ThenInclude(l => l.Provider)
+                .ThenInclude(u => u.User)
+                .Include(p => p.Appointments)
+                .ThenInclude(m => m.MedicalNotes)
+                .FirstOrDefault(p => p.UserId == apptInfo.Patient.UserId);
 
             // Next appointment (not in the past)
             ViewBag.NextAppointment = dbContext.Appointments
@@ -100,17 +104,17 @@ namespace VirtualClinic.Controllers
                 .Where(p => p.PatientId == userInDb.UserId && p.DateTime >= DateTime.Now.AddHours(-1))
                 .OrderBy(p => p.DateTime)
                 .FirstOrDefault();
-            
+
 
 
             ViewBag.ApptInfo = apptInfo;
 
             ViewBag.MedicalNote = dbContext.MedicalNotes
-                .FirstOrDefault(m => m.PatientId == apptInfo.PatientId 
-                                            && m.ProviderId == apptInfo.ProviderId
-                                            && m.AppointmentId == apptInfo.AppointmentId);
+                .FirstOrDefault(m => m.PatientId == apptInfo.PatientId
+                                     && m.ProviderId == apptInfo.ProviderId
+                                     && m.AppointmentId == apptInfo.AppointmentId);
 
-            
+
             return View();
         }
 
@@ -127,44 +131,44 @@ namespace VirtualClinic.Controllers
             // Console.WriteLine("\n###############\n");
             //     // dbContext.MedicalNotes.Add(newMedicalNote);
             //     // dbContext.SaveChanges();
-                
+
             var newNoteInDb = dbContext.MedicalNotes
-                .FirstOrDefault(m => m.PatientId == newNote.PatientId 
-                                    && m.ProviderId == newNote.ProviderId
-                                    && m.AppointmentId == newNote.AppointmentId);
+                .FirstOrDefault(m => m.PatientId == newNote.PatientId
+                                     && m.ProviderId == newNote.ProviderId
+                                     && m.AppointmentId == newNote.AppointmentId);
             if (newNoteInDb != null)
             {
                 newNoteInDb.HPI = newNote.HPI;
                 newNoteInDb.PE = newNote.PE;
                 newNoteInDb.Summary = newNote.Summary;
                 newNoteInDb.AP = newNote.AP;
-                
+
                 // save changes
                 dbContext.SaveChanges();
-                
+
                 var response = "Auto-updated Medical Notes";
-            
+
                 return Json(response);
             }
             else
             {
                 dbContext.MedicalNotes.Add(newNote);
                 dbContext.SaveChanges();
-                
+
                 var response = "Added new Medical Notes";
-            
+
                 return Json(response);
             }
 
         }
-            
+
         // Edit Provider Profile
         [HttpGet("edit/providerprofile")]
         public IActionResult EditProviderProfile()
         {
             // User Logged In
             var userInDb = dbContext.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"));
-            
+
             ViewBag.UserLoggedIn = userInDb;
 
             // Patient Medications
@@ -180,14 +184,14 @@ namespace VirtualClinic.Controllers
         [HttpPost("edit/providerinfo/")]
         public IActionResult EditPatientInfo(ProviderUpdate UpdatedUser)
         {
-            
-            
+
+
             User userInDb = dbContext.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"));
 
             // Get the Provider attached to the User
             Provider oldProviderInDb = dbContext.Providers
-            .Include(p => p.User)
-            .FirstOrDefault(p => p.UserId == userInDb.UserId);
+                .Include(p => p.User)
+                .FirstOrDefault(p => p.UserId == userInDb.UserId);
 
             oldProviderInDb.User.PreferredName = UpdatedUser.PreferredName;
             oldProviderInDb.Specialty = UpdatedUser.Specialty;
@@ -196,12 +200,12 @@ namespace VirtualClinic.Controllers
             oldProviderInDb.BankName = UpdatedUser.BankName;
             oldProviderInDb.RoutingNumber = UpdatedUser.RoutingNumber;
             oldProviderInDb.AdditionalInformation = UpdatedUser.AdditionalInformation;
-            
+
             dbContext.SaveChanges();
 
             return RedirectToAction("ProviderDashboard");
         }
-        
+
         // Provider Create Appointment
         // GET METHOD
         [HttpGet("provider/createappointment")]
@@ -212,21 +216,21 @@ namespace VirtualClinic.Controllers
                 TempData["AuthError"] = "You must be logged in to view this page";
                 return RedirectToAction("Index", "Home");
             }
-            
+
             var userInDb = dbContext.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"));
-            
+
             Console.WriteLine("User Logged In: ", HttpContext.Session.GetInt32("UserId"));
-            
+
             ViewBag.UserLoggedIn = userInDb;
 
             // Patient Medications
-            
+
             var providerInfo = dbContext.Providers
                 .Include(p => p.User)
                 .FirstOrDefault(p => p.UserId == userInDb.UserId);
-            
+
             ViewBag.ProviderInfo = providerInfo;
-            
+
             // Get all appointments for the logged in provider with all patients
             ViewBag.ProviderAppointments = dbContext.Appointments
                 .Include(a => a.Patient)
@@ -234,9 +238,10 @@ namespace VirtualClinic.Controllers
                 .Where(a => a.ProviderId == providerInfo.ProviderId)
                 .OrderBy(a => a.DateTime)
                 .ToList();
-            
+
             return View();
         }
+
         // Provider Create Appointment
         // POST METHOD
         [HttpPost("provider/createappointmentpost")]
@@ -255,9 +260,9 @@ namespace VirtualClinic.Controllers
             var providerInfo = dbContext.Providers
                 .Include(p => p.User)
                 .FirstOrDefault(p => p.UserId == userInDb.UserId);
-            
+
             ViewBag.ProviderInfo = providerInfo;
-            
+
             // Get all appointments for the logged in provider with all patients
             ViewBag.ProviderAppointments = dbContext.Appointments
                 .Include(a => a.Patient)
@@ -270,15 +275,15 @@ namespace VirtualClinic.Controllers
                 // Add Appointment to DB
                 dbContext.Appointments.Add(newAppt);
                 dbContext.SaveChanges();
-                
+
                 // var response = "Added new Appointment";
-            
+
                 return RedirectToAction("ProviderCreateAppt");
             }
 
             return RedirectToAction("ProviderCreateAppt");
         }
-        
+
         //Provider Delete Appointment
         [HttpGet("provider/deleteappointment/{appointmentId}")]
         public IActionResult ProviderDeleteAppt(int appointmentId)
@@ -318,7 +323,7 @@ namespace VirtualClinic.Controllers
                 TempData["AuthError"] = "You must be logged in to view this page";
                 return RedirectToAction("Index", "Home");
             }
-            
+
             var userInDb = dbContext.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"));
 
             // Catch the provider in Db
@@ -342,7 +347,7 @@ namespace VirtualClinic.Controllers
                 .Include(p => p.Appointments)
                 .Where(p => p.Appointments.Any(a => a.ProviderId == providerInDb.ProviderId))
                 .ToList();
-            
+
             // Create the veiewbags
             ViewBag.AllAppointments = AllAppointments;
             ViewBag.AllPatients = AllPatients;
@@ -350,7 +355,7 @@ namespace VirtualClinic.Controllers
             ViewBag.UserLoggedIn = userInDb;
 
             return View();
-        } 
+        }
 
         // Single Patient Provider View
         [HttpGet("/patientinfo/{patientId}")]
@@ -383,33 +388,33 @@ namespace VirtualClinic.Controllers
             ViewBag.AllAppointments = AllAppointments;
             ViewBag.ProviderInfo = providerInDb;
             ViewBag.UserLoggedIn = userInDb;
-             // Patient Info
-            
+            // Patient Info
+
             ViewBag.PatientInfo = dbContext.Patients
-                                    .Include(p => p.Medications)
-                                    .Include(p => p.ReportedMedications)
-                                    .SingleOrDefault(p => p.PatientId == patientId);
+                .Include(p => p.Medications)
+                .Include(p => p.ReportedMedications)
+                .SingleOrDefault(p => p.PatientId == patientId);
 
             // Patient Allergies
             ViewBag.PatientAllergies = dbContext.Patients
-                                        .Include(p => p.Allergies)
-                                        .SingleOrDefault(p => p.PatientId == patientId);
-    
+                .Include(p => p.Allergies)
+                .SingleOrDefault(p => p.PatientId == patientId);
+
             // Patient MedHx
             ViewBag.PatientMedHx = dbContext.Patients
-                                    .Include(p => p.MedicalHistory)
-                                    .SingleOrDefault(p => p.PatientId == patientId);
+                .Include(p => p.MedicalHistory)
+                .SingleOrDefault(p => p.PatientId == patientId);
 
             // Patient Appointment
             ViewBag.PatientAppt = dbContext.Patients
-                                    .Include(p => p.Appointments)
-                                    .ThenInclude(l => l.Provider)
-                                    .ThenInclude(u => u.User)
-                                    .Include(p => p.Appointments)
-                                    .ThenInclude(m => m.MedicalNotes)
-                                    .SingleOrDefault(p => p.PatientId == patientId);
+                .Include(p => p.Appointments)
+                .ThenInclude(l => l.Provider)
+                .ThenInclude(u => u.User)
+                .Include(p => p.Appointments)
+                .ThenInclude(m => m.MedicalNotes)
+                .SingleOrDefault(p => p.PatientId == patientId);
 
-             // Next appointment (not in the past)
+            // Next appointment (not in the past)
             ViewBag.NextAppointment = dbContext.Appointments
                 .Include(p => p.Patient)
                 .Include(p => p.Provider)
@@ -420,5 +425,79 @@ namespace VirtualClinic.Controllers
 
             return View();
         }
+
+        // Save videoCall Url in appointment
+        [HttpPost("/provider/appt/setvideourl/{videoRoom}/{apptId}/")]
+        public IActionResult SetVideoUrl(string videoRoom, int apptId)
+        {
+            Console.WriteLine("New Room Object: " + videoRoom);
+            Console.WriteLine("New Room Object: " + apptId);
+            if (HttpContext.Session.GetInt32("UserId") == null)
+            {
+                TempData["AuthError"] = "You must be logged in to view this page";
+                return RedirectToAction("Index", "Home");
+            }
+            
+            // Get the Appointment with the apptId
+            Console.WriteLine("Get the Appointment with the apptId");
+            var apptInDb = dbContext.Appointments
+                .FirstOrDefault(p => p.AppointmentId == apptId);
+            
+            // If has videoUrl in apptInDb, post delete request to delete the room
+            if (apptInDb.videoUrl != null && !apptInDb.roomIsExpired())
+            {
+                var url = $"https://api.daily.co/v1/rooms/{apptInDb.videoRoom}";
+
+                var httpRequest = (HttpWebRequest)WebRequest.Create(url);
+                httpRequest.Method = "DELETE";
+                
+                httpRequest.ContentType = "application/json";
+                httpRequest.Headers["Authorization"] = "Bearer 03aca7a0426cbe7eb6b6fb068dba0fd4c9b25aff6413607a606f9cdfd7ea9d61";
+
+
+                var httpResponse = (HttpWebResponse)httpRequest.GetResponse();
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
+                }
+
+                Console.WriteLine(httpResponse.StatusCode);
+            }
+
+            var dailyDomain = "https://williamneves.daily.co/";
+            
+            // Update the videoUrl in the Appointment
+            Console.WriteLine("Update the videoUrl in the Appointment");
+            apptInDb.videoUrl = $"{dailyDomain}{videoRoom}";
+            apptInDb.videoRoom = videoRoom;
+            apptInDb.videoRoomCreateDate = DateTime.UtcNow;
+            dbContext.SaveChanges();
+            
+            // Return Json result
+            return Json("OK");
+        }
+        
+        // Change appointment status
+        [HttpPost("/provider/appt/status/{apptId}/{status}/")]
+        public IActionResult ChangeStatus(int apptId, string status)
+        {
+            if (HttpContext.Session.GetInt32("UserId") == null)
+            {
+                TempData["AuthError"] = "You must be logged in to view this page";
+                return RedirectToAction("Index", "Home");
+            }
+            
+            // Get the Appointment with the apptId
+            var apptInDb = dbContext.Appointments
+                .FirstOrDefault(p => p.AppointmentId == apptId);
+            
+            // Update the status in the Appointment
+            apptInDb.Status = status;
+            dbContext.SaveChanges();
+            
+            // Return Json result
+            return Json("OK");
+        }
+
     }
 }
