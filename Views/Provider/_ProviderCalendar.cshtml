@@ -1,206 +1,110 @@
-                <ul class="nav nav-tabs" id="myTab">
-                    <li class="active"><a href="#nav-today" data-toggle="tab"
-                            class="nav-link maintext">@DateTime.Today.ToString("dddd, MMMM dd yyyy")</a></li>
-                    <li><a href="#nav-tomorrow" data-toggle="tab" class="nav-link maintext">
-                            @DateTime.Today.AddDays(1).ToString("dddd, MMMM dd yyyy")</a></li>
-                    <li><a href="#nav-t2" data-toggle="tab"
-                            class="nav-link maintext">@DateTime.Today.AddDays(2).ToString("dddd, MMMM dd yyyy")</a></li>
-                    <li><a href="#nav-t3" data-toggle="tab"
-                            class="nav-link maintext">@DateTime.Today.AddDays(3).ToString("dddd, MMMM dd yyyy")</a></li>
-                    <li><a href="#nav-t4" data-toggle="tab"
-                            class="nav-link maintext">@DateTime.Today.AddDays(4).ToString("dddd, MMMM dd yyyy")</a></li>
-                    <li><a href="#nav-t5" data-toggle="tab"
-                            class="nav-link maintext">@DateTime.Today.AddDays(5).ToString("dddd, MMMM dd yyyy")</a></li>
-                    <li><a href="#nav-t6" data-toggle="tab"
-                            class="nav-link maintext">@DateTime.Today.AddDays(6).ToString("dddd, MMMM dd yyyy")</a></li>
-                </ul>
-
-                @* dbContext ==> where (DateTime.Today.AddDays(2 + (7 * Count))) *@
-
-
-            </div>
-            @* CALENDAR TABS *@
-
-            <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade" id="nav-today" role="tabpanel" aria-labelledby="nav-today-tab">
-                    <table class="maintext table table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Patient Name</th>
-                                <th scope="col">Duration of Appointment</th>
-                                <th scope="col">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if (ViewBag.AppointmentToday != null)
+           
+            @* Table with all appointments *@
+    <div class="card mb-3">
+        <div class="card-header bg-gray-500">
+            <h5 class="card-title mb-0">Appoiments With user Waiting:</h5>
+        </div>
+        <div class="card-body p-0">
+            <table id="apptTablePatientWating" class="table table-striped table align-middle mb-0 display" style="width:100%">
+                <thead class="bg-light">
+                <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Duration</th>
+                    <th scope="col">Patient Info</th>
+                    <th scope="col" class="text-center">Video Url</th>
+                    <th scope="col" class="text-center">Status</th>
+                    <th scope="col" class="text-center">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var appt in ViewBag.ProviderAppointments)
+                {
+                                @* Check the status and if is for today *@
+                    if (appt.Status == "patient_waiting" && appt.DateTime.Date == DateTime.Now.Date)
+                    {
+                        <tr>
+                            <th scope="row">Today @@ @appt.DateTime.ToString("hh:mm tt")</th>
+                            <td>@appt.Duration minutes</td>
+                            <td><b>@appt.Patient.User.getFullName()</b>, @appt.Patient.User.Sex, @appt.Patient.User.getAgeInYear() y </td>
+                            <td class="text-center">
+                                <input class="videoUrltoCopy" style="display: none" value="@appt.videoUrl"/>
+                                <button class="btn btn-sm btn-light" onclick="autoCopyURL()" data-bs-placement="right" data-bs-toggle="tooltip" data-bs-html="true" title="Click to Copy<br/>The Video URL<br/>and share">Copy Url <i class="fa-duotone fa-copy"></i></button>
+                            </td>
+                            @if (appt.getStatus() == "Open")
                             {
-                                @foreach (var i in ViewBag.AppointmentToday)
-                                {
-                                    <tr>
-                                        <td scope="col">i </td>
-                                        <td>i.User.FirstName i.User.LastName</td>
-                                        <td>i.Duration minutes</td>
-                                        <td>i.Status </td>
-                                    </tr>
-                                }
+                                <td class="text-center">
+                                    <span class="badge bg-purple-700 text-light">@appt.getStatus()</span>
+                                </td>
                             }
-                        </tbody>
-                    </table>
+                            else if (appt.getStatus() == "Blocked")
+                            {
+                                <td class="text-center">
+                                    <span class="badge bg-dark text-light">@appt.getStatus()</span>
+                                </td>
+                            }
+                            else if (appt.getStatus() == "Upcoming")
+                            {
+                                <td class="text-center">
+                                    <span class="badge bg-primary text-light">@appt.getStatus()</span>
+                                </td>
+                            }
+                            else if (appt.getStatus() == "Finished")
+                            {
+                                <td class="text-center">
+                                    <span class="badge bg-success text-light">@appt.getStatus()</span>
+                                </td>
+                            }
+                            else if (appt.getStatus() == "In Progress")
+                            {
+                                <td class="text-center">
+                                    <span class="badge bg-warning text-dark">@appt.getStatus()</span>
+                                </td>
+                            }
+                            else
+                            {
+                                <td class="text-center">
+                                    <span class="badge bg-orange-600 text-light">@appt.getStatus()</span>
+                                </td>
+                            }
+                            
+                            <td class="text-center">
+                                @if (appt.getStatus() == "Open")
+                                {
+                                    <a class="btn btn-sm btn-danger px-3" asp-action="ProviderDeleteAppt" asp-controller="Provider" asp-route-appointmentId="@appt.AppointmentId" data-bs-placement="left" data-bs-toggle="tooltip" data-bs-html="true" title="Remove">
+                                        <i class="fa-solid fa-calendar-circle-minus"></i>
+                                    </a>
+                                }
+                                else if (appt.getStatus() == "Finished")
+                                {
+                                    <a class="btn btn-sm btn-primary px-3" asp-action="ProviderAttendance" asp-controller="Provider" asp-route-apptId="@appt.AppointmentId" data-bs-placement="left" data-bs-toggle="tooltip" data-bs-html="true" title="See it">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </a>
+                                }
+                                else if (appt.getStatus() == "Upcoming" || appt.getStatus() == "In Progress" || appt.Status == "patient_waiting")
+                                {
+                                    <a class="btn btn-sm btn-success px-3" asp-action="ProviderAttendance" asp-controller="Provider" asp-route-apptId="@appt.AppointmentId" data-bs-placement="left" data-bs-toggle="tooltip" data-bs-html="true" title="Attend">
+                                        <i class="fa-solid fa-circle-play"></i>
+                                    </a>
 
-                </div>
+                                    @if (@appt.roomIsExpired())
+                                    {
+                                        <a class="btn btn-sm btn-warning px-3" data-bs-placement="right" data-bs-toggle="tooltip" data-bs-html="true" title="Create Video Room" onclick="createRoom(this,@appt.AppointmentId), reloadPage()">
+                                            <i class="fa-duotone fa-camera-web"></i>
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a class="btn btn-sm btn-secondary px-3" data-bs-placement="right" data-bs-toggle="tooltip" data-bs-html="true" title="Room is created">
+                                            <i class="fa-duotone fa-camera-web" disabled></i>
+                                        </a>
+                                    }
+                                }
 
-                <div class="tab-pane fade" id="nav-tomorrow" role="tabpanel" aria-labelledby="nav-tomorrow-tab">
-                    <table class="maintext table table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Patient Name</th>
-                                <th scope="col">Duration of Appointment</th>
-                                <th scope="col">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @* @if(ViewBag.AppointmentToday){
-                                @foreach (var i in ViewBag.AppointmentToday)
-                                { *@
-                            <tr>
-                                <td scope="col">i </td>
-                                <td>i.User.FirstName i.User.LastName</td>
-                                <td>i.Duration minutes</td>
-                                <td>i.Status </td>
-                            </tr>
-                            @* }
-                                } *@
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="tab-pane fade" id="nav-t2" role="tabpanel" aria-labelledby="nav-t2-tab">
-                    <table class="maintext table table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">t2</th>
-                                <th scope="col">Patient Name</th>
-                                <th scope="col">Duration of Appointment</th>
-                                <th scope="col">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @* @if(ViewBag.AppointmentToday){
-                                @foreach (var i in ViewBag.AppointmentToday)
-                                { *@
-                            <tr>
-                                <td scope="col">i </td>
-                                <td>i.User.FirstName i.User.LastName</td>
-                                <td>i.Duration minutes</td>
-                                <td>i.Status </td>
-                            </tr>
-                            @* }
-                                } *@
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="tab-pane fade" id="nav-t3" role="tabpanel" aria-labelledby="nav-t3-tab">
-                    <table class="maintext table table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">#t3</th>
-                                <th scope="col">Patient Name</th>
-                                <th scope="col">Duration of Appointment</th>
-                                <th scope="col">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @* @if(ViewBag.AppointmentToday){
-                                @foreach (var i in ViewBag.AppointmentToday)
-                                { *@
-                            <tr>
-                                <td scope="col">i </td>
-                                <td>i.User.FirstName i.User.LastName</td>
-                                <td>i.Duration minutes</td>
-                                <td>i.Status </td>
-                            </tr>
-                            @* }
-                                } *@
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="tab-pane fade" id="nav-t4" role="tabpanel" aria-labelledby="nav-t4-tab">
-                    <table class="maintext table table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Patient Name</th>
-                                <th scope="col">Duration of Appointment</th>
-                                <th scope="col">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @* @if(ViewBag.AppointmentToday){
-                                @foreach (var i in ViewBag.AppointmentToday)
-                                { *@
-                            <tr>
-                                <td scope="col">i </td>
-                                <td>i.User.FirstName i.User.LastName</td>
-                                <td>i.Duration minutes</td>
-                                <td>i.Status </td>
-                            </tr>
-                            @* }
-                                } *@
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="tab-pane fade" id="nav-t5" role="tabpanel" aria-labelledby="nav-t5-tab">
-                    <table class="maintext table table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Patient Name</th>
-                                <th scope="col">Duration of Appointment</th>
-                                <th scope="col">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @* @if(ViewBag.AppointmentToday){
-                                @foreach (var i in ViewBag.AppointmentToday)
-                                { *@
-                            <tr>
-                                <td scope="col">i </td>
-                                <td>i.User.FirstName i.User.LastName</td>
-                                <td>i.Duration minutes</td>
-                                <td>i.Status </td>
-                            </tr>
-                            @* }
-                                } *@
-                        </tbody>
-                    </table>
-
-                    <div class="tab-pane fade" id="nav-t6" role="tabpanel" aria-labelledby="nav-t6-tab">test6
-                    <table class="maintext table table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Patient Name</th>
-                                <th scope="col">Duration of Appointment</th>
-                                <th scope="col">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @* @if(ViewBag.AppointmentToday){
-                                @foreach (var i in ViewBag.AppointmentToday)
-                                { *@
-                            <tr>
-                                <td scope="col">i </td>
-                                <td>i.User.FirstName i.User.LastName</td>
-                                <td>i.Duration minutes</td>
-                                <td>i.Status </td>
-                            </tr>
-                            @* }
-                                } *@
-                        </tbody>
-                    </table>
-                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>

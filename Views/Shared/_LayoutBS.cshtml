@@ -66,13 +66,20 @@
                                 <i class="fa-duotone fa-grid-horizontal"></i>
                             </a>
                         }
-                            
-
                         </li>
                         <li class="nav-item text-center mb-2">
-                            <a asp-action="ProviderInbox" asp-controller="Provider" class="btn-left-sidebar btn btn-outline-secondary fs-3 text-center" aria-current="page"  data-bs-placement="right" data-bs-toggle="tooltip" data-bs-html="true" title="Messages">
-                                <i class="fa-duotone fa-messages"></i>
-                            </a>
+                            @if (ViewBag.UserLoggedIn.userType == "provider")
+                            {
+                                <a asp-action="ProviderInbox" asp-controller="Provider" class="btn-left-sidebar btn btn-outline-secondary fs-3 text-center" aria-current="page" data-bs-placement="right" data-bs-toggle="tooltip" data-bs-html="true" title="Messages">
+                                    <i class="fa-duotone fa-messages"></i>
+                                </a>
+                            }
+                            else
+                            {
+                                <a asp-action="PatientInbox" asp-controller="Patient" class="btn-left-sidebar btn btn-outline-secondary fs-3 text-center" aria-current="page" data-bs-placement="right" data-bs-toggle="tooltip" data-bs-html="true" title="Messages">
+                                    <i class="fa-duotone fa-messages"></i>
+                                </a>
+                            }
                         </li>
                         @if (@ViewBag.UserLoggedIn.userType == "provider")
                         {

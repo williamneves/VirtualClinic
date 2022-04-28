@@ -35,9 +35,28 @@ namespace VirtualClinic.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            int UserId = (int) HttpContext.Session.GetInt32("UserId");
+            var userInDb = dbContext.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"));
 
-            ViewBag.UserLoggedIn = dbContext.Users.FirstOrDefault(p => p.UserId == UserId);
+            ViewBag.UserLoggedIn = userInDb;
+            
+            
+            
+            var providerInfo = dbContext.Providers
+                .Include(p => p.User)
+                .FirstOrDefault(p => p.UserId == userInDb.UserId);
+            
+            // Get all appointments for the logged in provider with all patients
+            var providerAppointments = dbContext.Appointments
+                .Include(a => a.Patient)
+                .ThenInclude(p => p.User)
+                .Include(a => a.Provider)
+                .ThenInclude(p => p.User)
+                .Where(a => a.ProviderId == providerInfo.ProviderId)
+                .OrderBy(a => a.DateTime)
+                .ToList();
+            
+            // ViewBags
+            ViewBag.ProviderAppointments = providerAppointments;
 
             return View();
         }
