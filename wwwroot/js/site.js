@@ -310,6 +310,7 @@ function ShowMessages(providerId, patientId) {
             // var Inbox = createHtml(res.data);
             // document.getElementById("PtInbox").innerHTML(Inbox);
             $("#PtInbox").html(res.data);
+            document.getElementById( 'bottom' ).scrollIntoView();
         })
         .catch((err) => {
             console.log(err);
@@ -327,6 +328,7 @@ function UpdateMessages(text, providerId, patientId) {
             // var Inbox = createHtml(res.data);
             // document.getElementById("PtInbox").innerHTML(Inbox);
             $("#PtInbox").html(res.data);
+            document.getElementById( 'bottom' ).scrollIntoView();
         })
         .catch((err) => {
             console.log(err);
@@ -344,11 +346,13 @@ function ShowProviderMessages(providerId, patientId) {
             // var Inbox = createHtml(res.data);
             // document.getElementById("PtInbox").innerHTML(Inbox);
             $("#PrInbox").html(res.data);
+            document.getElementById( 'bottom' ).scrollIntoView();
         })
         .catch((err) => {
             console.log(err);
         });
 }
+
 
 // update Patient Messages
 function UpdateProviderMessages(text, providerId, patientId) {
@@ -361,12 +365,12 @@ function UpdateProviderMessages(text, providerId, patientId) {
             // var Inbox = createHtml(res.data);
             // document.getElementById("PtInbox").innerHTML(Inbox);
             $("#PrInbox").html(res.data);
+            document.getElementById( 'bottom' ).scrollIntoView();
         })
         .catch((err) => {
             console.log(err);
         });
 }
-
 
 
 
