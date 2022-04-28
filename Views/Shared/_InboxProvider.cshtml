@@ -1,27 +1,33 @@
 <form id="messageForm" action="/sendptmessage" method="post">
-    <div class="col-12 col-sm-8" style="border: 1px solid black; border-radius: 5px; padding: 10px;">
-        <div class="container m-3" style="max-height: 250px;overflow-y: scroll;">
+    <div class="col-12 col-sm-8 w-100" style="border: 1px solid black; border-radius: 5px; padding: 10px; height: 100hv">
+        <div class="container m-3 " style="max-height: 500px;overflow-y: scroll;">
             <input type="hidden" name="ProviderId" value="@ViewBag.ProviderId">
             <input type="hidden" name="PatientId" value="@ViewBag.PatientId">
-            <input type="hidden" name="WriterId" value="@ViewBag.UserLoggedIn.UserId">
+            <input type="hidden" name="WriterId" value="@ViewBag.UserId">
 
             @if (ViewBag.Messages != null)
             {
                 @foreach (var i in ViewBag.Messages)
                 {
-                    @if (i.WriterId != ViewBag.UserLoggedIn.UserId)
+                    @if (i.WriterId == ViewBag.UserId)
                     {
-                        <div class="row">
-                            <div class="col align-self-start"></div>
-                            <p>@i.Text</p>
-                            <p>@i.CreatedAt</p>
-                        </div>
-                    } else {
-                        <div class="row">
-                            <div class="col align-self-end"></div>
-                            <p>@i.Text</p>
-                            <p>@i.CreatedAt</p>
-                        </div>
+                            <div class="row justify-content-end">
+                                <text class="col-4"></text>
+                                <text class="col-4 card">
+                                    @i.Text
+                                <h6 class="text-muted col-4">@i.CreatedAt</h6>
+                                </text>
+                            </div>
+                    }
+                    else
+                    {
+                            <div class="row justify-content-start ">
+                                <text>@i.Text</text>
+                            </div>
+                            <div class="row justify-content-start">
+                                <h6 class="text-muted">@i.CreatedAt</h6>
+                            </div>
+
                     }
                 }
             }
@@ -37,7 +43,7 @@
             <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="Text"></textarea>
         </div>
         <a href="#" class="btn btn-primary" aria-current="true" value="@ViewBag.ProviderId"
-            onclick="UpdateProviderMessages(document.getElementById('exampleFormControlTextarea1').value, @ViewBag.ProviderId, @ViewBag.PatientId)">Send
+            onclick="UpdateProviderMessages(document.getElementById('exampleFormControlTextarea1').value, @ViewBag.UserId, @ViewBag.ProviderId, @ViewBag.PatientId)">Send
             Message</a>
     </div>
 </form>
