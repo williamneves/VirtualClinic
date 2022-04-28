@@ -7,21 +7,29 @@
 
 <div class="row">
 
-        <div class="col-12 col-sm-4">
-            
-            <div class="list-group">
-                <div class= "list-group-item m-3"aria-current="true"> List of Conversations</div>
-                @foreach (Patient i in ViewBag.AllPatients)
-                {
-                    <a href="#" class="list-group-item m-3" value="@i.PatientId" onclick="ShowProviderMessages(@ViewBag.UserLoggedIn.UserId, @ViewBag.Provider.ProviderId, @i.PatientId)">@i.User.FirstName
-                        @i.User.LastName</a>
-                }
-            </div>
+    <div class="col-12 col-sm-4">
 
+        <div class="list-group">
+            <div class="card m-3 p-3 bg-gray-500" aria-current="true"> List of Conversations</div>
+            @foreach (Patient i in ViewBag.AllPatients)
+            {
+                <div class="card m-3 p-3" value="@i.PatientId"
+                onclick="ShowProviderMessages(@ViewBag.UserLoggedIn.UserId, @ViewBag.Provider.ProviderId, @i.PatientId)">@i.User.FirstName
+                    @i.User.LastName
+                    @if (ViewBag.ReadMessages == false)
+                    {
+                        <span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
+                            <span class="visually-hidden">New alerts</span>
+                        </span>
+                    }
+                </div>
+            }
         </div>
 
-        <div class="col-12 col-sm-8">
-            <div id="PrInbox"> </div>
-        </div>
+    </div>
+
+    <div class="col-12 col-sm-8">
+        <div id="PrInbox"> </div>
+    </div>
 
 </div>
