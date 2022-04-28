@@ -6,12 +6,12 @@
 @model Message
 
 <div class="row">
-
+    <div class= "list-group-item m-3"aria-current="true"> List of Conversations</div>
         <div class="col-12 col-sm-4">
-            <div class="list-group">
+            <div class="list-group-item m-3">
                 @foreach (Provider i in ViewBag.AllProviders)
                 {
-                    <a href="#" class="list-group-item" aria-current="true" value="@i.ProviderId" onclick="ShowMessages(@i.ProviderId, @ViewBag.Patient.PatientId)">@i.User.FirstName @i.User.LastName</a>
+                    <a href="#" class="list-group-item m-3" aria-current="true" value="@i.ProviderId" onclick="ShowMessages(@ViewBag.UserLoggedIn.UserId, @i.ProviderId, @ViewBag.Patient.PatientId)">@i.User.FirstName @i.User.LastName</a>
                 }
             </div>
         </div>

@@ -503,10 +503,10 @@ DailyIframe.createFrame({
 // }
 
 // get Patient Messages
-function ShowMessages(providerId, patientId) {
+function ShowMessages(writerId, providerId, patientId) {
     axios({
         method: "get",
-        url: `/patientinbox/partial/${providerId}/${patientId}`,
+        url: `/patientinbox/partial/${writerId}/${providerId}/${patientId}`,
     })
         .then((res) => {
             console.log(res);
@@ -521,10 +521,10 @@ function ShowMessages(providerId, patientId) {
 }
 
 // update Patient Messages
-function UpdateMessages(text, providerId, patientId) {
+function UpdateMessages(text, writerId, providerId, patientId) {
     axios({
         method: "get",
-        url: `/updateinbox/partial/${text}/${providerId}/${patientId}`,
+        url: `/updateinbox/partial/${text}/${writerId}/${providerId}/${patientId}`,
     })
         .then((res) => {
             console.log(res);
@@ -539,10 +539,10 @@ function UpdateMessages(text, providerId, patientId) {
 }
 
 // get Provider Messages
-function ShowProviderMessages(providerId, patientId) {
+function ShowProviderMessages(writerId, providerId, patientId) {
     axios({
         method: "get",
-        url: `/providerinbox/partial/${providerId}/${patientId}`,
+        url: `/providerinbox/partial/${writerId}/${providerId}/${patientId}`,
     })
         .then((res) => {
             console.log(res);
@@ -550,18 +550,21 @@ function ShowProviderMessages(providerId, patientId) {
             // document.getElementById("PtInbox").innerHTML(Inbox);
             $("#PrInbox").html(res.data);
             document.getElementById( 'bottom' ).scrollIntoView();
+            
         })
         .catch((err) => {
             console.log(err);
         });
+    
+        
 }
 
 
 // update Provider Messages
-function UpdateProviderMessages(text, providerId, patientId) {
+function UpdateProviderMessages(text, writerId, providerId, patientId) {
     axios({
         method: "get",
-        url: `/updateproviderinbox/partial/${text}/${providerId}/${patientId}`,
+        url: `/updateproviderinbox/partial/${text}/${writerId}/${providerId}/${patientId}`,
     })
         .then((res) => {
             console.log(res);
