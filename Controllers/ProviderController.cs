@@ -472,7 +472,7 @@ namespace VirtualClinic.Controllers
             return View();
         }
 
-        // Provider Messages page
+        // Provider Inbox
         [HttpGet("/providerinbox")]
         public IActionResult ProviderInbox()
         {
@@ -487,7 +487,7 @@ namespace VirtualClinic.Controllers
             ViewBag.AllMessages = dbContext.Messages
                                 .Include(p => p.Patient)
                                 .Include(p => p.Provider)
-                                .Where(p => p.PatientId == userInDb.UserId)
+                                .Where(p => p.ProviderId == userInDb.UserId)
                                 .ToList();
             
             ViewBag.AllPatients = dbContext.Patients
@@ -503,9 +503,25 @@ namespace VirtualClinic.Controllers
         }
         
         // Messages
-        [HttpGet("/providerinbox/partial/{providerId}/{patientId}")]
-        public IActionResult ProviderInboxParital(int providerId, int patientId)
+        [HttpGet("/providerinbox/partial/{writerId}/{providerId}/{patientId}")]
+        public IActionResult ProviderInboxParital(int writerId, int providerId, int patientId)
         {
+
+            var userInDb = dbContext.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"));
+
+            ViewBag.UserLoggedIn = userInDb;
+            ViewBag.UserId = userInDb.UserId;
+            
+            var result = dbContext.Messages.Where(p => p.PatientId == patientId && p.ProviderId == providerId).ToList();
+                if (result != null)
+                {
+                    foreach(Message i in result)
+                    {
+                        i.Read = true;
+                    }
+                    dbContext.SaveChanges();
+                }
+
             ViewBag.ProviderId = providerId;
             ViewBag.PatientId = patientId;
 
@@ -521,14 +537,19 @@ namespace VirtualClinic.Controllers
         }
 
         // Messages
-        [HttpGet("/updateproviderinbox/partial/{text}/{providerId}/{patientId}")]
-        public IActionResult ProviderInbox(Message newMessage, int providerId, int patientId)
+        [HttpGet("/updateproviderinbox/partial/{text}/{writerId}/{providerId}/{patientId}")]
+        public IActionResult ProviderInbox(Message newMessage, int writerId, int providerId, int patientId)
         {
+            var userInDb = dbContext.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"));
+            ViewBag.UserLoggedIn = userInDb;
+            
             dbContext.Add(newMessage);
             dbContext.SaveChanges();
 
             ViewBag.ProviderId = providerId;
             ViewBag.PatientId = patientId;
+            ViewBag.UserId = userInDb.UserId;
+
             
             ViewBag.Messages = dbContext.Messages
                                 .Include(p => p.Patient)
@@ -537,7 +558,7 @@ namespace VirtualClinic.Controllers
                                 .ToList();
             
             ViewBag.Patients = dbContext.Patients.FirstOrDefault(p => p.PatientId == patientId);
-  
+
 
             return PartialView(@"~/Views/Shared/_InboxProvider.cshtml");
         }

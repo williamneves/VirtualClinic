@@ -13,8 +13,14 @@ namespace VirtualClinic.Models
         [Key] 
         public int MessageId { get; set; }
         public string Text { get; set; }
-        
+
+        public bool Read { get; set; } = false;
+
+
         // Foreign Key and Navigation Property
+        public int WriterId { get; set; }
+        public User User { get; set; }
+
         public int PatientId { get; set; }
         public Patient Patient { get; set; }
 

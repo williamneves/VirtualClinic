@@ -294,7 +294,7 @@ namespace VirtualClinic.Controllers
         }
         
         
-        // Messages
+        // Patient Inbox
         [HttpGet("/patientinbox")]
         public IActionResult PatientInbox()
         {
@@ -324,10 +324,24 @@ namespace VirtualClinic.Controllers
             return View();
         }
 
-        // Partial Message
-        [HttpGet("/patientinbox/partial/{providerId}/{patientId}")]
-        public IActionResult PatientInboxPartial(int providerId, int patientId)
+        // Partial Message for Patient
+        [HttpGet("/patientinbox/partial/{writerId}/{providerId}/{patientId}")]
+        public IActionResult PatientInboxPartial(int writerId, int providerId, int patientId)
         {
+            var userInDb = dbContext.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"));
+            ViewBag.UserLoggedIn = userInDb;
+            ViewBag.UserId = userInDb.UserId;
+            
+            var result = dbContext.Messages.Where(p => p.PatientId == patientId && p.ProviderId == providerId).ToList();
+                if (result != null)
+                {
+                    foreach(Message i in result)
+                    {
+                        i.Read = true;
+                    }
+                    dbContext.SaveChanges();
+                }
+
             ViewBag.ProviderId = providerId;
             ViewBag.PatientId = patientId;
 
@@ -343,13 +357,18 @@ namespace VirtualClinic.Controllers
         }
         
         // Post Message
-        [HttpGet("/updateinbox/partial/{text}/{providerId}/{patientId}")]
-        public IActionResult UpdateMessages(Message newMessage, int providerId, int patientId)
+        [HttpGet("/updateinbox/partial/{text}/{writerId}/{providerId}/{patientId}")]
+        public IActionResult PatientInbox(Message newMessage, int writerId, int providerId, int patientId)
         {
+            var userInDb = dbContext.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"));
+
+            ViewBag.UserLoggedIn = userInDb;
+        
             dbContext.Add(newMessage);
             dbContext.SaveChanges();
-            
+
             ViewBag.ProviderId = providerId;
+            ViewBag.UserId = userInDb.UserId;
             ViewBag.PatientId = patientId;
 
             ViewBag.Messages = dbContext.Messages
