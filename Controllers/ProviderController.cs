@@ -426,9 +426,7 @@ namespace VirtualClinic.Controllers
             return View();
         }
 
-
-=======
-// Provider Messages page
+        // Provider Messages page
         [HttpGet("/providerinbox")]
         public IActionResult ProviderInbox()
         {
