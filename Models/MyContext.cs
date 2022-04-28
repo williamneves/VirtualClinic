@@ -32,6 +32,9 @@ namespace VirtualClinic.Models
         
         // Medical History
         public DbSet<MedicalHistory> MedicalHistories { get; set; }
+
+        // Messages
+        public DbSet<Message> Messages { get; set; }
         
     }
 }

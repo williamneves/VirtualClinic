@@ -51,6 +51,8 @@ namespace VirtualClinic.Models
         [Display(Name = "Additional Information", Prompt = "Additional Information")]
         public string AdditionalInformation { get; set; }
 
+        public List<Message> Messages { get; set; }
+
     }
 
     public class ProviderUpdate
