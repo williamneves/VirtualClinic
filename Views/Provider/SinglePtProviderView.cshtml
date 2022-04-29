@@ -33,8 +33,8 @@
                     <h5 class="mb-0">Prescribed Medications</h5>
 
                 </div>
-                @if (ViewBag.PatientInfo != null && ViewBag.PatientInfo.Medications != null)
                 @* @if (ViewBag.PatientInfo.Medications.Count != 0) *@
+                @if (ViewBag.PatientInfo != null && ViewBag.PatientInfo.Medications != null)
                 {
                     <div class="card-body" style="max-height: 250px;overflow-y: scroll;">
                         <table class="table table-sm">
@@ -77,9 +77,9 @@
                         <p class="fs-5">Add Medications</p>
                         <partial name="_AddPtMed" />
                     </div>
+                    @* @if (ViewBag.PatientInfo.ReportedMedications.Count != 0) *@
                     <hr />
                     @if (ViewBag.PatientInfo != null && ViewBag.PatientInfo.ReportedMedications != null)
-                    @* @if (ViewBag.PatientInfo.ReportedMedications.Count != 0) *@
                     {
                         <table class="table table-sm">
                             <thead>
@@ -119,8 +119,8 @@
                     <partial name="_AddAllergy" />
                     <hr />
 
-                    @if (@ViewBag.PatientAllergies != null)
                     @* @if (@ViewBag.PatientAllergies.Allergies.Count != 0) *@
+                    @if (@ViewBag.PatientAllergies != null)
                     {
                         <table class="table table-sm">
                             <thead>
@@ -160,9 +160,9 @@
                     <partial name="_AddMedHx" />
 
                     <hr />
-                    @if (@ViewBag.PatientMedHx != null)
-
                     @* @if (@ViewBag.PatientMedHx.MedicalHistory.Count != 0) *@
+
+                    @if (@ViewBag.PatientMedHx != null)
                     {
                         <table class="table">
                             <thead>

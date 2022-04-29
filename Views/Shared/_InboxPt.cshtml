@@ -1,5 +1,5 @@
 <form id="messageForm" action="/senddrmessage" method="post">
-    <div class="col-12 col-sm-8 w-100" style="border: 1px solid gray; border-radius: 5px; padding: 10px; height: 100hv">
+    <div class="col-12 col-sm-8 w-100" style="border: 1px solid gray; border-radius: 5px; padding: 10px; height: 100vh">
         <h2>Messages with @ViewBag.Providers.User.FirstName @ViewBag.Providers.User.LastName</h2>
 
         <div class="container m-3" style="max-height: 500px; overflow-y: scroll;">
@@ -17,10 +17,11 @@
                             <text class="col-4"></text>
 
                             <div class="card col-6">
-                                <text class="card-body">
+                                <div class="card-body">
                                     <h5 class="card-title">@ViewBag.UserLoggedIn.FirstName</h5>
                                     <p class="card-text">@i.Text</p>
-                                    <h6 class="text-muted col-4">@i.CreatedAt</text>
+                                    <h6 class="text-muted col-4">@i.CreatedAt</h6>
+                                </div>
                             </div>
                         </div>
                     }
@@ -29,10 +30,11 @@
                         <div class="row justify-content-start">
 
                             <div class="card col-6">
-                                <text class="card-body">
+                                <div class="card-body">
                                     <h5 class="card-title">@ViewBag.Providers.User.FirstName</h5>
                                     <p class="card-text">@i.Text</p>
-                                    <h6 class="text-muted col-4">@i.CreatedAt</text>
+                                    <h6 class="text-muted col-4">@i.CreatedAt</h6>
+                                </div>
                             </div>
 
                         </div>
@@ -55,4 +57,4 @@
         <a href="#" class="btn btn-primary" aria-current="true" value="@ViewBag.ProviderId"
             onclick="UpdateMessages(document.getElementById('exampleFormControlTextarea1').value, @ViewBag.UserId, @ViewBag.ProviderId, @ViewBag.PatientId)">Send Message</a>
     </div>
-</form>
+    </form>
