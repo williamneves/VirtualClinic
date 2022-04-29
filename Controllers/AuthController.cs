@@ -143,7 +143,7 @@ namespace VirtualClinic.Controllers
 
                 ViewBag.UserLoggedIn = newUser;
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("PatientDashboard", "Patient");
             }
 
             // Not Valid ModelState
@@ -241,10 +241,10 @@ namespace VirtualClinic.Controllers
 
             if(userInDb.userType == "patient")
             {
-                return RedirectToAction("PatientDashboard");
+                return RedirectToAction("PatientDashboard", "Patient");
             }
 
-            return RedirectToAction("ProviderDashboard");
+            return RedirectToAction("ProviderDashboard", "Provider");
         }
 
     }

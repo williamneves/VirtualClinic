@@ -54,7 +54,8 @@ namespace VirtualClinic.Models
         public string PreferredName { get; set; }
 
         // Image profile
-        public string ImageProfile { get; set; }
+        public string ImageProfile { get; set; } = "default.png";
+        
         [NotMapped]
         [Display(Name = "Upload File")]
         public IFormFile ImageFile { get; set; }

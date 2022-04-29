@@ -623,10 +623,10 @@ function UpdateMessages(text, writerId, providerId, patientId) {
 }
 
 // get Provider Messages
-function ShowProviderMessages(element, writerId, providerId, patientId) {
-    element.classList.add("bg-yellow-300");
-    element.classList.add("fw-bold");
-    element.classList.add("ps-5");
+function ShowProviderMessages(writerId, providerId, patientId) {
+    // element.classList.add("bg-yellow-300");
+    // element.classList.add("fw-bold");
+    // element.classList.add("ps-5");
     
     axios({
         method: "get",
@@ -649,10 +649,10 @@ function ShowProviderMessages(element, writerId, providerId, patientId) {
 
 
 // update Provider Messages
-function UpdateProviderMessages(element, text, writerId, providerId, patientId) {
-    element.classList.add("bg-yellow-300");
-    element.classList.add("fw-bold");
-    element.classList.add("ps-5");
+function UpdateProviderMessages(text, writerId, providerId, patientId) {
+    // element.classList.add("bg-yellow-300");
+    // element.classList.add("fw-bold");
+    // element.classList.add("ps-5");
     
     axios({
         method: "get",

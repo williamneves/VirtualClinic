@@ -12,23 +12,31 @@
                 {
                     @if (i.WriterId == ViewBag.UserId)
                     {
-                            <div class="row justify-content-end">
-                                <text class="col-4"></text>
-                                <text class="col-4 card">
-                                    @i.Text
-                                <h6 class="text-muted col-4">@i.CreatedAt</h6>
-                                </text>
+
+                        <div class="row justify-content-end">
+                            <text class="col-4"></text>
+
+                            <div class="card col-6">
+                                <text class="card-body">
+                                    <h5 class="card-title">@ViewBag.UserLoggedIn.FirstName</h5>
+                                    <p class="card-text">@i.Text</p>
+                                    <h6 class="text-muted col-4">@i.CreatedAt</text>
                             </div>
+                        </div>
+
                     }
                     else
                     {
-                            <div class="row justify-content-start ">
-                                <text>@i.Text</text>
-                            </div>
-                            <div class="row justify-content-start">
-                                <h6 class="text-muted">@i.CreatedAt</h6>
+                        <div class="row justify-content-start">
+
+                            <div class="card col-6">
+                                <text class="card-body">
+                                    <h5 class="card-title">@ViewBag.Patient.User.FirstName</h5>
+                                    <p class="card-text">@i.Text</p>
+                                    <h6 class="text-muted col-4">@i.CreatedAt</text>
                             </div>
 
+                        </div>
                     }
                 }
             }
