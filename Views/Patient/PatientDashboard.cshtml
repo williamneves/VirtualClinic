@@ -53,8 +53,19 @@
                             <p class="fs-4"> @ViewBag.NextAppointment.DateTime.ToString("MMMM dd") at
                                 @ViewBag.NextAppointment.DateTime.ToString("h:mm tt")</p>
                             <hr class="my-2 mx-auto">
-                            <small class="text-muted fst-italic">Dr.
-                                @ViewBag.NextAppointment.Provider.User.PreferredName</small>
+                            <small class="text-muted fst-italic">
+                                
+                                
+                                @if (@ViewBag.NextAppointment.Provider.User.PreferredName == null)
+                                {
+                                    <td>Dr. @ViewBag.NextAppointment.Provider.User.FirstName @ViewBag.NextAppointment.Provider.User.LastName</td>
+                                }
+                                else
+                                {
+                                    <td>Dr. @ViewBag.NextAppointment.Provider.User.PreferredName</td>
+                                }
+                            
+                            </small>
                         }
                         else
                         {

@@ -1,25 +1,48 @@
 @model Medication
 
-<form class="row row-cols-lg-auto g-3 align-items-center" action="/addmed" method="post">
-    <div class="col-12">
-        <label class="visually-hidden" for="inlineFormInputGroupUsername">Medication Name</label>
-        <div class="input-group">
-            <div class="input-group-text"></div>
-            <input type="text" class="form-control" id="inlineFormInputGroupUsername" placeholder="Medication Name"
-                asp-for="Name">
+@* <form class="row row-cols-lg-auto g-3 align-items-center" asp-action="AddMed" asp-controller="Provider" method="post"> *@
+    
+<form id="formsubmitnewMedPrescrib" class="mb-3"
+      asp-action="AddMed" asp-controller="Provider" method="post"
+      >
+<div class="col-12">
+    
+    <input type="hidden" asp-for="ProviderId" value="@ViewBag.ApptInfo.Provider.ProviderId"/>
+    <input type="hidden" asp-for="PatientId" value="@ViewBag.ApptInfo.Patient.PatientId"/>
+    <input type="hidden" asp-for="AppointmentId" value="@ViewBag.ApptInfo.AppointmentId"/>
+    <div class="row flex-row">
+        <div class="col-6">
+            <div class="col-12">
+                <label class="visually-hidden" for="inlineFormInputGroupUsername">Medication Name</label>
+                <div class="input-group mb-3">
+                    <div class="input-group-text"><i class="fa-solid fa-pills"></i></div>
+                    <input type="text" class="form-control" id="inlineFormInputGroupUsername" placeholder="Medication Name"
+                           asp-for="Name" required>
+                </div>
+            </div>
+            <div class="col-12">
+                <label class="visually-hidden" for="inlineFormSelectPref">Description</label>
+                <div class="input-group mb-3">
+                    <div class="input-group-text"><i class="fa-solid fa-pen-field"></i></div>
+                    <input type="text" class="form-control" id="inlineFormInputGroupUsername" placeholder="Take # Pills x Days"
+                           asp-for="Description" required>
+                </div>
+            </div>
+            <div class="col-12">
+                <button id="addmedicationbtn" type="submit" class="btn btn-primary w-100" data-bs-display="static" disabled>Add Medication</button>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="col-12">
+                <ul class="list-group" id="listOfMedPrescribed">
+
+                    <partial name="_PrescribedMed"/>
+
+
+                </ul>
+            </div>
         </div>
     </div>
 
-    <div class="col-12">
-        <label class="visually-hidden" for="inlineFormSelectPref">Description</label>
-        <div class="input-group">
-            <div class="input-group-text"></div>
-            <input type="text" class="form-control" id="inlineFormInputGroupUsername" placeholder="Take # Pills x Days"
-                asp-for="Description">
-        </div>
-    </div>
-
-    <div class="col-12">
-        <button type="submit" class="btn btn-primary" data-bs-display="static">Add Medication</button>
-    </div>
+</div>
 </form>

@@ -26,7 +26,15 @@
                         {
                             <td>@i.MedicalNotes[0].Summary</td>
                         }
-                        <td>Dr. @i.Provider.User.PreferredName</td>
+                        @if (i.Provider.User.PreferredName == null)
+                        {
+                            <td>@i.Provider.User.FirstName @i.Provider.User.LastName</td>
+                        }
+                        else
+                        {
+                            <td>Dr. @i.Provider.User.PreferredName</td>
+                        }
+                        
                         
                         @if(i.MedicalNotes.Count == 0)
                         {

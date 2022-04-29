@@ -90,6 +90,7 @@ namespace VirtualClinic.Controllers
                 .Include(p => p.Provider)
                 .ThenInclude(u => u.User)
                 .Include(p => p.MedicalNotes)
+                .Include(p => p.Medications)    
                 .FirstOrDefault(p => p.AppointmentId == apptId);
 
             // Patient Medications
@@ -622,15 +623,15 @@ namespace VirtualClinic.Controllers
         }
 
         // Add medications (provider in appt)
-        [HttpPost("addmed")]
-
+        [HttpPost("/addmed")]
         public IActionResult AddMed(Medication NewMed)
         {
-            NewMed.PatientId = (int) HttpContext.Session.GetInt32("UserId");
-
+            // Save the new medication to the database
             dbContext.Add(NewMed);
             dbContext.SaveChanges();
-            return RedirectToAction("UpdateMedicalInfo");
+
+            // Redirect with ok message
+            return Json(new{name = NewMed.Name, description = NewMed.Description});
 
         }
     }

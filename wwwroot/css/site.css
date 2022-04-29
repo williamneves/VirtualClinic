@@ -97,4 +97,4 @@ table#apptTable1 {margin: 0!important;}
 .imgprofile img{
   width: 90%;
   height: 90%;
-  /* margin: 0; *//* padding: 0; */}
+  object-fit: cover;}
