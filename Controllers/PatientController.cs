@@ -434,7 +434,6 @@ namespace VirtualClinic.Controllers
             return PartialView(@"~/Views/Shared/_InboxPt.cshtml");
         }
 
-
         // Patient Join Appointment
         [HttpGet("patient/joinappointment")]
         public IActionResult PatientJoinAppt()
