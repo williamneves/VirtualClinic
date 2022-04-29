@@ -90,6 +90,14 @@
                                 </a>
                             </li>
                         }
+                        else
+                        {
+                            <li class="nav-item text-center mb-2">
+                                <a asp-action="PatientJoinAppt" asp-controller="Patient" class="btn-left-sidebar btn btn-outline-secondary fs-3 text-center" aria-current="page" data-bs-placement="right" data-bs-toggle="tooltip" data-bs-html="true" title="Create an Appt">
+                                    <i class="fa-duotone fa-calendar-plus"></i>
+                                </a>
+                            </li>
+                        }
                         <li class="nav-item text-center mb-2">
                             <a asp-controller="Provider" asp-action="ProviderAttendAppt" class="btn-left-sidebar btn btn-outline-secondary fs-3 text-center" aria-current="page"  data-bs-placement="right" data-bs-toggle="tooltip" data-bs-html="true" title="Attend">
                                 <i class="fa-solid fa-circle-play"></i>

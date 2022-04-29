@@ -435,13 +435,112 @@ namespace VirtualClinic.Controllers
         }
 
 
-        // Post Message
-        // [HttpPost("senddrmessage")]
-        // public IActionResult SendMessage(Message newMessage)
-        // {
-        //     dbContext.Add(newMessage);
-        //     dbContext.SaveChanges();
-        //     return RedirectToAction("PatientInbox");
-        // }
+        // Patient Join Appointment
+        [HttpGet("patient/joinappointment")]
+        public IActionResult PatientJoinAppt()
+        {
+            if (HttpContext.Session.GetInt32("UserId") == null)
+            {
+                TempData["AuthError"] = "You must be logged in to view this page";
+                return RedirectToAction("Index", "Home");
+            }
+
+            var userInDb = dbContext.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"));
+
+            Console.WriteLine("User Logged In: ", HttpContext.Session.GetInt32("UserId"));
+
+            ViewBag.UserLoggedIn = userInDb;
+
+            // Patient Medications
+
+            var patientInfo = dbContext.Patients
+                .Include(p => p.User)
+                .FirstOrDefault(p => p.UserId == userInDb.UserId);
+
+            ViewBag.PatientInfo = patientInfo;
+
+            // Get all appointments for the logged in provider with all patients
+            ViewBag.AllPatientAppointments = dbContext.Appointments
+                .Include(a => a.Patient)
+                .ThenInclude(p => p.User)
+                .Include(a => a.Provider)
+                .ThenInclude(p => p.User)
+                .Where(a => a.PatientId == patientInfo.PatientId)
+                .OrderBy(a => a.DateTime)
+                .ToList();
+            
+            // Get all appointments without the logged in patient and not at User 1 (Admin)
+            // List with Open Appointments
+            ViewBag.AllOpenAppointments = dbContext.Appointments
+                .Include(a => a.Patient)
+                .ThenInclude(p => p.User)
+                .Include(a => a.Provider)
+                .ThenInclude(p => p.User)
+                .Where(a => a.Status == "created" || a.Status == "open")
+                .OrderBy(a => a.DateTime)
+                .ToList();
+
+            return View();
+        }
+        
+        // Patient Join Appointment
+        [HttpPost("patient/joinappointment/{appId}/")]
+        public IActionResult PatientJoinApptPost(int appId)
+        {
+            // Get the Patient by the logged in UserId
+            var userInDb = dbContext.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"));
+            var patientInDb = dbContext.Patients.FirstOrDefault(p => p.UserId == userInDb.UserId);
+            
+            // Get the Appointment by the appId
+            var apptInDb = dbContext.Appointments.FirstOrDefault(a => a.AppointmentId == appId);
+            
+            // Update the Appointment Status to "joined"
+            apptInDb.Status = "taken";
+            // Update the Appointment PatientId to the logged in UserId
+            apptInDb.PatientId = patientInDb.PatientId;
+            // Update database
+            dbContext.SaveChanges();
+            
+            // Console log Update Success
+            Console.WriteLine("Appointment Update Success");
+            
+            return Json("Joined Appointment");
+        }
+        // Patient Leave Appointment
+        [HttpPost("patient/unjoinappointment/{appId}/")]
+        public IActionResult PatientUnJoinApptPost(int appId)
+        {
+            // Get the Appointment by the appId
+            var apptInDb = dbContext.Appointments.FirstOrDefault(a => a.AppointmentId == appId);
+            
+            // Update the Appointment Status to "open"
+            apptInDb.Status = "open";
+            // Update the Appointment PatientId to Default User(1)
+            apptInDb.PatientId = 1;
+            // Update database
+            dbContext.SaveChanges();
+            
+            // Console log Update Success
+            Console.WriteLine("Appointment Update Success");
+            
+            return Json("UnJoined Appointment");
+        }
+        // Patient Enter in Waiting Room
+        [HttpPost("/patient/joinappointment/watingroom/{appId}/")]
+        public IActionResult PatientWaitingRoomApptPost(int appId)
+        {
+            // Get the Appointment by the appId
+            var apptInDb = dbContext.Appointments.FirstOrDefault(a => a.AppointmentId == appId);
+            
+            // Update the Appointment Status to "patient_waiting"
+            apptInDb.Status = "patient_waiting";
+            // Update database
+            dbContext.SaveChanges();
+            
+            // Console log Update Success
+            Console.WriteLine("Appointment Update Success");
+            
+            return Json("Joined to Waiting Room");
+        }
     }
 }
