@@ -4,16 +4,19 @@
     <div class="sticky-top" style="top: 4rem; z-index: 1">
 
         <div class="card col-sm-10 col-10 mx-auto mb-4 bg-gray-500 rounded-3">
-
-            <img src="~/imgs/profileimg/@ViewBag.UserLoggedIn.ImageProfile"
-                class="rounded-circle mx-auto border border-5 shadow border-white w-50 my-2" alt="Profile Picture">
+            <div class="imgprofile">
+                <img src="~/imgs/profileimg/@ViewBag.UserLoggedIn.ImageProfile"
+                     class="rounded-circle border border-3 shadow-sm border-white" alt="Profile Picture">
+            </div>
             @if (ViewBag.UserLoggedIn.PreferredName != null)
             {
                 <h4 class="text-center my-2">"@ViewBag.UserLoggedIn.PreferredName"</h4>
             }
             <h5 class="my-2 text-center"> @ViewBag.UserLoggedIn.FirstName @ViewBag.UserLoggedIn.LastName</h5>
-            <p class="my-2 text-center">Pronouns: @ViewBag.UserLoggedIn.Pronouns</p>
-
+            @if (ViewBag.UserLoggedIn.Pronouns != null)
+            {
+                <p class="my-2 text-center">Pronouns: @ViewBag.UserLoggedIn.Pronouns</p>
+            }
             <form asp-controller="Auth" asp-action="UploadPatientPic" enctype="multipart/form-data">
                 <div class="input-group input-group-sm col-9 mx-auto p-3">
                     <input class="form-control" id="inputImageFile" asp-for="ImageFile" accept="image/*">

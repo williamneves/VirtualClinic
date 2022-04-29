@@ -1,0 +1,34 @@
+﻿@{
+    ViewData["Title"] = "VideoRoom";
+    Layout = "_LayoutBS";
+}
+
+<div id="videoConferenceIframe"></div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script>
+
+const MY_IFRAME = document.createElement('iframe');
+    MY_IFRAME.setAttribute(
+        'allow',
+        'microphone; camera; autoplay; display-capture'
+    );
+
+    const iframeProperties = { url: `https://williamneves.daily.co/@ViewBag.RoomId` };
+
+    let videoIframe = document.getElementById('videoConferenceIframe');
+    let videocallblock = videoIframe.appendChild(MY_IFRAME);
+
+    videoIframe.style.height = '470px';
+    videocallblock.style.width = '100%';
+    videocallblock.style.height = '100%';
+    videocallblock.classList = ["iframevideo"];
+
+    let callFrame = window.DailyIframe.createTransparentFrame(MY_IFRAME, iframeProperties);
+
+    callFrame.join();
+    
+</script>

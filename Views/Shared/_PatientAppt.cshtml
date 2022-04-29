@@ -1,8 +1,4 @@
-@model Patient
-
-
-<tbody>
-    @if (ViewBag.PatientAppt.Appointments.Count != 0)
+    @if (ViewBag.HasAppointmentStatus)
     {
         <table class="table table-striped table-light table-hover mb-0">
         <thead>
@@ -22,12 +18,32 @@
                     <tr>
                         <th scope="row">#@i.AppointmentId</th>
                         <td>@i.DateTime.ToString("MM/dd/yyyy hh:mm tt")</td>
-                        <td>@i.MedicalNotes[0].Summary</td>
+                        @if(i.MedicalNotes.Count == 0)
+                        {
+                            <td>No Medical Notes</td>
+                        }
+                        else
+                        {
+                            <td>@i.MedicalNotes[0].Summary</td>
+                        }
                         <td>Dr. @i.Provider.User.PreferredName</td>
+                        
+                        @if(i.MedicalNotes.Count == 0)
+                        {
+                            <td>No actions</td>
+                        }
+                        else
+                        {
                         <td>
                             <button type="submit" class="btn btn-outline-primary btn-sm" onclick="getMedicalNotes(@i.MedicalNotes[0].MedicalNoteId)"><i class="bi bi-eye"></i> View</button>
                         </td>
+                        }
+                        
                     </tr>
+                }
+                if(i.MedicalNotes == null)
+                {
+                    <h5 class="p-3">You do not have any previous visits. </h5>
                 }
                 
                 
@@ -37,6 +53,6 @@
     } 
     else
     {
-        <p>You do not have any previous visits. </p>
+        <h5 class="p-3">You do not have any previous visits. </h5>
     }
 

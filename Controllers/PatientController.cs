@@ -82,10 +82,14 @@ namespace VirtualClinic.Controllers
                 .Include(p => p.Patient)
                 .Include(p => p.Provider)
                 .ThenInclude(u => u.User)
-                .Where(p => p.PatientId == userInDb.UserId && p.DateTime >= DateTime.Now.AddHours(-1))
+                .Where(p => p.PatientId == userInDb.UserId && p.DateTime.Date >= DateTime.Now.Date)
                 .OrderBy(p => p.DateTime)
                 .FirstOrDefault();
             
+            // Check if has anny appoitment status done
+            ViewBag.HasAppointmentStatus = dbContext.Appointments
+                .Any(p => p.Status == "done" && p.PatientId == userInDb.UserId);
+
 
             return View();
         }
@@ -541,5 +545,49 @@ namespace VirtualClinic.Controllers
             
             return Json("Joined to Waiting Room");
         }
+        
+        [HttpGet("/videoroom/{roomId}")]
+        public IActionResult VideoCallRoom(string roomId)
+        {
+            var userInDb = dbContext.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"));
+
+            Console.WriteLine("User Logged In: ", HttpContext.Session.GetInt32("UserId"));
+
+            ViewBag.UserLoggedIn = userInDb;
+
+            // Patient Medications
+
+            var patientInfo = dbContext.Patients
+                .Include(p => p.User)
+                .FirstOrDefault(p => p.UserId == userInDb.UserId);
+
+            ViewBag.PatientInfo = patientInfo;
+
+            // Get all appointments for the logged in provider with all patients
+            ViewBag.AllPatientAppointments = dbContext.Appointments
+                .Include(a => a.Patient)
+                .ThenInclude(p => p.User)
+                .Include(a => a.Provider)
+                .ThenInclude(p => p.User)
+                .Where(a => a.PatientId == patientInfo.PatientId)
+                .OrderBy(a => a.DateTime)
+                .ToList();
+            
+            // Get all appointments without the logged in patient and not at User 1 (Admin)
+            // List with Open Appointments
+            ViewBag.AllOpenAppointments = dbContext.Appointments
+                .Include(a => a.Patient)
+                .ThenInclude(p => p.User)
+                .Include(a => a.Provider)
+                .ThenInclude(p => p.User)
+                .Where(a => a.Status == "created" || a.Status == "open")
+                .OrderBy(a => a.DateTime)
+                .ToList();
+            
+            ViewBag.RoomId = roomId;
+            
+            return View();
+        }
+        
     }
 }

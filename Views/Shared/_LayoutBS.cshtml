@@ -98,21 +98,19 @@
                                 </a>
                             </li>
                         }
+                        @if (@ViewBag.UserLoggedIn.userType == "provider")
+                        {
                         <li class="nav-item text-center mb-2">
                             <a asp-controller="Provider" asp-action="ProviderAttendAppt" class="btn-left-sidebar btn btn-outline-secondary fs-3 text-center" aria-current="page"  data-bs-placement="right" data-bs-toggle="tooltip" data-bs-html="true" title="Attend">
                                 <i class="fa-solid fa-circle-play"></i>
                             </a>
                         </li>
-                        @if (@ViewBag.UserLoggedIn.userType == "provider")
-                        {
+                        
                             <li class="nav-item text-center mb-2">
                                 <a asp-controller="Provider" asp-action="AllPatients" class="btn-left-sidebar btn btn-outline-secondary fs-3 text-center" aria-current="page" data-bs-placement="right" data-bs-toggle="tooltip" data-bs-html="true" title="My Patients">
                                     <i class="fa-solid fa-hospital-user"></i>
                                 </a>
                             </li>
-                        }
-                        @if (@ViewBag.UserLoggedIn.userType == "provider")
-                        {
                             <li class="nav-item text-center mb-2">
                                 <a asp-action="EditProviderProfile" asp-controller="Provider" class="btn-left-sidebar btn btn-outline-secondary fs-3 text-center" aria-current="page"  data-bs-placement="right" data-bs-toggle="tooltip" data-bs-html="true" title="Edit Profile">
                                     <i class="fa-duotone fa-user-doctor"></i>
