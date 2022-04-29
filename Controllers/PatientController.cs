@@ -541,6 +541,5 @@ namespace VirtualClinic.Controllers
             
             return Json("Joined to Waiting Room");
         }
-
     }
 }
