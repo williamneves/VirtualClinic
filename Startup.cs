@@ -28,6 +28,7 @@ namespace VirtualClinic
             services.AddDbContext<MyContext>(options => options.UseMySql(Configuration["DBInfo:ConnectionString"]));
             services.AddControllersWithViews();
             services.AddSession();
+            // services.AddDbContext<ImageDbContext>(options => options.UseMySql());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

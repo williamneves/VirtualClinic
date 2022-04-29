@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json.Linq;
+using System.IO;
 
 namespace VirtualClinic.Controllers
 {
@@ -38,13 +39,13 @@ namespace VirtualClinic.Controllers
             var userInDb = dbContext.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"));
 
             ViewBag.UserLoggedIn = userInDb;
-            
-            
-            
+
+
+
             var providerInfo = dbContext.Providers
                 .Include(p => p.User)
                 .FirstOrDefault(p => p.UserId == userInDb.UserId);
-            
+
             // Get all appointments for the logged in provider with all patients
             var providerAppointments = dbContext.Appointments
                 .Include(a => a.Patient)
@@ -54,7 +55,7 @@ namespace VirtualClinic.Controllers
                 .Where(a => a.ProviderId == providerInfo.ProviderId)
                 .OrderBy(a => a.DateTime)
                 .ToList();
-            
+
             // ViewBags
             ViewBag.ProviderAppointments = providerAppointments;
 
@@ -220,6 +221,23 @@ namespace VirtualClinic.Controllers
             oldProviderInDb.RoutingNumber = UpdatedUser.RoutingNumber;
             oldProviderInDb.AdditionalInformation = UpdatedUser.AdditionalInformation;
 
+            // CODE SNIPPET ###############################################################
+            // string filename = string.Empty;
+            // if (fileupload.PostedFile.FileName.Length > 0)
+            // {
+            //     filename = Path.GetFileName(fileupload.PostedFile.FileName);
+            //     if (File.Exists(Server.MapPath("~/Images/" + filename)))
+            //     {
+            //         Label6.Visible = true;
+            //         return;
+            //     }
+            //     string fileExtension = Path.GetExtension(filename).ToLower();  // this will give you file extension.
+            //     string uniqueFileName = Guid.NewGuid().ToString() + fileExtension;   // this will give you unique filename.
+            //     fileupload.SaveAs(Server.MapPath("~/Images/" + uniqueFileName)); // save the image with guid name.
+            // }
+            // com.Parameters.AddWithValue("@Image", (filename.Length > 0) ? "Images/" + uniqueFileName : string.Empty);
+            // com.ExecuteNonQuery();
+
             dbContext.SaveChanges();
 
             return RedirectToAction("ProviderDashboard");
@@ -332,7 +350,7 @@ namespace VirtualClinic.Controllers
             TempData["AuthError"] = "You must be a Provider to view this page";
             return RedirectToAction("ProviderCreateAppt", "Provider");
         }
-        
+
         // Provider Create Appointment
         // GET METHOD
         [HttpGet("provider/attendappointment")]
@@ -344,7 +362,7 @@ namespace VirtualClinic.Controllers
                 TempData["AuthError"] = "You must be logged in to view this page";
                 return RedirectToAction("Index", "Home");
             }
-            
+
             // UserInDb
             var userInDb = dbContext.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"));
             // Check if user is a provider, and if not, redirect to home
@@ -369,12 +387,12 @@ namespace VirtualClinic.Controllers
                 .Where(a => a.ProviderId == providerInfo.ProviderId)
                 .OrderBy(a => a.DateTime)
                 .ToList();
-            
+
             // ViewBags
             ViewBag.ProviderAppointments = providerAppointments;
             ViewBag.ProviderInfo = providerInfo;
             ViewBag.UserLoggedIn = userInDb;
-            
+
             // Return View
             return View();
         }
@@ -508,7 +526,7 @@ namespace VirtualClinic.Controllers
                                 .Include(p => p.Provider)
                                 .Where(p => p.ProviderId == userInDb.UserId)
                                 .ToList();
-            
+
             ViewBag.AllPatients = dbContext.Patients
                                 .Include(p => p.User)
                                 .ToList();
@@ -517,10 +535,10 @@ namespace VirtualClinic.Controllers
 
             ViewBag.Provider = dbContext.Providers
                             .FirstOrDefault(p => p.User.UserId == userInDb.UserId);
-            
+
             return View();
         }
-        
+
         // Messages
         [HttpGet("/providerinbox/partial/{writerId}/{providerId}/{patientId}")]
         public IActionResult ProviderInboxParital(int writerId, int providerId, int patientId)
@@ -530,16 +548,16 @@ namespace VirtualClinic.Controllers
 
             ViewBag.UserLoggedIn = userInDb;
             ViewBag.UserId = userInDb.UserId;
-            
+
             var result = dbContext.Messages.Where(p => p.PatientId == patientId && p.ProviderId == providerId).ToList();
-                if (result != null)
+            if (result != null)
+            {
+                foreach (Message i in result)
                 {
-                    foreach(Message i in result)
-                    {
-                        i.Read = true;
-                    }
-                    dbContext.SaveChanges();
+                    i.Read = true;
                 }
+                dbContext.SaveChanges();
+            }
 
             ViewBag.ProviderId = providerId;
             ViewBag.PatientId = patientId;
@@ -549,7 +567,7 @@ namespace VirtualClinic.Controllers
                                 .Include(p => p.Provider)
                                 .Where(p => p.PatientId == patientId && p.ProviderId == providerId)
                                 .ToList();
-            
+
             ViewBag.Patient = dbContext.Patients
                             .Include(p => p.User)
                             .FirstOrDefault(p => p.PatientId == patientId);
@@ -569,7 +587,7 @@ namespace VirtualClinic.Controllers
         {
             var userInDb = dbContext.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"));
             ViewBag.UserLoggedIn = userInDb;
-            
+
             dbContext.Add(newMessage);
             dbContext.SaveChanges();
 
@@ -577,13 +595,13 @@ namespace VirtualClinic.Controllers
             ViewBag.PatientId = patientId;
             ViewBag.UserId = userInDb.UserId;
 
-            
+
             ViewBag.Messages = dbContext.Messages
                                 .Include(p => p.Patient)
                                 .Include(p => p.Provider)
                                 .Where(p => p.PatientId == patientId && p.ProviderId == providerId)
                                 .ToList();
-            
+
             ViewBag.Patient = dbContext.Patients
                             .Include(p => p.User)
                             .FirstOrDefault(p => p.PatientId == patientId);
@@ -597,14 +615,14 @@ namespace VirtualClinic.Controllers
 
             return PartialView(@"~/Views/Shared/_InboxProvider.cshtml");
         }
-        
+
         // MESSAGE
-    //     [HttpPost("sendptmessage")]
-    //     public IActionResult SendMessage(Message newMessage)
-    //     {
-    //         dbContext.Add(newMessage);
-    //         dbContext.SaveChanges();
-    //         return RedirectToAction("ProviderInbox");
-    //     }
+        //     [HttpPost("sendptmessage")]
+        //     public IActionResult SendMessage(Message newMessage)
+        //     {
+        //         dbContext.Add(newMessage);
+        //         dbContext.SaveChanges();
+        //         return RedirectToAction("ProviderInbox");
+        //     }
     }
 }

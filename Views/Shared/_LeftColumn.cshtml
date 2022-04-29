@@ -1,21 +1,32 @@
+@model User
+
 <div class="col-12 col-sm-4">
     <div class="sticky-top" style="top: 4rem; z-index: 1">
 
         <div class="card col-sm-10 col-10 mx-auto mb-4 bg-gray-500 rounded-3">
 
-            <img src="https://www.newsshare.in/wp-content/uploads/2/Cartoon-WhatsApp-DP-44.jpg" class="rounded-circle mx-auto border border-5 shadow border-white w-50 my-2" alt="Profile Picture">
-            @if(ViewBag.UserLoggedIn.PreferredName != null)
+            <img src="~/imgs/profileimg/@ViewBag.UserLoggedIn.ImageProfile"
+                class="rounded-circle mx-auto border border-5 shadow border-white w-50 my-2" alt="Profile Picture">
+            @if (ViewBag.UserLoggedIn.PreferredName != null)
             {
                 <h4 class="text-center my-2">"@ViewBag.UserLoggedIn.PreferredName"</h4>
             }
             <h5 class="my-2 text-center"> @ViewBag.UserLoggedIn.FirstName @ViewBag.UserLoggedIn.LastName</h5>
-            <p class="my-2 text-center">Preferred Pronouns: @ViewBag.UserLoggedIn.Pronouns</p>
+            <p class="my-2 text-center">Pronouns: @ViewBag.UserLoggedIn.Pronouns</p>
 
-            <a href="/edit/patientprofile" class="btn btn-sm btn-outline-light col-8 mx-auto my-3"><i class="bi bi-gear"></i> Edit Profile</a>
+            <form asp-action="UploadPatientPic" enctype="multipart/form-data">
+                <div class="input-group input-group-sm col-9 mx-auto p-3">
+                    <input class="form-control" id="inputImageFile" asp-for="ImageFile" accept="image/*">
+                    <button type="button" class="btn btn-outline-secondary">Upload</button>
+                </div>
+            </form>
+
+            @* <a href="/" class="btn btn-sm btn-outline-light col-8 mx-auto my-3"><i class="bi bi-gear"></i> Edit
+                Profile</a> *@
         </div>
 
         <div class="card col-sm-10 col-10 mx-auto mb-4 bg-gray-100 rounded-3">
-            
+
             <div class="card-header border-bottom bg-gray-500">
                 <span class="card-title fw-bold">Patient Information:</span>
             </div>
@@ -24,13 +35,14 @@
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item bg-gray-100">Sex: @ViewBag.UserLoggedIn.Sex </li>
                     <li class="list-group-item bg-gray-100">Height:
-                    @if(ViewBag.PatientInfo != null)
-                    {
-                        @if (ViewBag.PatientInfo.Height != null)
+                        @if (ViewBag.PatientInfo != null)
                         {
-                            @ViewBag.PatientInfo.Height;
+                            @if (ViewBag.PatientInfo.Height != null)
+                            {
+                                @ViewBag.PatientInfo.Height
+                                ;
+                            }
                         }
-                    }
                     </li>
                     <li class="list-group-item bg-gray-100 p-0 m-0">
                         <partial name="_Allergies-MedHx" />

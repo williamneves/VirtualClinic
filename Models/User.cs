@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
 
 
 namespace VirtualClinic.Models
@@ -54,6 +55,9 @@ namespace VirtualClinic.Models
 
         // Image profile
         public string ImageProfile { get; set; }
+        [NotMapped]
+        [Display(Name = "Upload File")]
+        public IFormFile ImageFile { get; set; }
 
         // User Address
         public string StreetAddress { get; set; }
