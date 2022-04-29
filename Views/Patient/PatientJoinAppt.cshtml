@@ -64,11 +64,11 @@
                                         <td class="text-center">
                                             @if (@appt.Status == "patient_waiting" && appt.videoUrl != null)
                                             {
-                                                <button class="btn btn-sm btn-success px-3"
+                                                <a href="@appt.videoUrl" class="btn btn-sm btn-success px-3"
                                                         data-bs-placement="left" data-bs-toggle="tooltip" data-bs-html="true" title="Talk with the provider"
-                                                        onclick="">
+                                                        target="_blank">
                                                     <i class="fa-solid fa-user-doctor-message"></i>
-                                                </button>
+                                                </a>
                                             }
                                             else if(appt.Status == "patient_waiting" && appt.videoUrl == null)
                                             {
