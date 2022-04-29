@@ -25,7 +25,7 @@
                 }
 
                 <div class="card m-3 p-3" value="@i.PatientId"
-                onclick="ShowProviderMessages(@ViewBag.UserLoggedIn.UserId, @ViewBag.Provider.ProviderId, @i.PatientId)">@i.User.FirstName
+                onclick="ShowProviderMessages(this,@ViewBag.UserLoggedIn.UserId, @ViewBag.Provider.ProviderId, @i.PatientId)">@i.User.FirstName
                     @i.User.LastName
                     @if (unreadMessageByThread)
                     {

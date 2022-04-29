@@ -597,7 +597,11 @@ function UpdateMessages(text, writerId, providerId, patientId) {
 }
 
 // get Provider Messages
-function ShowProviderMessages(writerId, providerId, patientId) {
+function ShowProviderMessages(element, writerId, providerId, patientId) {
+    element.classList.add("bg-yellow-300");
+    element.classList.add("fw-bold");
+    element.classList.add("ps-5");
+    
     axios({
         method: "get",
         url: `/providerinbox/partial/${writerId}/${providerId}/${patientId}`,
@@ -619,7 +623,11 @@ function ShowProviderMessages(writerId, providerId, patientId) {
 
 
 // update Provider Messages
-function UpdateProviderMessages(text, writerId, providerId, patientId) {
+function UpdateProviderMessages(element, text, writerId, providerId, patientId) {
+    element.classList.add("bg-yellow-300");
+    element.classList.add("fw-bold");
+    element.classList.add("ps-5");
+    
     axios({
         method: "get",
         url: `/updateproviderinbox/partial/${text}/${writerId}/${providerId}/${patientId}`,

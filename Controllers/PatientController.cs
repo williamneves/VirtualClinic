@@ -9,16 +9,20 @@ using VirtualClinic.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace VirtualClinic.Controllers
 {
     public class PatientController : Controller
     {
         private MyContext dbContext;
+        private IWebHostEnvironment hostEnvironment;
 
-        public PatientController( MyContext context)
+        public PatientController( MyContext context, IWebHostEnvironment hostEnvironment)
         {
             dbContext = context;
+            this.hostEnvironment = hostEnvironment;
         }
 
         // patient dashboard
@@ -169,6 +173,42 @@ namespace VirtualClinic.Controllers
             return RedirectToAction("PatientDashboard");
         }
     
+        // Patient Profile Picture
+        // [HttpPost]
+        // public async Task<IActionResult> UploadPatientPic(User UpdatedUser)
+        // {
+
+        //     string wwwroot = hostEnvironment.WebRootPath;
+        //     string fileName = Path.GetFileNameWithoutExtension(UpdatedUser.ImageFile.FileName);
+        //     string extension = Path.GetExtension(UpdatedUser.ImageFile.FileName);
+        //     UpdatedUser.ImageProfile = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+        //     string path = Path.Combine(wwwroot + "/imgs/profileimg/", fileName);
+        //     using (var fileStream = new FileStream(path, FileMode.Create))
+        //     {
+        //         await UpdatedUser.ImageFile.CopyToAsync(fileStream);
+        //     }
+            
+        //     var OldPatient = dbContext.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"));
+        //     OldPatient.PreferredName = UpdatedUser.PreferredName;
+        //     OldPatient.Pronouns = UpdatedUser.Pronouns;
+        //     OldPatient.Email = OldPatient.Email;
+        //     OldPatient.Password = OldPatient.Password;
+        //      // Initialize hasher object
+        //     // PasswordHasher<User> Hasher = new PasswordHasher<User>();
+        //     // // Hash password
+        //     // OldPatient.Password = Hasher.HashPassword(UpdatedUser, UpdatedUser.Password);
+        //     OldPatient.StreetAddress = UpdatedUser.StreetAddress;
+        //     OldPatient.ImageProfile = UpdatedUser.ImageProfile;
+        //     OldPatient.City = UpdatedUser.City;
+        //     OldPatient.State = UpdatedUser.State;
+        //     OldPatient.Zipcode = UpdatedUser.Zipcode;
+        //     OldPatient.PhoneNumber = UpdatedUser.PhoneNumber;
+            
+        //     await dbContext.SaveChangesAsync();
+
+        //     return RedirectToAction("PatientDashboard");
+        // }
+
         // Get the Edit Page for Medical Info
         [HttpGet("edit/medicalinfo")]
         public IActionResult UpdateMedicalInfo()
@@ -393,6 +433,7 @@ namespace VirtualClinic.Controllers
 
             return PartialView(@"~/Views/Shared/_InboxPt.cshtml");
         }
+
 
         // Post Message
         // [HttpPost("senddrmessage")]
