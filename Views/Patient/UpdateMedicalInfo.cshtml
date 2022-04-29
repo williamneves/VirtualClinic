@@ -6,15 +6,68 @@
 @model Patient
 <div class="row">
 
-    <partial name="_LeftColumn"/>
+    <partial name="_LeftColumn" />
 
     <div class="col-12 col-sm-8">
         <h3>Add Medical Information:</h3>
 
-    <div class="card mb-4">
-        <div class="card-header bg-gray-500">
-            <h5 class="mb-0">Edit Height</h5>
-            
+        <div class="card mb-4">
+            <div class="card-header bg-gray-500">
+                <h5 class="mb-0">Edit Height and Weight</h5>
+            </div>
+            <div>
+                <form class="row g-3" asp-action="EditHt">
+                    <div class="col-auto">
+                        <label for="staticEmail2" class="visually-hidden m-3">Height</label>
+                        <input type="text" readonly class="form-control-plaintext m-3 " id="height"
+                            value="Height in Centimeters">
+                    </div>
+                    <div class="col-auto">
+                        <label for="height" class="visually-hidden m-3">Height</label>
+                        <input class="form-control m-3" id="height" placeholder="Height" asp-for="Height">
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-primary m-3">Update Height</button>
+                    </div>
+                    <div class="col-auto m-3">
+                        @if (ViewBag.Patient != null)
+                        {
+                            @if (ViewBag.Patient.Height != null)
+                            {
+                                <p class="mb-0 m-3">Current Height: @ViewBag.Patient.Height cm</p>
+                            }
+                        }
+                    </div>
+                </form>
+
+
+                <form class="row g-3" asp-action="EditWt">
+                    <div class="col-auto">
+
+                        <label for="staticEmail2" class="visually-hidden m-3">Weight</label>
+                        <input type="text" readonly class="form-control-plaintext m-3" id="Weight"
+                            value="Weight in Kilograms">
+                    </div>
+                    <div class="col-auto">
+                        <label for="Weight" class="visually-hidden m-3">Weight</label>
+                        <input class="form-control m-3" id="Weight" placeholder="Weight" asp-for="Weight">
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-primary m-3">Update Weight</button>
+                    </div>
+                    <div class="col-auto m-3">
+                        @if (ViewBag.Patient != null)
+                        {
+                            @if (ViewBag.Patient.Weight != null)
+                            {
+                                <p class="mb-0 m-3">Current Weight: @ViewBag.Patient.Weight kg</p>
+                            }
+                        }
+                    </div>
+                </form>
+
+            </div>
+        </div>
 
 
         <div>
@@ -29,22 +82,23 @@
                     <div class="card-body" style="max-height: 250px;overflow-y: scroll;">
                         <table class="table table-sm">
                             <thead>
-                            <tr>
-                                <th scope="col">Prescribed Medication Name</th>
-                                <th scope="col">Description</th>
-                            </tr>
+                                <tr>
+                                    <th scope="col">Prescribed Medication Name</th>
+                                    <th scope="col">Description</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            @foreach (var i in ViewBag.PatientInfo.Medications)
-                            {
-                                <tr>
-                                    <td>@i.Name</td>
-                                    <td>@i.Description</td>
-                                    @* <td> *@
-                                    @*     <a href="/remove/medication/@i.MedicationId" class="btn btn-primary btn-sm">Remove Medication</a> *@
-                                    @* </td> *@
-                                </tr>
-                            }
+                                @foreach (var i in ViewBag.PatientInfo.Medications)
+                                {
+                                    <tr>
+                                        <td>@i.Name</td>
+                                        <td>@i.Description</td>
+                                        @* <td> *@
+                                        @* <a href="/remove/medication/@i.MedicationId" class="btn btn-primary
+                                            btn-sm">Remove Medication</a> *@
+                                        @* </td> *@
+                                    </tr>
+                                }
                             </tbody>
                         </table>
 
@@ -64,30 +118,31 @@
 
                     <div>
                         <p class="fs-5">Add Medications</p>
-                        <partial name="_AddPtMed"/>
+                        <partial name="_AddPtMed" />
                     </div>
-                    <hr/>
+                    <hr />
 
                     @if (ViewBag.PatientInfo.ReportedMedications.Count != 0)
                     {
                         <table class="table table-sm">
                             <thead>
-                            <tr>
-                                <th scope="col">Reported Medication Name</th>
-                                <th scope="col">Description</th>
-                            </tr>
+                                <tr>
+                                    <th scope="col">Reported Medication Name</th>
+                                    <th scope="col">Description</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            @foreach (var i in ViewBag.PatientInfo.ReportedMedications)
-                            {
-                                <tr>
-                                    <td>@i.Name</td>
-                                    <td>@i.Description</td>
-                                    <td>
-                                        <a href="/remove/ptmedication/@i.ReportedMedicationId" class="btn btn-primary btn-sm">Remove Medication</a>
-                                    </td>
-                                </tr>
-                            }
+                                @foreach (var i in ViewBag.PatientInfo.ReportedMedications)
+                                {
+                                    <tr>
+                                        <td>@i.Name</td>
+                                        <td>@i.Description</td>
+                                        <td>
+                                            <a href="/remove/ptmedication/@i.ReportedMedicationId"
+                                        class="btn btn-primary btn-sm">Remove Medication</a>
+                                        </td>
+                                    </tr>
+                                }
                             </tbody>
                         </table>
                     }
@@ -104,29 +159,30 @@
                 </div>
                 <div class="card-body">
                     <p class="fs-5">Add Allergies</p>
-                    <partial name="_AddAllergy"/>
-                    <hr/>
+                    <partial name="_AddAllergy" />
+                    <hr />
 
                     @if (@ViewBag.PatientAllergies.Allergies.Count != 0)
                     {
                         <table class="table table-sm">
                             <thead>
-                            <tr>
-                                <th scope="col">Name</th>
-                                <th scope="col">Reaction</th>
-                            </tr>
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Reaction</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            @foreach (var i in ViewBag.PatientAllergies.Allergies)
-                            {
-                                <tr>
-                                    <td>@i.Name</td>
-                                    <td>@i.Reaction</td>
-                                    <td>
-                                        <a href="/remove/allergy/@i.AllergyId" class="btn btn-primary">Remove Allergy</a>
-                                    </td>
-                                </tr>
-                            }
+                                @foreach (var i in ViewBag.PatientAllergies.Allergies)
+                                {
+                                    <tr>
+                                        <td>@i.Name</td>
+                                        <td>@i.Reaction</td>
+                                        <td>
+                                            <a href="/remove/allergy/@i.AllergyId" class="btn btn-primary">Remove
+                                                Allergy</a>
+                                        </td>
+                                    </tr>
+                                }
                             </tbody>
                         </table>
                     }
@@ -144,29 +200,30 @@
                 </div>
                 <div class="card-body">
                     <p class="fs-5">Medical History</p>
-                    <partial name="_AddMedHx"/>
+                    <partial name="_AddMedHx" />
 
-                    <hr/>
+                    <hr />
                     @if (@ViewBag.PatientMedHx.MedicalHistory.Count != 0)
                     {
                         <table class="table">
                             <thead>
-                            <tr>
-                                <th scope="col">Diagnosis</th>
-                                <th scope="col">Year Diagnosed</th>
-                            </tr>
+                                <tr>
+                                    <th scope="col">Diagnosis</th>
+                                    <th scope="col">Year Diagnosed</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            @foreach (var i in ViewBag.PatientMedHx.MedicalHistory)
-                            {
-                                <tr>
-                                    <td>@i.Diagnosis</td>
-                                    <td>@i.DateofDx</td>
-                                    <td>
-                                        <a href="/remove/medicalhx/@i.MedicalHistoryId" class="btn btn-primary">Remove Diagnosis</a>
-                                    </td>
-                                </tr>
-                            }
+                                @foreach (var i in ViewBag.PatientMedHx.MedicalHistory)
+                                {
+                                    <tr>
+                                        <td>@i.Diagnosis</td>
+                                        <td>@i.DateofDx</td>
+                                        <td>
+                                            <a href="/remove/medicalhx/@i.MedicalHistoryId" class="btn btn-primary">Remove
+                                                Diagnosis</a>
+                                        </td>
+                                    </tr>
+                                }
                             </tbody>
                         </table>
                     }

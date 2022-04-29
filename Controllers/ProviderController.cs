@@ -457,7 +457,9 @@ namespace VirtualClinic.Controllers
                 .Include(p => p.User)
                 .FirstOrDefault(p => p.UserId == userInDb.UserId);
 
-            // ViewBag.AllPatients = dbContext.
+            ViewBag.PatientDemo = dbContext.Patients
+                            .Include(i => i.User)
+                            .FirstOrDefault(i => i.PatientId == patientId);
 
             // All the appointments for that the patient has
             var AllAppointments = dbContext.Appointments
@@ -616,13 +618,17 @@ namespace VirtualClinic.Controllers
             return PartialView(@"~/Views/Shared/_InboxProvider.cshtml");
         }
 
-        // MESSAGE
-        //     [HttpPost("sendptmessage")]
-        //     public IActionResult SendMessage(Message newMessage)
-        //     {
-        //         dbContext.Add(newMessage);
-        //         dbContext.SaveChanges();
-        //         return RedirectToAction("ProviderInbox");
-        //     }
+        // Add medications (provider in appt)
+        [HttpPost("addmed")]
+
+        public IActionResult AddMed(Medication NewMed)
+        {
+            NewMed.PatientId = (int) HttpContext.Session.GetInt32("UserId");
+
+            dbContext.Add(NewMed);
+            dbContext.SaveChanges();
+            return RedirectToAction("UpdateMedicalInfo");
+
+        }
     }
 }

@@ -7,37 +7,40 @@
 
 <div class="row">
     <div class="col-12 col-sm-4">
-    <div class="card m-3 p-3 bg-gray-500" aria-current="true"> List of Conversations</div>
-        <div class="card m-3 p-3">
-            @foreach (Provider i in ViewBag.AllProviders)
-            {
-
-                bool unreadMessageByThread = false;
-
-                foreach(var m in ViewBag.AllMessages)
+        <div class="list-group">
+            <div class="card m-3 p-3 bg-gray-500" aria-current="true"> List of Conversations</div>
+            <div class="card m-3 p-3">
+                @foreach (Provider i in ViewBag.AllProviders)
                 {
-                    if(m.PatientId == ViewBag.UserLoggedIn.UserId && m.ProviderId == i.ProviderId && m.Read == false)
-                    {
-                        unreadMessageByThread = true;
-                    }
-                }
 
-                <div class="card m-3 p-3" value="@i.ProviderId"
-                onclick="ShowMessages(@ViewBag.UserLoggedIn.UserId, @i.ProviderId, @ViewBag.Patient.PatientId)">@i.User.FirstName
-                    @i.User.LastName
-                    @if (unreadMessageByThread)
+                    bool unreadMessageByThread = false;
+
+                    foreach (var m in ViewBag.AllMessages)
                     {
-                        <span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
-                            <span class="visually-hidden">New alerts</span>
-                        </span>
+                        if (m.PatientId == ViewBag.UserLoggedIn.UserId && m.ProviderId == i.ProviderId && m.Read == false)
+                        {
+                            unreadMessageByThread = true;
+                        }
                     }
-                </div>
-            }
+
+                    <div class="card m-3 p-3" value="@i.ProviderId"
+                    onclick="ShowMessages(@ViewBag.UserLoggedIn.UserId, @i.ProviderId, @ViewBag.Patient.PatientId)">
+                        @i.User.FirstName
+                        @i.User.LastName
+                        @if (unreadMessageByThread)
+                        {
+                            <span
+                        class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
+                                <span class="visually-hidden">New alerts</span>
+                            </span>
+                        }
+                    </div>
+                }
+            </div>
         </div>
     </div>
 
     <div class="col-12 col-sm-8">
         <div id="PtInbox"></div>
     </div>
-    @* <partial name="_InboxPt"/> *@
 </div>

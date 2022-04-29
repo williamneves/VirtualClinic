@@ -19,7 +19,7 @@
             }
             <form asp-controller="Auth" asp-action="UploadPatientPic" enctype="multipart/form-data">
                 <div class="input-group input-group-sm col-9 mx-auto p-3">
-                    <input class="form-control" id="inputImageFile" asp-for="ImageFile" accept="image/*">
+                    <input class="form-control" id="inputImageFile" asp-for="ImageFile" accept="image/*" required>
                     <button type="submit" class="btn btn-outline-secondary">Upload</button>
                 </div>
             </form>

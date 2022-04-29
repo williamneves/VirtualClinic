@@ -132,6 +132,9 @@ namespace VirtualClinic.Controllers
 
             ViewBag.UserLoggedIn = userInDb;
 
+            ViewBag.Patient = dbContext.Patients
+                                    .FirstOrDefault(p => p.UserId == userInDb.UserId);
+
             
             // Patient Medications
             ViewBag.PatientInfo = dbContext.Patients
@@ -176,42 +179,38 @@ namespace VirtualClinic.Controllers
 
             return RedirectToAction("PatientDashboard");
         }
-    
-        // Patient Profile Picture
-        // [HttpPost]
-        // public async Task<IActionResult> UploadPatientPic(User UpdatedUser)
-        // {
 
-        //     string wwwroot = hostEnvironment.WebRootPath;
-        //     string fileName = Path.GetFileNameWithoutExtension(UpdatedUser.ImageFile.FileName);
-        //     string extension = Path.GetExtension(UpdatedUser.ImageFile.FileName);
-        //     UpdatedUser.ImageProfile = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
-        //     string path = Path.Combine(wwwroot + "/imgs/profileimg/", fileName);
-        //     using (var fileStream = new FileStream(path, FileMode.Create))
-        //     {
-        //         await UpdatedUser.ImageFile.CopyToAsync(fileStream);
-        //     }
-            
-        //     var OldPatient = dbContext.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"));
-        //     OldPatient.PreferredName = UpdatedUser.PreferredName;
-        //     OldPatient.Pronouns = UpdatedUser.Pronouns;
-        //     OldPatient.Email = OldPatient.Email;
-        //     OldPatient.Password = OldPatient.Password;
-        //      // Initialize hasher object
-        //     // PasswordHasher<User> Hasher = new PasswordHasher<User>();
-        //     // // Hash password
-        //     // OldPatient.Password = Hasher.HashPassword(UpdatedUser, UpdatedUser.Password);
-        //     OldPatient.StreetAddress = UpdatedUser.StreetAddress;
-        //     OldPatient.ImageProfile = UpdatedUser.ImageProfile;
-        //     OldPatient.City = UpdatedUser.City;
-        //     OldPatient.State = UpdatedUser.State;
-        //     OldPatient.Zipcode = UpdatedUser.Zipcode;
-        //     OldPatient.PhoneNumber = UpdatedUser.PhoneNumber;
-            
-        //     await dbContext.SaveChangesAsync();
+        // Update Patient Ht
+        [HttpPost]
+        public IActionResult EditHt(Patient UpdateHt)
+        {
+            var userInDb = dbContext.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"));
 
-        //     return RedirectToAction("PatientDashboard");
-        // }
+            Patient OldPatient = dbContext.Patients.FirstOrDefault(u => u.UserId == userInDb.UserId);
+
+            OldPatient.Height = UpdateHt.Height;
+            
+            dbContext.SaveChanges();
+
+            
+            return RedirectToAction("UpdateMedicalInfo");
+        }
+
+        // Update Patient Wt
+        [HttpPost]
+        public IActionResult EditWt(Patient UpdateWt)
+        {
+            var userInDb = dbContext.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"));
+
+            Patient OldPatient = dbContext.Patients.FirstOrDefault(u => u.UserId == userInDb.UserId);
+
+            OldPatient.Weight = UpdateWt.Weight;
+            
+            dbContext.SaveChanges();
+
+            
+            return RedirectToAction("UpdateMedicalInfo");
+        }
 
         // Get the Edit Page for Medical Info
         [HttpGet("edit/medicalinfo")]
@@ -224,6 +223,9 @@ namespace VirtualClinic.Controllers
             }
 
             var userInDb = dbContext.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"));
+
+            ViewBag.Patient = dbContext.Patients
+                                    .FirstOrDefault(p => p.UserId == userInDb.UserId);
             
             ViewBag.UserLoggedIn = userInDb;
 
@@ -246,18 +248,6 @@ namespace VirtualClinic.Controllers
             return View();
         }
 
-        // Add medications (provider in appt)
-        [HttpPost("addmed")]
-
-        public IActionResult AddMed(Medication NewMed)
-        {
-            NewMed.PatientId = (int) HttpContext.Session.GetInt32("UserId");
-
-            dbContext.Add(NewMed);
-            dbContext.SaveChanges();
-            return RedirectToAction("UpdateMedicalInfo");
-
-        }
         // Add medications (pt reported)
         [HttpPost("addptmed")]
 
@@ -395,7 +385,9 @@ namespace VirtualClinic.Controllers
                                 .Where(p => p.PatientId == patientId && p.ProviderId == providerId)
                                 .ToList();
             
-            ViewBag.Providers = dbContext.Providers.FirstOrDefault(p => p.ProviderId == providerId);
+            ViewBag.Providers = dbContext.Providers
+                                .Include(p => p.User)
+                                .FirstOrDefault(p => p.ProviderId == providerId);
 
             ViewBag.ReadMessages = dbContext.Messages
                                 .Where(p => p.PatientId == patientId && p.ProviderId == providerId)
@@ -427,9 +419,11 @@ namespace VirtualClinic.Controllers
                                 .Where(p => p.PatientId == patientId && p.ProviderId == providerId)
                                 .ToList();
             
-            ViewBag.Providers = dbContext.Providers.FirstOrDefault(p => p.ProviderId == providerId);
+            ViewBag.Providers = dbContext.Providers
+                                .Include(p => p.User)
+                                .FirstOrDefault(p => p.ProviderId == providerId);
 
-                        ViewBag.ReadMessages = dbContext.Messages
+            ViewBag.ReadMessages = dbContext.Messages
                                 .Where(p => p.PatientId == patientId && p.ProviderId == providerId)
                                 .Any(p => p.Read == false);
 
@@ -545,7 +539,7 @@ namespace VirtualClinic.Controllers
             
             return Json("Joined to Waiting Room");
         }
-        
+
         [HttpGet("/videoroom/{roomId}")]
         public IActionResult VideoCallRoom(string roomId)
         {
@@ -588,6 +582,6 @@ namespace VirtualClinic.Controllers
             
             return View();
         }
-        
+
     }
 }
