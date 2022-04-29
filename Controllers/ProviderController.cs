@@ -531,8 +531,9 @@ namespace VirtualClinic.Controllers
                                 .ToList();
 
             ViewBag.AllPatients = dbContext.Patients
-                                .Include(p => p.User)
-                                .ToList();
+                .Include(p => p.User)
+                .Where(p => p.UserId != 1)
+                .ToList();
 
             ViewBag.UserLoggedIn = userInDb;
 

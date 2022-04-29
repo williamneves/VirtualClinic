@@ -220,20 +220,20 @@ namespace VirtualClinic.Controllers
             }
             
             var OldPatient = dbContext.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("UserId"));
-            OldPatient.PreferredName = UpdatedUser.PreferredName;
-            OldPatient.Pronouns = UpdatedUser.Pronouns;
-            OldPatient.Email = OldPatient.Email;
-            OldPatient.Password = OldPatient.Password;
+            // OldPatient.PreferredName = UpdatedUser.PreferredName;
+            // OldPatient.Pronouns = UpdatedUser.Pronouns;
+            // OldPatient.Email = OldPatient.Email;
+            // OldPatient.Password = OldPatient.Password;
              // Initialize hasher object
             // PasswordHasher<User> Hasher = new PasswordHasher<User>();
             // // Hash password
             // OldPatient.Password = Hasher.HashPassword(UpdatedUser, UpdatedUser.Password);
-            OldPatient.StreetAddress = UpdatedUser.StreetAddress;
+            // OldPatient.StreetAddress = UpdatedUser.StreetAddress;
             OldPatient.ImageProfile = UpdatedUser.ImageProfile;
-            OldPatient.City = UpdatedUser.City;
-            OldPatient.State = UpdatedUser.State;
-            OldPatient.Zipcode = UpdatedUser.Zipcode;
-            OldPatient.PhoneNumber = UpdatedUser.PhoneNumber;
+            // OldPatient.City = UpdatedUser.City;
+            // OldPatient.State = UpdatedUser.State;
+            // OldPatient.Zipcode = UpdatedUser.Zipcode;
+            // OldPatient.PhoneNumber = UpdatedUser.PhoneNumber;
             
             await dbContext.SaveChangesAsync();
 
