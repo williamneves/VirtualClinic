@@ -205,7 +205,7 @@ namespace VirtualClinic.Controllers
         }
 
         // Patient Profile Picture
-        [HttpPost]
+        [HttpPost("UploadProfilePicture")]
         public async Task<IActionResult> UploadPatientPic(User UpdatedUser)
         {
 
