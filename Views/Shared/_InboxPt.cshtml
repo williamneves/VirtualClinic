@@ -1,5 +1,7 @@
 <form id="messageForm" action="/senddrmessage" method="post">
     <div class="col-12 col-sm-8" style="border: 1px solid black; border-radius: 5px; padding: 10px; height: 100hv">
+        <h2>Messages with @ViewBag.Provider.User.FirstName @ViewBag.Provider.User.LastName</h2>
+
         <div class="m-3" style="max-height: 500px;overflow-y: scroll;">
             <input type="hidden" name="ProviderId" value="@ViewBag.ProviderId">
             <input type="hidden" name="PatientId" value="@ViewBag.PatientId">
@@ -12,28 +14,27 @@
                     @if (i.WriterId == ViewBag.UserId)
                     {
                         <div class="row justify-content-end">
-                            <text class="col-6"></text>
+                            <text class="col-4"></text>
 
-                            <div class="cardcol-6">
-                                <div class="card-body">
+                            <div class="card col-6">
+                                <text class="card-body">
                                     <h5 class="card-title">@ViewBag.UserLoggedIn.FirstName</h5>
                                     <p class="card-text">@i.Text</p>
-                                    <h6 class="text-muted col-4">@i.CreatedAt</h6>
-                                </div>
+                                    <h6 class="text-muted col-4">@i.CreatedAt</text>
                             </div>
-
                         </div>
                     }
                     else
                     {
-                        <div class="row justify-content-start ">
-                            <div class="cardcol-6">
-                                <div class="card-body">
-                                    <h5 class="card-title">@ViewBag.Provder.User.FirstName</h5>
+                        <div class="row justify-content-start">
+
+                            <div class="card col-6">
+                                <text class="card-body">
+                                    <h5 class="card-title">@ViewBag.Provider.User.FirstName</h5>
                                     <p class="card-text">@i.Text</p>
-                                    <h6 class="text-muted col-4">@i.CreatedAt</h6>
-                                </div>
+                                    <h6 class="text-muted col-4">@i.CreatedAt</text>
                             </div>
+
                         </div>
 
                     }

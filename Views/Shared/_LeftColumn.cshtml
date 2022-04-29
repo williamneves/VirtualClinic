@@ -14,10 +14,10 @@
             <h5 class="my-2 text-center"> @ViewBag.UserLoggedIn.FirstName @ViewBag.UserLoggedIn.LastName</h5>
             <p class="my-2 text-center">Pronouns: @ViewBag.UserLoggedIn.Pronouns</p>
 
-            <form asp-action="UploadPatientPic" enctype="multipart/form-data">
+            <form asp-controller="Auth" asp-action="UploadPatientPic" enctype="multipart/form-data">
                 <div class="input-group input-group-sm col-9 mx-auto p-3">
                     <input class="form-control" id="inputImageFile" asp-for="ImageFile" accept="image/*">
-                    <button type="button" class="btn btn-outline-secondary">Upload</button>
+                    <button type="submit" class="btn btn-outline-secondary">Upload</button>
                 </div>
             </form>
 

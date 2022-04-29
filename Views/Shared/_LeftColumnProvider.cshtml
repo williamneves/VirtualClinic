@@ -12,10 +12,10 @@
                 <h4 class="text-center my-2">"@ViewBag.UserLoggedIn.PreferredName"</h4>
             }
             <h5 class="my-2 text-center"> @ViewBag.UserLoggedIn.FirstName @ViewBag.UserLoggedIn.LastName</h5>
-            <form asp-action="UploadPatientPic" enctype="multipart/form-data">
+            <form asp-controller="Auth" asp-action="UploadPatientPic" enctype="multipart/form-data">
                 <div class="input-group input-group-sm col-9 mx-auto p-3">
                     <input class="form-control" id="inputImageFile" asp-for="ImageFile" accept="image/*">
-                    <button type="button" class="btn btn-outline-secondary">Upload</button>
+                    <button type="submit" class="btn btn-outline-secondary">Upload</button>
                 </div>
             </form>
             @* <a href="/edit/providerprofile" class="btn btn-sm btn-outline-light col-8 mx-auto my-3"><i class="bi
