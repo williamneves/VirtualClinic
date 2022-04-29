@@ -12,9 +12,9 @@
       aria-labelledby="panelsStayOpen-headingOne">
       <div class="accordion-body p-0">
         <ul class="list-group list-group-flush">
-        @if (@ViewBag.PatientAllergies != null)
         @* @if (@ViewBag.PatientAllergies.Allergies.Count != 0) *@
 
+        @if (@ViewBag.PatientAllergies != null)
         {
           foreach (var i in ViewBag.PatientAllergies.Allergies)
           {
@@ -40,9 +40,9 @@
        aria-labelledby="panelsStayOpen-headingTwo">
     <div class="accordion-body p-0">
       <ul class="list-group list-group-flush">
-      @if (@ViewBag.PatientMedHx != null)
       @* @if (@ViewBag.PatientMedHx.MedicalHistory.Count != 0) *@
 
+      @if (@ViewBag.PatientMedHx != null)
       {
         foreach (var i in ViewBag.PatientMedHx.MedicalHistory)
         {

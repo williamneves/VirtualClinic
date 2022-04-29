@@ -509,6 +509,20 @@ namespace VirtualClinic.Controllers
                 .OrderBy(p => p.DateTime)
                 .FirstOrDefault();
 
+            // Check if has anny appoitment status done
+            ViewBag.HasAppointmentStatus = dbContext.Appointments
+                .Any(p => p.Status == "done" && p.PatientId == patientId);
+
+            // Appointment Info
+            // ViewBag.ApptInfo = dbContext.Appointments
+            //     .Include(p => p.Patient)
+            //     .ThenInclude(p => p.User)
+            //     .Include(p => p.Provider)
+            //     .ThenInclude(u => u.User)
+            //     .Include(p => p.MedicalNotes)
+            //     .Include(p => p.Medications)    
+            //     .FirstOrDefault(p => p.AppointmentId == apptId);
+
             return View();
         }
 
@@ -531,8 +545,9 @@ namespace VirtualClinic.Controllers
                                 .ToList();
 
             ViewBag.AllPatients = dbContext.Patients
-                                .Include(p => p.User)
-                                .ToList();
+                .Include(p => p.User)
+                .Where(p => p.UserId != 1)
+                .ToList();
 
             ViewBag.UserLoggedIn = userInDb;
 
