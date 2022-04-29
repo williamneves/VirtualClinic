@@ -8,65 +8,75 @@
     </div>
 
     @* // Card body *@
-    <form id="form-medical-note-pd" asp-action="AddMedicalNotesAutoSave" asp-controller="Provider" method="post">
-        <input type="hidden" asp-for="PatientId" value="@ViewBag.ApptInfo.Patient.PatientId"/>
-        <input type="hidden" asp-for="ProviderId" value="@ViewBag.ApptInfo.Provider.ProviderId"/>
-        <input type="hidden" asp-for="AppointmentId" value="@ViewBag.ApptInfo.AppointmentId"/>
-        <div class="card-body bg-gray-200">
-            @{
-                if (ViewBag.MedicalNote != null)
-                {
-                    <div class="mb-3">
-                        <label asp-for="HPI" class="form-label fw-bold ms-2">History of Present Illness</label>
-                        <textarea disabled class="form-control text-area-notes" rows="5" name="HPI">@ViewBag.MedicalNote.HPI</textarea>
-                    </div>
-                    <hr class="my-3"/>
-                    <div class="mb-3">
-                        <label asp-for="PE" class="form-label fw-bold ms-2">Physical Exam</label>
-                        <textarea disabled class="form-control text-area-notes" rows="5" name="PE">@ViewBag.MedicalNote.PE</textarea>
-                    </div>
-                    <hr class="my-3"/>
-                    <div class="mb-3">
-                        <label asp-for="Summary" class="form-label fw-bold ms-2">Summary</label>
-                        <textarea disabled class="form-control text-area-notes" rows="3" name="Summary">@ViewBag.MedicalNote.Summary</textarea>
-                    </div>
-                    <hr class="my-3"/>
-                    <div class="mb-3">
-                        <label asp-for="AP" class="form-label fw-bold ms-2">Assessment and Plan</label>
-                        <textarea disabled class="form-control text-area-notes" rows="5" name="AP">@ViewBag.MedicalNote.AP</textarea>
-                    </div>
-                }
-                else
-                {
-                    <div class="mb-3">
-                        <label asp-for="HPI" class="form-label fw-bold ms-2">History of Present Illness</label>
-                        <textarea disabled class="form-control text-area-notes" rows="5" name="HPI" placeholder="Type here..."></textarea>
-                    </div>
+    <div class="card-body bg-gray-200">
+        <div class="col-12">
+            <form id="form-medical-note-pd" asp-action="AddMedicalNotesAutoSave" asp-controller="Provider" method="post">
+                <input type="hidden" asp-for="PatientId" value="@ViewBag.ApptInfo.Patient.PatientId"/>
+                <input type="hidden" asp-for="ProviderId" value="@ViewBag.ApptInfo.Provider.ProviderId"/>
+                <input type="hidden" asp-for="AppointmentId" value="@ViewBag.ApptInfo.AppointmentId"/>
+                @{
+                    if (ViewBag.MedicalNote != null)
+                    {
+                        <div class="mb-3">
+                            <label asp-for="HPI" class="form-label fw-bold ms-2">History of Present Illness</label>
+                            <textarea disabled class="form-control text-area-notes" rows="5" name="HPI">@ViewBag.MedicalNote.HPI</textarea>
+                        </div>
+                        <hr class="my-3"/>
+                        <div class="mb-3">
+                            <label asp-for="PE" class="form-label fw-bold ms-2">Physical Exam</label>
+                            <textarea disabled class="form-control text-area-notes" rows="5" name="PE">@ViewBag.MedicalNote.PE</textarea>
+                        </div>
+                        <hr class="my-3"/>
+                        <div class="mb-3">
+                            <label asp-for="Summary" class="form-label fw-bold ms-2">Summary</label>
+                            <textarea disabled class="form-control text-area-notes" rows="3" name="Summary">@ViewBag.MedicalNote.Summary</textarea>
+                        </div>
+                        <hr class="my-3"/>
+                        <div class="mb-3">
+                            <label asp-for="AP" class="form-label fw-bold ms-2">Assessment and Plan</label>
+                            <textarea disabled class="form-control text-area-notes" rows="5" name="AP">@ViewBag.MedicalNote.AP</textarea>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="mb-3">
+                            <label asp-for="HPI" class="form-label fw-bold ms-2">History of Present Illness</label>
+                            <textarea disabled class="form-control text-area-notes" rows="5" name="HPI" placeholder="Type here..."></textarea>
+                        </div>
 
-                    <hr class="my-3"/>
-                    <div class="mb-3">
-                        <label asp-for="PE" class="form-label fw-bold ms-2">Physical Exam</label>
-                        <textarea disabled class="form-control text-area-notes" rows="5" name="PE" placeholder="Type here..."></textarea>
-                    </div>
-                    <hr class="my-3"/>
-                    <div class="mb-3">
-                        <label asp-for="Summary" class="form-label fw-bold ms-2">Summary</label>
-                        <textarea disabled class="form-control text-area-notes" rows="3" name="Summary" placeholder="Type here..."></textarea>
-                    </div>
-                    <hr class="my-3"/>
-                    <div class="mb-3">
-                        <label asp-for="AP" class="form-label fw-bold ms-2">Assessment and Plan</label>
-                        <textarea disabled class="form-control text-area-notes" rows="5" name="AP" placeholder="Type here..."></textarea>
-                    </div>
+                        <hr class="my-3"/>
+                        <div class="mb-3">
+                            <label asp-for="PE" class="form-label fw-bold ms-2">Physical Exam</label>
+                            <textarea disabled class="form-control text-area-notes" rows="5" name="PE" placeholder="Type here..."></textarea>
+                        </div>
+                        <hr class="my-3"/>
+                        <div class="mb-3">
+                            <label asp-for="Summary" class="form-label fw-bold ms-2">Summary</label>
+                            <textarea disabled class="form-control text-area-notes" rows="3" name="Summary" placeholder="Type here..."></textarea>
+                        </div>
+                        <hr class="my-3"/>
+                        <div class="mb-3">
+                            <label asp-for="AP" class="form-label fw-bold ms-2">Assessment and Plan</label>
+                            <textarea disabled class="form-control text-area-notes" rows="5" name="AP" placeholder="Type here..."></textarea>
+                        </div>
+                        <hr class="my-3"/>
+                    }
+
                 }
-                
-            }
+            </form>
         </div>
-    </form>
-        <div class="card-footer bg-gray-400">
-            <button id="btn-Finish-visit" class="btn btn-primary col-sm-3 offset-md-9" onclick="finishAttend(this)"disabled>
-                Finish Visit
-            </button>
+        <hr/>
+        <div class="col-12">
+            
+        <div class="my-3">
+            <partial name="_AddMedication"/>
         </div>
+        </div>
+    </div>
+    @* <div class="card-footer bg-gray-400"> *@
+    @*     <button id="btn-Finish-visit" class="btn btn-primary col-sm-3 offset-md-9" onclick="finishAttend(this)"disabled> *@
+    @*         Finish Visit *@
+    @*     </button> *@
+    @* </div> *@
 
 </div>

@@ -1,6 +1,6 @@
 @model ReportedMedication
 
-<form class="row row-cols-lg-auto g-3 align-items-center" action="/addptmed" method="post">
+<form class="row row-cols-lg-auto g-3 align-items-center" asp-action="AddPtMed" asp-controller="Patient" method="post">
     <div class="col-12">
         <label class="visually-hidden" for="inlineFormInputGroupUsername">Medication Name</label>
         <div class="input-group">

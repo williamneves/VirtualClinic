@@ -40,6 +40,9 @@ namespace VirtualClinic.Models
         // Relationship with Medical Notes
         public List<MedicalNote> MedicalNotes { get; set; }
         
+        // Relationship with Prescription Medica
+        public List<Medication> Medications { get; set; }
+        
         public string getStatus()
         {
             switch (Status)

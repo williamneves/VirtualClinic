@@ -77,18 +77,20 @@ namespace VirtualClinic.Controllers
             //     .OrderBy(p => p.DateTime)
             //     .ToList();
             
+            int PatientId = dbContext.Patients.FirstOrDefault(p => p.UserId == userInDb.UserId).PatientId;
             // Next appointment (not in the past)
             ViewBag.NextAppointment = dbContext.Appointments
                 .Include(p => p.Patient)
                 .Include(p => p.Provider)
                 .ThenInclude(u => u.User)
-                .Where(p => p.PatientId == userInDb.UserId && p.DateTime.Date >= DateTime.Now.Date)
+                .Where(p => p.PatientId == PatientId && p.DateTime.Date >= DateTime.Now.Date)
                 .OrderBy(p => p.DateTime)
                 .FirstOrDefault();
+            // Get Patient Id
             
             // Check if has anny appoitment status done
             ViewBag.HasAppointmentStatus = dbContext.Appointments
-                .Any(p => p.Status == "done" && p.PatientId == userInDb.UserId);
+                .Any(p => p.Status == "done" && p.PatientId == PatientId);
 
 
             return View();
@@ -253,7 +255,12 @@ namespace VirtualClinic.Controllers
 
         public IActionResult AddPtMed(ReportedMedication NewMed)
         {
-            NewMed.PatientId = (int) HttpContext.Session.GetInt32("UserId");
+            // Get Patient with UserId
+            var patientInDb = dbContext.Patients
+                .Include(p => p.User)
+                .FirstOrDefault(u => u.User.UserId == HttpContext.Session.GetInt32("UserId"));
+            
+            NewMed.PatientId = patientInDb.PatientId;
 
             dbContext.Add(NewMed);
             dbContext.SaveChanges();
@@ -266,7 +273,12 @@ namespace VirtualClinic.Controllers
 
         public IActionResult AddAllergy(Allergy newAllergy)
         {
-            newAllergy.PatientId = (int) HttpContext.Session.GetInt32("UserId");
+            var patientInDb = dbContext.Patients
+                .Include(p => p.User)
+                .FirstOrDefault(u => u.User.UserId == HttpContext.Session.GetInt32("UserId"));
+
+            
+            newAllergy.PatientId = patientInDb.PatientId;
 
             dbContext.Add(newAllergy);
             dbContext.SaveChanges();
@@ -279,8 +291,12 @@ namespace VirtualClinic.Controllers
 
         public IActionResult AddMedHx(MedicalHistory newMedHx)
         {
-            newMedHx.PatientId = (int) HttpContext.Session.GetInt32("UserId");
+            var patientInDb = dbContext.Patients
+                .Include(p => p.User)
+                .FirstOrDefault(u => u.User.UserId == HttpContext.Session.GetInt32("UserId"));
 
+            newMedHx.PatientId = patientInDb.PatientId;
+            
             dbContext.Add(newMedHx);
             dbContext.SaveChanges();
             return RedirectToAction("UpdateMedicalInfo");

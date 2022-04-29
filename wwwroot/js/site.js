@@ -141,6 +141,9 @@ function autosaveForm(run = false, FormID = "form-medical-note-pd", interval = 5
     }
 
 }
+
+
+
 // const tx = document.querySelectorAll('.text-area-notes');
 // // const tx = document.getElementsByTagName("textarea");
 // for (let i = 0; i < tx.length; i++) {
@@ -380,7 +383,7 @@ function startAttendence(element,apptId,videoUrl){
     element.classList.add('disabled');
     element.classList.remove('btn-primary');
     element.classList.add('btn-secondary');
-    document.querySelector("#btn-Finish-visit").disabled = false;
+    document.querySelector("#addmedicationbtn").disabled = false;
     document.querySelector("#btn-finish-left").disabled = false;
     
     // Select all textarea elements
@@ -425,7 +428,7 @@ function startAttendence(element,apptId,videoUrl){
             // Call the frame video
             videoCallFrame(videoUrl)
         }
-    }, 3000);
+    }, 5000);
     
     // Create video room if not exist or expired
     
@@ -458,7 +461,8 @@ function finishAttend(element,apptId){
     element.classList.add('disabled');
     element.classList.remove('btn-primary');
     element.classList.add('btn-secondary');
-    document.querySelector("#btn-Finish-visit").disabled = true;
+    // document.querySelector("#btn-Finish-visit").disabled = true;
+    document.querySelector("#addmedicationbtn").disabled = true;
     // Select all textarea elements
     let textareas = document.querySelectorAll('textarea');
     // Loop through the textarea elements
@@ -691,7 +695,7 @@ function patientJoinApp(element,AppointmentId){
             element.classList.remove("btn-secondary");
             element.classList.add("btn-success");
             // change element text to joined
-            element.innerHTML = `Joined <i class="fa-solid fa-calendar-check"></i>`;
+            element.innerHTML = `Booked <i class="fa-solid fa-calendar-check"></i>`;
             // change element bg-color to success
             element.onclick = null;
             element.title = "You have joined this appointment";
@@ -734,7 +738,7 @@ function patientUnJoinApp(element,AppointmentId){
                 element.classList.remove("btn-secondary");
                 element.classList.add("btn-success");
                 // change element text to joined
-                element.innerHTML = `Un-Joined <i class="fa-solid fa-calendar-check"></i>`;
+                element.innerHTML = `Canceled <i class="fa-solid fa-calendar-check"></i>`;
                 // change element bg-color to success
                 element.onclick = null;
                 element.title = "You have Canceled this appointment";
@@ -775,7 +779,7 @@ function patientKnockRoom(element,AppointmentId){
                 element.classList.remove("btn-secondary");
                 element.classList.add("btn-success");
                 // change element text to joined
-                element.innerHTML = `In wainting room <i class="fa-solid fa-circle-check"></i>`;
+                element.innerHTML = `In the Waiting room <i class="fa-solid fa-circle-check"></i>`;
                 // change element bg-color to success
                 element.onclick = null;
                 element.title = "You ara in waiting room";
@@ -793,6 +797,44 @@ function patientKnockRoom(element,AppointmentId){
         });
 
 }
+
+
+const element = document.getElementById('formsubmitnewMedPrescrib');
+element.addEventListener('submit', event => {
+    event.preventDefault();
+    // actual logic, e.g. validate the form
+    let form = document.getElementById("formsubmitnewMedPrescrib");
+    let formAction = form.getAttribute("action");
+    let formMethod = form.getAttribute("method");
+    
+    console.log(form["Name"]["value"]);
+    // Using Axios js library to make the post request
+    axios({
+        method: 'POST',
+        url: "/addmed",
+        data: $(form).serialize(),
+        dataType: 'json',
+    })
+        .then((res) => {
+            // console.log(res);
+            let list = document.getElementById("listOfMedPrescribed");
+            let newelement = document.createElement("div");
+            newelement.innerHTML = `<li class="list-group-item">
+                            <span class="mb-1">${res.data.name}</span><br/>
+                            <small class="text-muted fst-italic">
+                                <span>${res.data.description}</span>
+                            </small>
+                        </li>`
+            list.appendChild(newelement);
+            
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+    
+});
+
+
 
 
 

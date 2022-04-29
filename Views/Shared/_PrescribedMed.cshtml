@@ -1,0 +1,16 @@
+﻿@if (ViewBag.ApptInfo.Medications.Count != 0)
+{
+    foreach (var med in ViewBag.ApptInfo.Medications)
+    {
+        <li class="list-group-item">
+            <span class="mb-1">@med.Name</span><br/>
+            <small class="text-muted fst-italic">
+                <span>@med.Description</span>
+            </small>
+        </li>
+    }
+}
+else
+{
+    <li class="list-group-item">No Medications</li>
+}

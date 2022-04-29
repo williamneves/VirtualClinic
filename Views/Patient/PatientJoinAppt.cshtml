@@ -47,7 +47,7 @@
                                         @if (appt.videoUrl == null)
                                         {
                                             <td class="text-center">
-                                                <span class="badge bg-warning text-center">...Wainting Provider...</span>
+                                                <span class="badge bg-warning text-center">...Waiting for Provider...</span>
                                             </td>
                                         }
                                         else
@@ -135,9 +135,9 @@
                                                     
                                     <td class="text-center">
                                         <button class="btn btn-sm bg-teal-700 px-3 text-light"
-                                                data-bs-placement="left" data-bs-toggle="tooltip" data-bs-html="true" title="Join Appointment"  
+                                                data-bs-placement="left" data-bs-toggle="tooltip" data-bs-html="true" title="Book Appointment"  
                                                 onclick="patientJoinApp(this,@appt.AppointmentId)">
-                                            Join <i class="fa-solid fa-person-walking-arrow-right"></i>
+                                            Book <i class="fa-solid fa-calendar-circle-plus"></i>
                                         </button>
                 
                                     </td>
