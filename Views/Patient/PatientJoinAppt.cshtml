@@ -1,0 +1,159 @@
+@{
+    ViewData["Title"] = "Welcome";
+    Layout = "_LayoutBS";
+}
+
+@model Appointment
+
+<div class="row">
+
+    @* <partial name="_LeftColumnProvider"/> *@
+
+    <div class="col-12 col-sm-12 mx-auto">
+
+        <div class="col-sm-12 row me-0 mt-3 justify-content-between">
+            
+            @* Create Appointment *@
+            @* <partial name="_FilterAppt"/> *@
+            
+            <div class="col-md-12 col-sm-12">
+                @* Table with all appointments *@
+                <div class="card mb-3">
+                    <div class="card-header bg-gray-500">
+                        <h5 class="card-title mb-0">All Upcomming Appointments:</h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <table id="AllPatientAppointments" class="table table-striped table align-middle mb-0 display" style="width:100%">
+                            <thead class="bg-light">
+                            <tr>
+                                <th scope="col">Date</th>
+                                <th scope="col">Time</th>
+                                <th scope="col">Provider Info</th>
+                                <th scope="col" class="text-center">Room Info</th>
+                                <th scope="col" class="text-center">Status</th>
+                                <th scope="col" class="text-center">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (var appt in ViewBag.AllPatientAppointments)
+                            {
+                                
+                                if (@appt.Status != "done")
+                                {
+                                    <tr>
+                                        <th scope="row">@appt.DateTime.ToString("MM/dd/yyyy")</th>
+                                        <td>@appt.DateTime.ToString("hh:mm tt")</td>
+                                        <td>@appt.Provider.User.getFullName()</td>
+                                        @if (appt.videoUrl == null)
+                                        {
+                                            <td class="text-center">
+                                                <span class="badge bg-warning text-center">...Wainting Provider...</span>
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td class="text-center">
+                                                <input class='videoUrltoCopy@(appt.AppointmentId)' style="display: none" value="@appt.videoUrl"/>
+                                                <button class="btn btn-sm btn-light" onclick="autoCopyURL('videoUrltoCopy@(appt.AppointmentId)')" data-bs-placement="right" data-bs-toggle="tooltip" data-bs-html="true" title="Click to Copy<br/>The Video URL<br/>and share">Copy Url <i class="fa-duotone fa-copy"></i></button>
+                                            </td>
+                                        }
+                                        <td class="text-center">
+                                            <span class="badge bg-primary text-light">@appt.getStatus()</span>
+                                        </td>
+                                    
+                                        <td class="text-center">
+                                            @if (@appt.Status == "patient_waiting" && appt.videoUrl != null)
+                                            {
+                                                <button class="btn btn-sm btn-success px-3"
+                                                        data-bs-placement="left" data-bs-toggle="tooltip" data-bs-html="true" title="Talk with the provider"
+                                                        onclick="">
+                                                    <i class="fa-solid fa-user-doctor-message"></i>
+                                                </button>
+                                            }
+                                            else if(appt.Status == "patient_waiting" && appt.videoUrl == null)
+                                            {
+                                                <button class="btn btn-sm bg-orange-400 px-3"
+                                                        data-bs-placement="left" data-bs-toggle="tooltip" data-bs-html="true" title="Enter in Waiting Room"
+                                                        onclick="patientKnockRoom(this,@appt.AppointmentId)">
+                                                    <i class="fa-solid fa-hand-wave"></i>
+                                                </button>
+                                            }
+                                            else
+                                            {
+                                                <button class="btn btn-sm bg-orange-400 px-3"
+                                                        data-bs-placement="left" data-bs-toggle="tooltip" data-bs-html="true" title="Enter in Waiting Room"
+                                                        onclick="patientKnockRoom(this,@appt.AppointmentId)">
+                                                    <i class="fa-solid fa-hand-wave"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-danger px-3"
+                                                        data-bs-placement="left" data-bs-toggle="tooltip" data-bs-html="true" title="Cancel Appointment"
+                                                        onclick="patientUnJoinApp(this,@appt.AppointmentId)">
+                                                    <i class="fa-solid fa-ban"></i>
+                                                </button>
+                                            }
+                                            
+                                            
+
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <hr/>
+                
+                @* Table with all appointments *@
+                <div class="card mb-3">
+                    <div class="card-header bg-gray-500">
+                        <h5 class="card-title mb-0">All Open Appointments:</h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <table id="AllOpenAppointmentsPatient" class="table table-striped table align-middle mb-0 display" style="width:100%">
+                            <thead class="bg-light">
+                            <tr>
+                                <th scope="col">Date</th>
+                                <th scope="col">Time</th>
+                                <th scope="col">Provider Info</th>
+                                <th scope="col" class="text-center">Status</th>
+                                <th scope="col" class="text-center">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (var appt in ViewBag.AllOpenAppointments)
+                            {
+                                <tr>
+                                    <th scope="row">@appt.DateTime.ToString("MM/dd/yyyy")</th>
+                                    <td>@appt.DateTime.ToString("hh:mm tt")</td>
+                                    <td>@appt.Provider.User.getFullName()</td>
+                                                    
+                                    <td class="text-center">
+                                        <span class="badge bg-primary text-light">@appt.getStatus()</span>
+                                    </td>
+                                                    
+                                    <td class="text-center">
+                                        <button class="btn btn-sm bg-teal-700 px-3 text-light"
+                                                data-bs-placement="left" data-bs-toggle="tooltip" data-bs-html="true" title="Join Appointment"  
+                                                onclick="patientJoinApp(this,@appt.AppointmentId)">
+                                            Join <i class="fa-solid fa-person-walking-arrow-right"></i>
+                                        </button>
+                
+                                    </td>
+                                </tr>
+                
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        
+
+    </div>
+    
+</div>

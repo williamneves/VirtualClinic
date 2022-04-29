@@ -266,9 +266,9 @@ refreshEveryInterval(60000);
 
 
 // Copy to clipboard
-function autoCopyURL() {
+function autoCopyURL(classname) {
     /* Get the text field */
-    var copyText = document.querySelector(".videoUrltoCopy");
+    var copyText = document.querySelector(`.${classname}`);
 
     /* Select the text field */
     copyText.select();
@@ -425,7 +425,7 @@ function startAttendence(element,apptId,videoUrl){
             // Call the frame video
             videoCallFrame(videoUrl)
         }
-    }, 2000);
+    }, 3000);
     
     // Create video room if not exist or expired
     
@@ -505,6 +505,32 @@ let apptTableAllToday = new DataTable('#apptTableAllToday', {
 });
 
 let apptTablePatientWating = new DataTable('#apptTablePatientWating', {
+    // options
+    // scrollY: "300px",
+    scrollCollapse: true,
+    paging: true,
+    select: true,
+    "dom": '<"card-header d-flex px-3 pt-2 justify-content-between align-items-center"lf><"bg-light m-0"rt><"card-footer d-flex px-3 pb-2 justify-content-between align-items-center"<"info-pag"i>p><"clear">'
+});
+let apptTablePatientToday = new DataTable('#apptTablePatientToday', {
+    // options
+    // scrollY: "300px",
+    scrollCollapse: true,
+    paging: true,
+    select: true,
+    "dom": '<"card-header d-flex px-3 pt-2 justify-content-between align-items-center"lf><"bg-light m-0"rt><"card-footer d-flex px-3 pb-2 justify-content-between align-items-center"<"info-pag"i>p><"clear">'
+});
+
+let AllOpenAppointmentsPatient = new DataTable('#AllOpenAppointmentsPatient', {
+    // options
+    // scrollY: "300px",
+    scrollCollapse: true,
+    paging: true,
+    select: true,
+    "dom": '<"card-header d-flex px-3 pt-2 justify-content-between align-items-center"lf><"bg-light m-0"rt><"card-footer d-flex px-3 pb-2 justify-content-between align-items-center"<"info-pag"i>p><"clear">'
+});
+
+let AllPatientAppointments = new DataTable('#AllPatientAppointments', {
     // options
     // scrollY: "300px",
     scrollCollapse: true,
@@ -641,3 +667,132 @@ function UpdateProviderMessages(element, text, writerId, providerId, patientId) 
             console.log(err);
         });
 }
+
+function patientJoinApp(element,AppointmentId){
+
+    // disable button element
+    element.disabled = true;
+    // Element Html spinner
+    element.innerHTML = '<i class="fa-solid fa-spinner fa-spin-pulse"></i>';
+    // change element bg-color to success
+    element.classList.remove("bg-teal-700");
+    element.classList.add("btn-secondary");
+    
+    
+    // send ajax request to join appointment
+    axios({
+        method: "POST",
+        url: `/patient/joinappointment/${AppointmentId}`,
+    })
+        .then((res) => {
+            console.log(res);
+            setTimeout(function() {
+
+            element.classList.remove("btn-secondary");
+            element.classList.add("btn-success");
+            // change element text to joined
+            element.innerHTML = `Joined <i class="fa-solid fa-calendar-check"></i>`;
+            // change element bg-color to success
+            element.onclick = null;
+            element.title = "You have joined this appointment";
+            element.disabled = false;
+            }, 2000);
+            
+            setTimeout(function()   {
+                // reload page
+                location.reload();
+            }, 4000);
+            
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+    
+    
+}
+
+function patientUnJoinApp(element,AppointmentId){
+
+    // disable button element
+    element.disabled = true;
+    // Element Html spinner
+    element.innerHTML = '<i class="fa-solid fa-spinner fa-spin-pulse"></i>';
+    // change element bg-color to success
+    element.classList.remove("btn-danger");
+    element.classList.add("btn-secondary");
+
+
+    // send ajax request to cancel appointment
+    axios({
+        method: "POST",
+        url: `/patient/unjoinappointment/${AppointmentId}`,
+    })
+        .then((res) => {
+            console.log(res);
+            setTimeout(function() {
+
+                element.classList.remove("btn-secondary");
+                element.classList.add("btn-success");
+                // change element text to joined
+                element.innerHTML = `Un-Joined <i class="fa-solid fa-calendar-check"></i>`;
+                // change element bg-color to success
+                element.onclick = null;
+                element.title = "You have Canceled this appointment";
+                element.disabled = false;
+            }, 2000);
+
+            setTimeout(function()   {
+                // reload page
+                location.reload();
+            }, 4000);
+
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+
+}
+function patientKnockRoom(element,AppointmentId){
+
+    // disable button element
+    element.disabled = true;
+    // Element Html spinner
+    element.innerHTML = '<i class="fa-solid fa-spinner fa-spin-pulse"></i>';
+    // change element bg-color to success
+    element.classList.remove("bg-orange-400");
+    element.classList.add("btn-secondary");
+
+
+    // send ajax request to cancel appointment
+    axios({
+        method: "POST",
+        url: `/patient/joinappointment/watingroom/${AppointmentId}`,
+    })
+        .then((res) => {
+            console.log(res);
+            setTimeout(function() {
+
+                element.classList.remove("btn-secondary");
+                element.classList.add("btn-success");
+                // change element text to joined
+                element.innerHTML = `In wainting room <i class="fa-solid fa-circle-check"></i>`;
+                // change element bg-color to success
+                element.onclick = null;
+                element.title = "You ara in waiting room";
+                element.disabled = false;
+            }, 2000);
+
+            setTimeout(function()   {
+                // reload page
+                location.reload();
+            }, 4000);
+
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+
+}
+
+
+
