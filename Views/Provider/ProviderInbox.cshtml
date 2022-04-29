@@ -17,7 +17,7 @@
 
                     foreach(var m in ViewBag.AllMessages)
                     {
-                        if(m.ProviderId == ViewBag.UserLoggedIn.UserId && m.PatientId == i.PatientId && m.Read == false)
+                        if(m.Provider.UserId == ViewBag.UserLoggedIn.UserId && m.PatientId == i.PatientId && m.Read == false && m.WriterId !=  ViewBag.UserLoggedIn.UserId)
                         {
                             unreadMessageByThread = true;
                         }
@@ -28,7 +28,7 @@
                         @i.User.LastName
                         @if (unreadMessageByThread)
                         {
-                            <span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
+                            <span class="position-absolute top-0 start-100translate-middle p-2 bg-danger border border-light rounded-circle">
                                 <span class="visually-hidden">New alerts</span>
                             </span>
                         }
