@@ -8,6 +8,12 @@ The project's MVP is to create an interface for the Patient, Provider and Manage
 The language used is `C#`, with `Entityframework`, `razor and JavaScript FrontEnd, Bootstrap and FontAwesome Icons libaries` and others.
 
 -----------
+![alt text](https://imgur.com/GK2zRS6)
+-----------
+![alt text](https://imgur.com/a3Ck4N6)
+-----------
+![alt text](https://imgur.com/aYIKl0a)
+-----------
 **Features for version 1.0:**
  - [ ] Login and Registration
 	 - [x] Patient
