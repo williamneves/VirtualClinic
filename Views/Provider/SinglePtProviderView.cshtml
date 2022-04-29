@@ -8,7 +8,21 @@
     <partial name="_LeftColumnPtProviderView"/>
 
     <div class="col-12 col-sm-8">
-        <h3>Add Medical Information:</h3>
+
+            <div class="card mb-3">
+                <div class="card-header bg-gray-500">
+                    <h5 class="mb-0">Visit History:</h5>
+                </div>
+                <div class="card-body p-0">
+                    <partial name="_PatientAppt"/>
+                </div>
+
+                @* <partial name="_MedicalNotesAcc"/> *@
+                
+            </div>
+
+
+        <h3>Medical Information:</h3>
 
         <div>
             <div class="card mb-4">
@@ -93,7 +107,7 @@
             </div>
             <div class="card mb-4">
                 <div class="card-header bg-gray-500">
-                    <h5 mb-0>Patient Reported Medications</h5>
+                    <h5 mb-0>Patient Reported Allergies</h5>
 
                 </div>
                 <div class="card-body">
@@ -134,7 +148,7 @@
 
             <div class="card mb-4">
                 <div class="card-header bg-gray-500">
-                    <h5 mb-0>Patient Reported </h5>
+                    <h5 mb-0>Patient Reported Medical History</h5>
 
                 </div>
                 <div class="card-body">
