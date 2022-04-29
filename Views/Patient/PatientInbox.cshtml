@@ -17,7 +17,7 @@
 
                     foreach (var m in ViewBag.AllMessages)
                     {
-                        if (m.PatientId == ViewBag.UserLoggedIn.UserId && m.ProviderId == i.ProviderId && m.Read == false)
+                        if (m.Patient.UserId == ViewBag.UserLoggedIn.UserId && m.ProviderId == i.ProviderId && m.Read == false && m.WriterId !=  ViewBag.UserLoggedIn.UserId)
                         {
                             unreadMessageByThread = true;
                         }

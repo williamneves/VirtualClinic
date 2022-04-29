@@ -526,7 +526,7 @@ namespace VirtualClinic.Controllers
             ViewBag.AllMessages = dbContext.Messages
                                 .Include(p => p.Patient)
                                 .Include(p => p.Provider)
-                                .Where(p => p.ProviderId == userInDb.UserId)
+                                .Where(p => p.Provider.UserId == userInDb.UserId)
                                 .ToList();
 
             ViewBag.AllPatients = dbContext.Patients
@@ -556,7 +556,10 @@ namespace VirtualClinic.Controllers
             {
                 foreach (Message i in result)
                 {
-                    i.Read = true;
+                    if(i.WriterId != userInDb.UserId)
+                    {
+                        i.Read = true;
+                    }
                 }
                 dbContext.SaveChanges();
             }
