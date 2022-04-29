@@ -5,7 +5,7 @@
 
 <div class="row">
 
-    <partial name="_LeftColumn"/>
+    <partial name="_LeftColumnPtProviderView"/>
 
     <div class="col-12 col-sm-8">
         <h3>Add Medical Information:</h3>
@@ -17,7 +17,8 @@
                     <h5 class="mb-0">Prescribed Medications</h5>
 
                 </div>
-                @if (ViewBag.PatientInfo.Medications.Count != 0)
+                @if (ViewBag.PatientInfo != null && ViewBag.PatientInfo.Medications != null)
+                @* @if (ViewBag.PatientInfo.Medications.Count != 0) *@
                 {
                     <div class="card-body" style="max-height: 250px;overflow-y: scroll;">
                         <table class="table table-sm">
@@ -60,8 +61,8 @@
                         <partial name="_AddPtMed"/>
                     </div>
                     <hr/>
-
-                    @if (ViewBag.PatientInfo.ReportedMedications.Count != 0)
+                @if (ViewBag.PatientInfo != null && ViewBag.PatientInfo.ReportedMedications != null)
+                    @* @if (ViewBag.PatientInfo.ReportedMedications.Count != 0) *@
                     {
                         <table class="table table-sm">
                             <thead>
@@ -100,7 +101,8 @@
                     <partial name="_AddAllergy"/>
                     <hr/>
 
-                    @if (@ViewBag.PatientAllergies.Allergies.Count != 0)
+                    @if (@ViewBag.PatientAllergies != null)
+                    @* @if (@ViewBag.PatientAllergies.Allergies.Count != 0) *@
                     {
                         <table class="table table-sm">
                             <thead>
@@ -140,7 +142,9 @@
                     <partial name="_AddMedHx"/>
 
                     <hr/>
-                    @if (@ViewBag.PatientMedHx.MedicalHistory.Count != 0)
+                    @if (@ViewBag.PatientMedHx != null)
+
+                    @* @if (@ViewBag.PatientMedHx.MedicalHistory.Count != 0) *@
                     {
                         <table class="table">
                             <thead>

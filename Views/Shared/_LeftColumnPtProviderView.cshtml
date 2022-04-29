@@ -1,0 +1,44 @@
+
+<div class="col-12 col-sm-4">
+    <div class="sticky-top" style="top: 4rem; z-index: 1">
+
+        <div class="card col-sm-10 col-10 mx-auto mb-4 bg-gray-500 rounded-3">
+
+            <img src="~/imgs/profileimg/@ViewBag.PatientDemo.User.ImageProfile"
+                class="rounded-circle mx-auto border border-5 shadow border-white w-50 my-2" alt="Profile Picture">
+            @if (ViewBag.PatientDemo.User.PreferredName != null)
+            {
+                <h4 class="text-center my-2">"@ViewBag.PatientDemo.User.PreferredName"</h4>
+            }
+            <h5 class="my-2 text-center"> @ViewBag.PatientDemo.User.FirstName @ViewBag.PatientDemo.User.LastName</h5>
+            <p class="my-2 text-center">Pronouns: @ViewBag.PatientDemo.User.Pronouns</p>
+
+        </div>
+
+        <div class="card col-sm-10 col-10 mx-auto mb-4 bg-gray-100 rounded-3">
+
+            <div class="card-header border-bottom bg-gray-500">
+                <span class="card-title fw-bold">Patient Information:</span>
+            </div>
+
+            <div class="card-body p-0">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item bg-gray-100">Sex: @ViewBag.PatientDemo.User.Sex </li>
+                    <li class="list-group-item bg-gray-100">Height:
+                        @if (ViewBag.PatientDemo != null)
+                        {
+                            @if (ViewBag.PatientDemo.Height != null)
+                            {
+                                @ViewBag.PatientDemo.Height;
+                            }
+                        }
+                    </li>
+                    <li class="list-group-item bg-gray-100 p-0 m-0">
+                        <partial name="_Allergies-MedHx" />
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</div>
